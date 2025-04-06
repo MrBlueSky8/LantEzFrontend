@@ -1,0 +1,42 @@
+<div class="login-container">
+    <div class="login-card">
+      <div class="image-section">
+        <img src="../../../assets/crushIcon.svg" alt="Crush Icon" />
+      </div>
+  
+      <div class="form-section">
+        <h2 class="login-title">Iniciar Sesión</h2>
+  
+        <form [formGroup]="form" (ngSubmit)="login()">
+          <mat-form-field appearance="fill" class="custom-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="username" placeholder=" " />
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="form.get('username')?.hasError('required')">
+              El e-mail es obligatorio.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill" class="custom-field">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password" placeholder=" " />
+            <mat-icon matSuffix>lock</mat-icon>
+            <mat-error *ngIf="form.get('password')?.hasError('required')">
+              La contraseña es obligatoria.
+            </mat-error>
+          </mat-form-field>
+  
+          <button mat-raised-button type="submit" class="login-button">
+            Iniciar Sesión
+          </button>
+  
+          <div class="forgot-password">
+            <a routerLink="/recuperar">¿Olvidaste la contraseña?</a>
+          </div>
+  
+          <div *ngIf="mensaje" class="error-message">{{ mensaje }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
