@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="container" style="text-align: center">
+    <h2>Inicie sesión</h2>
+    <form [formGroup]="form" (ngSubmit)="login()" class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput placeholder="Username" formControlName="username" />
+        <mat-error *ngIf="form.get('username')?.hasError('required')"
+          >El username es obligatorio.</mat-error
+        >
+      </mat-form-field>
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="form.get('password')?.hasError('required')"
+          >La contraseña es obligatoria.</mat-error
+        >
+      </mat-form-field>
+      <br />
+      <button mat-raised-button color="warn" type="submit">Ingresar</button>
+      <br />
+      <div *ngIf="mensaje" class="error-message">{{ mensaje }}</div>
+    </form>
+  </div>
+  

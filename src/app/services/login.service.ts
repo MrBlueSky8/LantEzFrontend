@@ -16,11 +16,11 @@ export class LoginService {
     return this.http.post(this.url, request);
   }
   verificar() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     return token != null;
   }
   showRole() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if (!token) {
       // Manejar el caso en el que el token es nulo.
       return null; // O cualquier otro valor predeterminado dependiendo del contexto.
@@ -30,7 +30,7 @@ export class LoginService {
     return decodedToken?.role;
   }
   showUser() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if (!token) {
       return null; // O cualquier otro valor predeterminado dependiendo del contexto.
     }

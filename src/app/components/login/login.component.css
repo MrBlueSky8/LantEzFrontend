@@ -1,0 +1,8 @@
+mat-form-field {
+    width: 50%;
+    }
+    .error-message {
+        color: blue;
+        margin-top: 10px;
+      }
+      

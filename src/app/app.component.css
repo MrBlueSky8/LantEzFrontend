@@ -1,0 +1,32 @@
+.mat-toolbar {
+    background-color: blue; /* Color rojo para la barra de navegación */
+    color: white;
+  }
+  
+  .mat-toolbar button {
+    color: white; /* Color blanco para el texto de los botones */
+    margin-right: 10px;
+  }
+  
+  .mat-icon {
+    margin-right: 5px;
+    color: white; /* Color blanco para los íconos */
+  }
+  
+  .mat-menu-item {
+    color: black; /* Color negro para el texto de los ítems del menú */
+  }
+  
+  .mat-menu-item:hover {
+    background-color: rgba(255, 0, 0, 0.1); /* Fondo rojo claro al pasar el ratón sobre los ítems */
+  }
+  
+  .mat-menu-item .mat-icon {
+    color: blue; /* Color rojo para los íconos en el menú */
+  }
+  
+  .mat-menu-item span {
+    vertical-align: middle;
+  }
+  
+  
