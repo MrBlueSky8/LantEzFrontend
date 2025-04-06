@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['homes']);
       },
       (error) => {
-        this.mensaje = 'Credenciales incorrectas!!!';
+        this.mensaje = 'La dirección de correo electrónico o la contraseña no son correctos.';
         this.snackBar.open(this.mensaje, 'Aviso', {
           duration: 2000,
         });
