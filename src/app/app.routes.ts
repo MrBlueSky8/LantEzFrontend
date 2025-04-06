@@ -8,7 +8,7 @@ import { EvaluadorComponent } from './components/evaluador/evaluador.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'homes',
     pathMatch: 'full',
   },
   {
@@ -23,11 +23,13 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
+    canActivate: [segGuard],
+    data: { roles: ['ADMIN', 'Segundo rol ejm'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'evaluador',
     component: EvaluadorComponent,
     canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
+    data: { roles: ['EVALUADOR', 'ADMIN'] }
   }
 ];
