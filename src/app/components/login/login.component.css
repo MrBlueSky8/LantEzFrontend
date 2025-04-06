@@ -1,8 +1,112 @@
-mat-form-field {
-    width: 50%;
-    }
-    .error-message {
-        color: blue;
-        margin-top: 10px;
-      }
-      
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+.login-container {
+  height: 100vh;
+  background: linear-gradient(to bottom right, #FFD27F, #FFC260);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  display: flex;
+  width: 900px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.image-section {
+  background: #F3AF42;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-section img {
+  width: 70%;
+  height: auto;
+}
+
+.form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  color: #674103;
+  margin-bottom: 30px;
+}
+
+.custom-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.custom-field .mat-form-field-flex {
+  background-color: transparent !important;
+  padding-bottom: 5px !important;
+}
+
+.custom-field.mat-form-field-appearance-fill .mat-form-field-flex {
+  border-bottom: 2px solid #674103 !important;
+  border-radius: 0 !important;
+}
+
+.custom-field.mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+  border-bottom: 2px solid #F3AF42 !important;
+}
+
+.custom-field .mat-icon {
+  color: #674103;
+}
+
+.login-button {
+  background: linear-gradient(180deg, #F3AF42 0%, #674103 166.39%);
+  border-radius: 25px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  height: 45px;
+  width: 100%;
+  margin-top: 10px;
+  box-shadow: none;
+  transition: transform 0.2s;
+}
+
+.login-button:hover {
+  transform: scale(1.03);
+  box-shadow: none;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #674103;
+  font-family: 'Poppins', sans-serif;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
