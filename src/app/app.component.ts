@@ -26,6 +26,7 @@ export class AppComponent {
 
   role: string = '';
   user: string = '';
+  currentPath: string = '';
   constructor(private loginService: LoginService) {}
 
   cerrar() {
@@ -35,9 +36,11 @@ export class AppComponent {
   verificar() {
     this.role = this.loginService.showRole();
     this.user = this.loginService.showUser();
+    this.currentPath = window.location.pathname;
+    console.log('evento: cambio de path a: ' + this.currentPath);
     return this.loginService.verificar();
   }
   isAdmin() {
-    return this.role === 'ROLE_USER';
+    return this.role === 'ADMIN';
   }
 }
