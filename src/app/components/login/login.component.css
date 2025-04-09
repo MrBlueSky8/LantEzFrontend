@@ -2,7 +2,7 @@
 
 .login-container {
   height: 100vh;
-  background: linear-gradient(to bottom right, #FFD27F, #FFC260);
+  background: linear-gradient(to right, #FFCB72 0%, #FFF8E4 50%, #FF9D00 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,9 +10,9 @@
 
 .login-card {
   display: flex;
-  width: 900px;
+  width: 90%;
   background: rgba(255, 255, 255, 0.4);
-  border-radius: 20px;
+  border-radius: 2%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -33,7 +33,7 @@
 
 .form-section {
   flex: 1;
-  padding: 40px;
+  padding: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,33 +42,34 @@
 .login-title {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 250%;
   text-align: center;
-  color: #674103;
-  margin-bottom: 30px;
+  background: linear-gradient(to bottom, #FF9D00, #965D02);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 5%;
 }
 
 .custom-field {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 4%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 100%;
 }
 
-.custom-field .mat-form-field-flex {
-  background-color: transparent !important;
-  padding-bottom: 5px !important;
+/* Quitar background al texto*/
+.mat-mdc-form-field {
+  --mat-sys-surface-variant: transparent !important;
+}
+/* Quitar background al input*/
+.mdc-text-field__input {
+  background: transparent !important;
 }
 
-.custom-field.mat-form-field-appearance-fill .mat-form-field-flex {
-  border-bottom: 2px solid #674103 !important;
-  border-radius: 0 !important;
-}
-
-.custom-field.mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
-  border-bottom: 2px solid #F3AF42 !important;
-}
-
-.custom-field .mat-icon {
-  color: #674103;
+.mat-mdc-raised-button:not(:disabled) {
+  color: white !important;
+  font-size: 20px !important;
 }
 
 .login-button {
@@ -79,9 +80,10 @@
   font-weight: bold;
   height: 45px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 2%;
   box-shadow: none;
   transition: transform 0.2s;
+  font-size: 120%;
 }
 
 .login-button:hover {
@@ -91,22 +93,29 @@
 
 .forgot-password {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 3%;
 }
 
 .forgot-password a {
   text-decoration: none;
   color: #674103;
   font-family: 'Poppins', sans-serif;
+  font-size: 110%
 }
 
 .forgot-password a:hover {
   text-decoration: underline;
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
+.mat-mdc-form-field .mat-mdc-floating-label {
+  color: black !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.mat-mdc-form-field .mat-mdc-floating-label.mdc-floating-label {
+  color: #674103 !important;
+}
+.mat-mdc-form-field-subscript-wrapper {
+  color: #674103 !important;
+  font-family: 'Poppins', sans-serif !important;
 }
