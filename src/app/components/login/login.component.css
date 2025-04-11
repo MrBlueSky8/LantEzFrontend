@@ -24,11 +24,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden; /* Evita que partes no deseadas queden visibles */
 }
 
 .image-section img {
-  width: 70%;
-  height: auto;
+  width: 140%; /* Aumenta el tamaño para que sobresalga */
+  height: 140%;
+  object-fit: cover;
+  position: absolute;
 }
 
 .form-section {
