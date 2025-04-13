@@ -24,7 +24,7 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [segGuard],
-    data: { roles: ['ADMIN'] }, // solo construcciones, se debe agregar a cada uno
+    data: { roles: ['ADMIN', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'evaluador',

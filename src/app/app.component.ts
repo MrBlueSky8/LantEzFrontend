@@ -37,7 +37,7 @@ export class AppComponent {
     this.role = this.loginService.showRole();
     this.user = this.loginService.showUser();
     this.currentPath = window.location.pathname;
-    console.log('evento: cambio de path a: ' + this.currentPath);
+    //console.log('evento: cambio de path a: ' + this.currentPath);
     return this.loginService.verificar();
   }
   isAdmin() {
