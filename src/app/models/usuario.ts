@@ -1,3 +1,7 @@
+import { Empresas } from "./empresas";
+import { Roles } from "./roles";
+import { TipoDocumento } from "./tipo-documento";
+
 export class Usuarios {
     id: number = 0;
     email: string = '';
@@ -10,7 +14,11 @@ export class Usuarios {
     prefijo_telefono: string = '';
     telefono: string = '';
     fecha_registro: Date= new Date(Date.now());
-    
-    enabled: boolean = false;
+    tipoDocumento: TipoDocumento = new TipoDocumento();
+    numero_doc: string = '';
+    fechanacimiento: Date = new Date(Date.now());
+    roles: Roles = new Roles();
+    empresas: Empresas = new Empresas();
+    estado: boolean = false;
   }
   
