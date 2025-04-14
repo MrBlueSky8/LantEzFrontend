@@ -1,5 +1,5 @@
 .sidenav {
-    background: #263238;
+    background: #FFFFFF;
     transition: all 0.5s ease;
     position: fixed;
     z-index: 1;
@@ -39,7 +39,7 @@
     margin-left: 1.5rem;
     font-size: 22px;
     font-weight: 600;
-    color: #fff;
+    color: #000000;
   }
   
   .sidenav .logo-container .btn-close {
@@ -53,7 +53,7 @@
   }
   
   .sidenav .logo-container .btn-close .fa-times {
-    color: #fff;
+    color: #000000;
     font-size: 24px;
   }
   
@@ -80,7 +80,7 @@
     display: flex;
     align-items: center;
     height: 3rem;
-    color: #f3f3f3;
+    color: #000000;
     text-decoration: none;
     border-radius: 0.625rem;
     transition: all 0.3s ease;
@@ -99,7 +99,7 @@
   }
   
   .sidenav-nav .sidenav-nav-item .sidenav-nav-link:hover {
-    background-color: #fff;
+    background-color: #FFE5BB;
     color: #000;
   }
   
@@ -108,17 +108,17 @@
   }
   
   .active {
-    background-color: #fff;
+    background-color: #FFE5BB;
   }
   
   .active .menu-collapse-icon,
   .active .sidenav-link-icon,
   .active .sidenav-link-text {
-    color: #000;
+    color: #DA8804;
   }
   
   .active-sublevel {
-    color: #f3f3f3 !important;
+    color: #FFE5BB !important;
   }
   
   .menu-collapse-icon {
@@ -127,7 +127,7 @@
     min-width: 2rem;
     margin: auto 0.5rem auto auto;
     text-align: center;
-    color: #f3f3f3;
+    color: #FFE5BB;
   }
   
   .sublevel-nav {
@@ -158,7 +158,7 @@
   }
   
   .sublevel-nav .sublevel-nav-item .sublevel-nav-link:hover {
-    color: #f3f3f3;
+    color: #FFE5BB;
   }
   
   /* Scrollbar y visibilidad */
