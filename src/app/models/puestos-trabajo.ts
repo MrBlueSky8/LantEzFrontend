@@ -1,5 +1,5 @@
 import { Areas } from "./area";
-import { Usuarios } from "./usuario";
+import { Usuarios } from "./usuarios";
 
 export class PuestosTrabajo {
     id: number = 0;
