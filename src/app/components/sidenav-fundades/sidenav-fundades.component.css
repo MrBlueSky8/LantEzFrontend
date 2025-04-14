@@ -16,7 +16,8 @@
   }
   
   .sidenav .logo-container .logo {
-    background: #DA8804;
+    background: #e6bb7f;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     width: 3rem;
     min-width: 3rem;

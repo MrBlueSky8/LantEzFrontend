@@ -16,7 +16,12 @@
                     *ngIf="data.items && data.items.length > 0"
                     [ngClass]="getActiveClass(data)"
                 >
-                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <ng-container *ngIf="data.svgIcon; else faIcon">
+                        <img [src]="data.svgIcon" alt="icon" class="sidenav-link-icon svg-icon" />
+                    </ng-container>
+                    <ng-template #faIcon>
+                        <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    </ng-template>
                     <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
                         {{data.label}}
                     </span>
@@ -32,7 +37,12 @@
                     [routerLinkActiveOptions]="{exact: true}"
                     (click)="shrinkItems(data)"
                     >
-                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <ng-container *ngIf="data.svgIcon; else faIcon">
+                        <img [src]="data.svgIcon" alt="icon" class="sidenav-link-icon svg-icon" />
+                      </ng-container>
+                      <ng-template #faIcon>
+                        <i class="sidenav-link-icon" [class]="data.icon"></i>
+                      </ng-template>
                     <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
                         {{data.label}}
                     </span>

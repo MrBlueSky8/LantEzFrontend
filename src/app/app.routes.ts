@@ -5,6 +5,15 @@ import { segGuard } from './guard/seguridad.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { EvaluadorComponent } from './components/evaluador/evaluador.component';
 import { SidenavFundadesComponent } from './components/sidenav-fundades/sidenav-fundades.component';
+import { LogsComponent } from './components/admin/logs/logs.component';
+import { DashboardComponent } from './components/shared/dashboard/dashboard.component';
+import { EmpresasComponent } from './components/fundades/empresas/empresas.component';
+import { DashboardFundadesComponent } from './components/fundades/dashboard-fundades/dashboard-fundades.component';
+import { UsuariosComponent } from './components/admin/usuarios/usuarios.component';
+import { PostulantesComponent } from './components/shared/postulantes/postulantes.component';
+import { EvaluadoresComponent } from './components/admin/evaluadores/evaluadores.component';
+import { EvaluacionesComponent } from './components/shared/evaluaciones/evaluaciones.component';
+import { AjustesGeneralesComponent } from './components/shared/ajustes-generales/ajustes-generales.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +33,38 @@ export const routes: Routes = [
         path: 'homes',
         component: HomeComponent,
       },
+      {
+        path: 'logs',
+        component: LogsComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardFundadesComponent,
+      },
+      {
+        path: 'empresas',
+        component: EmpresasComponent,
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+      },
+      {
+        path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'evaluadores',
+        component: EvaluadoresComponent,
+      },
+      {
+        path: 'evaluaciones',
+        component: EvaluacionesComponent,
+      },
+      {
+        path: 'ajustes',
+        component: AjustesGeneralesComponent,
+      }
     ],
     canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
   },

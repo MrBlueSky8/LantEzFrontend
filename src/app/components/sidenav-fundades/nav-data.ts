@@ -2,15 +2,55 @@ import { INavbarData } from "./helper";
 
 export const navbarData: INavbarData[] = [
     {
-        routeLink: 'admin',
-        icon: 'fal fa-home', // Dashboard
+        routeLink: 'homes',
+        svgIcon: '../../../assets/Home.svg',
+        //icon: 'fal fa-home', // Dashboard
+        label: 'Home',
+    },
+    {
+        routeLink: 'logs',
+        svgIcon: '../../../assets/logs.svg',
+        //icon: 'fa fa-industry', 
+        label: 'Logs'
+    },
+    {
+        routeLink: 'dashboard',
+        svgIcon: '../../../assets/dashboard.svg',
+        //icon: 'fal fa-briefcase', 
         label: 'Dashboard',
     },
     {
-        routeLink: 'evaluador',
-        icon: 'fa fa-industry', // Rubros de empresas
-        label: 'Rubros'
+        routeLink: 'empresas',
+        svgIcon: '../../../assets/empresas.svg', 
+        label: 'Empresas',
     },
+    {
+        routeLink: 'usuarios',
+        svgIcon: '../../../assets/users.svg',
+        label: 'Usuarios'
+    },
+    {
+        routeLink: 'postulantes',
+        svgIcon: '../../../assets/postulante.svg',
+        label: 'Postulantes',
+    },
+    {
+        routeLink: 'evaluadores',
+        svgIcon: '../../../assets/evaluadores.svg',
+        label: 'Evaluadores',
+    },
+    {
+        routeLink: 'evaluaciones',
+        svgIcon: '../../../assets/evaluaciones.svg',
+        label: 'Evaluaciones',
+    },
+    {
+        routeLink: 'ajustes',
+        svgIcon: '../../../assets/settings.svg',
+        label: 'Ajustes',
+    }
+
+    /*ejm con items
     {
         routeLink: 'admin',
         icon: 'fal fa-briefcase', // Ofertas de empleo
@@ -27,42 +67,6 @@ export const navbarData: INavbarData[] = [
                 label: 'Ofertas publicadas',
             },
         ]
-    },
-    {
-        routeLink: 'evaluador',
-        icon: 'fal fa-calendar-alt', // Tipos de trabajos laborales
-        label: 'Jornada Laboral',
-    },
-    {
-        routeLink: 'homes',
-        icon: 'fal fa-map-marker-alt', // Ubicación de oferta
-        label: 'Ubicacion de oferta'
-    },
-    {
-        routeLink: 'homes',
-        icon: 'fal fa-file-alt',
-        label: 'Ver solicitudes',
-        items: [
-            {
-                routeLink: 'job-applications/listapplications',
-                icon: 'fal fa-eye',
-                label: 'Solicitudes recibidas',
-            },
-            {
-                routeLink: 'job-applications/accepted-applications',
-                icon: 'fal fa-check-circle',
-                label: 'Solicitudes Aceptadas',
-            }
-        ]
-    },
-    {
-        routeLink: 'homes',
-        icon: 'fal fa-users', //Posts
-        label: 'Preguntas',
-    },
-    {
-        routeLink: 'homes',
-        icon: 'fal fa-user-cog', // Mi Cuenta
-        label: 'Mi Cuenta',
     }
+    */
 ];
