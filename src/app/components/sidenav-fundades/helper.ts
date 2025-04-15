@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 
 export interface INavbarData {
-    routeLink: string;
+    routeLink?: string;
     icon?: string;
     svgIcon?: string;
     label: string;

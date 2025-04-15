@@ -84,7 +84,7 @@ export class SidenavFundadesComponent implements OnInit{
   }
 
   getActiveClass(data: INavbarData): string {
-    return this.router.url.includes(data.routeLink) ? 'active' : '';
+    return this.router.url.includes(data.routeLink ?? '') ? 'active' : '';
   }
 
   shrinkItems(item: INavbarData): void {
