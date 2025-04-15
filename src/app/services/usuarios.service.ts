@@ -42,7 +42,7 @@ export class UsuariosService {
   }
 
   findNameByEmail(email: string): Observable<string> {
-    return this.http.get<string>(`${this.url}/findname/${email}`);
+    return this.http.get(`${this.url}/findname/${email}`, { responseType: 'text' });
   }
 
   findIdByEmail(email: string): Observable<number> {

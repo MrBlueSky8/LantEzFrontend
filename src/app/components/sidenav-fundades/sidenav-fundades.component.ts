@@ -5,6 +5,8 @@ import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 import { fadeInOut, INavbarData } from './helper';
 import { navbarData } from './nav-data';
 import { SublevelMenuComponent } from "./sublevel-menu.component";
+import { UsuariosService } from '../../services/usuarios.service';
+import { LoginService } from '../../services/login.service';
 
 
 interface SideNavToggle {
@@ -37,6 +39,7 @@ export class SidenavFundadesComponent implements OnInit{
   screenWidth = 0;
   navData = navbarData;
   multiple: boolean = false;
+  username: string = '';
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -47,10 +50,22 @@ export class SidenavFundadesComponent implements OnInit{
     }
   }
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private usuarioService: UsuariosService,
+    private loginService: LoginService
+
+  ) {}
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
+
+      
+      this.usuarioService.findNameByEmail(this.loginService.showUser()).subscribe((data) => {
+        this.username = data;
+        //console.log(this.username);
+      });
+      
   }
 
   toggleCollapse(): void {
