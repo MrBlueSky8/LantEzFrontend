@@ -18,7 +18,7 @@ import { AjustesGeneralesComponent } from './components/shared/ajustes-generales
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'sidenav-fundades',
+    redirectTo: 'homes',
     pathMatch: 'full',
   },
   {
@@ -66,7 +66,8 @@ export const routes: Routes = [
         component: AjustesGeneralesComponent,
       }
     ],
-    canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
+    canActivate: [segGuard],
+    data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'homes',
@@ -77,7 +78,7 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [segGuard],
-    data: { roles: ['ADMIN', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
+    data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'evaluador',
@@ -85,4 +86,5 @@ export const routes: Routes = [
     canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
     data: { roles: ['EVALUADOR', 'ADMIN'] },
   },
+  { path: '**', redirectTo: '/homes', pathMatch: 'full' }
 ];

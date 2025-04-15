@@ -1,7 +1,13 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,9 +19,9 @@ import { JwtRequest } from '../../models/jwtRequest';
 @Component({
   selector: 'app-login',
   imports: [
-    FormsModule, 
-    MatFormFieldModule, 
-    MatButtonModule, 
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     NgIf,
@@ -24,9 +30,9 @@ import { JwtRequest } from '../../models/jwtRequest';
     CommonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   form: FormGroup;
   mensaje: string = '';
 
@@ -60,10 +66,13 @@ export class LoginComponent implements OnInit{
     this.loginService.login(request).subscribe(
       (data: any) => {
         localStorage.setItem('token', data.jwttoken);
-        this.router.navigate(['homes']);
+        //this.router.navigate(['homes']);
+        const role = this.loginService.showRole();
+        this.RedirectByRole(role);
       },
       (error) => {
-        this.mensaje = 'La dirección de correo electrónico o la contraseña no son correctos.';
+        this.mensaje =
+          'La dirección de correo electrónico o la contraseña no son correctos.';
         this.snackBar.open(this.mensaje, 'Aviso', {
           duration: 2000,
         });
@@ -71,4 +80,37 @@ export class LoginComponent implements OnInit{
     );
   }
 
+  RedirectByRole(data: string) {
+    switch (data) {
+      case 'ADMINISTRADOR FUNDADES':
+        // Redirige al dashboard de administrador
+        this.router.navigate(['/sidenav-fundades']);
+        break;
+
+      case 'SUBADMINISTRADOR FUNDADES':
+        // Redirige al panel de subadministrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'ADMINISTRADOR':
+        // Redirige al dashboard de administrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'SUBADMINISTRADOR':
+        // Redirige al panel de subadministrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'EVALUADOR':
+        // Redirige a la vista del evaluador
+        this.router.navigate(['/homes']);
+        break;
+
+      default:
+        // Redirige a una página de error o login por defecto
+        this.router.navigate(['/login']);
+        break;
+    }
+  }
 }

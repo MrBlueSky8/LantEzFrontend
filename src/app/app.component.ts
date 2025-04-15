@@ -2,10 +2,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginService } from './services/login.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +22,34 @@ import { LoginService } from './services/login.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'lant-ez-frontend';
 
   role: string = '';
   user: string = '';
   currentPath: string = '';
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+
+  ) {}
+
+  ngOnInit(): void {
+    //this.currentPath = window.location.pathname;
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentPath = event.urlAfterRedirects;
+
+      //console.log('cambiando current path: ' + this.currentPath);
+      if (this.currentPath === '/homes') {
+        const rol = this.loginService.showRole();
+        if (rol) {
+          this.RedirectByRole(rol);
+        }
+      }
+    });
+  }
 
   cerrar() {
     localStorage.clear();
@@ -42,5 +64,39 @@ export class AppComponent {
   }
   isAdmin() {
     return this.role === 'ADMIN';
+  }
+
+  RedirectByRole(data: string) {
+    switch (data) {
+      case 'ADMINISTRADOR FUNDADES':
+        // Redirige al dashboard de administrador
+        this.router.navigate(['/sidenav-fundades']);
+        break;
+
+      case 'SUBADMINISTRADOR FUNDADES':
+        // Redirige al panel de subadministrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'ADMINISTRADOR':
+        // Redirige al dashboard de administrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'SUBADMINISTRADOR':
+        // Redirige al panel de subadministrador
+        this.router.navigate(['/homes']);
+        break;
+
+      case 'EVALUADOR':
+        // Redirige a la vista del evaluador
+        this.router.navigate(['/homes']);
+        break;
+
+      default:
+        // Redirige a una página de error o login por defecto
+        this.router.navigate(['/login']);
+        break;
+    }
   }
 }
