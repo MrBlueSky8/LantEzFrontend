@@ -13,7 +13,11 @@ export const segGuard = (
   const lService = inject(LoginService);
   const router = inject(Router);
   const isLogged = lService.verificar();
-  if (!isLogged) {
+  const tokenExpired = lService.isTokenExpired();
+
+  if (!isLogged || tokenExpired) {
+    //console.log('evento: sesión invalida, regresando al login');
+    localStorage.clear();
     router.navigate(['/login']);
     return false;
   }
