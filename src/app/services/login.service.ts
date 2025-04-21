@@ -47,7 +47,9 @@ export class LoginService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const exp = payload.exp;
       const now = Math.floor(Date.now() / 1000);
-      console.log('evento: token expirado efectivamente');
+      if(now > exp){
+        console.log('evento: token expirado efectivamente');
+      }
       return now > exp; // true si ya expiró
     } catch (e) {
       console.log('evento: error atrapado, terrible situación');

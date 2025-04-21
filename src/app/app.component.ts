@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
 
       //console.log('cambiando current path: ' + this.currentPath);
       if (this.currentPath === '/homes') {
+        //console.log('evento: xD, ruta no valida ingresada, ejecutando redirección');
         const rol = this.loginService.showRole();
         if (rol) {
           this.RedirectByRole(rol);
