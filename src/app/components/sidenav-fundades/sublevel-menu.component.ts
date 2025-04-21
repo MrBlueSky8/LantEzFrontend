@@ -86,6 +86,7 @@ export class SublevelMenuComponent implements OnInit{
       }
     
       handleClick(item: any): void {
+        //console.log('evento: submenu clickeado, ' + item);
         if (!this.multiple) {
           if (this.data.items && this.data.items.length > 0) {
             for(let modelItem of this.data.items) {
@@ -95,6 +96,8 @@ export class SublevelMenuComponent implements OnInit{
             }
           }
         }
+        //console.log('evento: submenu clickeado, ' + item);
+        //console.log('Item clicked:', item);
         item.expanded = !item.expanded;
       }
     

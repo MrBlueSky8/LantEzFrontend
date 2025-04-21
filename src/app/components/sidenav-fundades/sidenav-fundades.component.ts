@@ -96,7 +96,9 @@ export class SidenavFundadesComponent implements OnInit{
       }
     }
     console.log('Item clicked:', item);
-
+    if(item.action){
+      item.action();
+    }
   }
 
   logout() {

@@ -11,7 +11,7 @@ export const navbarData: INavbarData[] = [
         routeLink: 'logs',
         svgIcon: '../../../assets/logs.svg',
         //icon: 'fa fa-industry', 
-        label: 'Logs'
+        label: 'Logs',
     },
     {
         routeLink: 'dashboard',
@@ -48,6 +48,27 @@ export const navbarData: INavbarData[] = [
         routeLink: 'ajustes',
         svgIcon: '../../../assets/settings.svg',
         label: 'Ajustes',
+        
+        items: [
+            {
+                routeLink: 'ajustes',
+                icon: 'fal fa-plus-square', // Agregar ofertas
+                label: 'Preferencias',
+            },
+            {
+                //routeLink: 'offers/listdeleteoffers',
+                icon: 'fal fa-list-ul', // Todas mis ofertas
+                label: 'Cerrar sesión',
+                action: () => {
+                    console.log('evento: action de ajustes 2 clickeado');
+                }
+            },
+        ],
+            
+        action: () => {
+            console.log('evento: action de ajustes clickeado');
+        }
+            
     }
 
     /*ejm con items

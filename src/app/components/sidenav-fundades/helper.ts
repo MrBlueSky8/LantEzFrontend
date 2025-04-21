@@ -7,6 +7,7 @@ export interface INavbarData {
     label: string;
     expanded?: boolean;
     items?: INavbarData[];
+    action?: () => void; // NUEVO: función personalizada a ejecutar
 }
 
 export const fadeInOut = trigger('fadeInOut', [
