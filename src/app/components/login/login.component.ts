@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { JwtRequest } from '../../models/jwtRequest';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ import { JwtRequest } from '../../models/jwtRequest';
     ReactiveFormsModule,
     MatSelectModule,
     CommonModule,
+    RecaptchaModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -47,16 +49,28 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
+  captchaToken: string = '';
+
+  onCaptchaResolved(token: string | null) {
+    if (token) {
+      this.captchaToken = token;
+    } else {
+      this.captchaToken = '';
+    }
+  }
 
   ngOnInit(): void {}
 
   login() {
     if (this.form.invalid) {
-      this.mensaje = 'Username y password son obligatorios';
-      this.snackBar.open(this.mensaje, 'Aviso', {
-        duration: 2000,
-      });
-      return;
+      this.mensaje = !this.captchaToken
+      ? 'Por favor completa el reCAPTCHA.'
+      : 'Username y password son obligatorios';
+    
+    this.snackBar.open(this.mensaje, 'Aviso', {
+      duration: 2000,
+    });
+    return;
     }
 
     const request = new JwtRequest();

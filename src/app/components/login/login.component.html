@@ -25,7 +25,12 @@
               La contraseña es obligatoria.
             </mat-error>
           </mat-form-field>
-  
+
+          <re-captcha 
+            [siteKey]="'6LdLLCArAAAAAL-jBmtxWagrUjwHxxfRyoiwLff-'" 
+            (resolved)="onCaptchaResolved($event)">
+          </re-captcha>
+
           <button mat-raised-button type="submit" class="login-button">
             Iniciar Sesión
           </button>
