@@ -56,11 +56,13 @@ export const navbarData: INavbarData[] = [
                 label: 'Preferencias',
             },
             {
-                //routeLink: 'offers/listdeleteoffers',
+                //routeLink: 'homes',
                 icon: 'fal fa-list-ul', // Todas mis ofertas
                 label: 'Cerrar sesión',
                 action: () => {
-                    console.log('evento: action de ajustes 2 clickeado');
+                    //console.log('evento: action de ajustes 2 clickeado');
+                    localStorage.clear();
+                    window.location.href = '/login';
                 }
             },
         ],
