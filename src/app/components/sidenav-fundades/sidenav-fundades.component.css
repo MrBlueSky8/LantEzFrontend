@@ -118,7 +118,8 @@
   }
   
   .active-sublevel {
-    color: #FFE5BB !important;
+    color: #DA8804 !important;
+    /*background-color: #FFE5BB;*/ /*quitar comentario para poner estilo clownfer*/
   }
   
   .menu-collapse-icon {
@@ -139,7 +140,7 @@
     display: flex;
     align-items: center;
     height: 3rem;
-    color: #898989;
+    color: #000000;
     text-decoration: none;
     border-radius: 0.625rem;
     transition: all 0.3s ease;
@@ -158,7 +159,8 @@
   }
   
   .sublevel-nav .sublevel-nav-item .sublevel-nav-link:hover {
-    color: #FFE5BB;
+    /*color: #FFE5BB;*/
+    background-color: #FFE5BB;
   }
   
   /* Scrollbar y visibilidad */
