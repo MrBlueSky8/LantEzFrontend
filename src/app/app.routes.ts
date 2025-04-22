@@ -4,6 +4,16 @@ import { HomeComponent } from './components/home/home.component';
 import { segGuard } from './guard/seguridad.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { EvaluadorComponent } from './components/evaluador/evaluador.component';
+import { SidenavFundadesComponent } from './components/sidenav-fundades/sidenav-fundades.component';
+import { LogsComponent } from './components/admin/logs/logs.component';
+import { DashboardComponent } from './components/shared/dashboard/dashboard.component';
+import { EmpresasComponent } from './components/fundades/empresas/empresas.component';
+import { DashboardFundadesComponent } from './components/fundades/dashboard-fundades/dashboard-fundades.component';
+import { UsuariosComponent } from './components/admin/usuarios/usuarios.component';
+import { PostulantesComponent } from './components/shared/postulantes/postulantes.component';
+import { EvaluadoresComponent } from './components/admin/evaluadores/evaluadores.component';
+import { EvaluacionesComponent } from './components/shared/evaluaciones/evaluaciones.component';
+import { AjustesGeneralesComponent } from './components/shared/ajustes-generales/ajustes-generales.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +26,50 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'sidenav-fundades',
+    component: SidenavFundadesComponent,
+    children: [
+      {
+        path: 'homes',
+        component: HomeComponent,
+      },
+      {
+        path: 'logs',
+        component: LogsComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardFundadesComponent,
+      },
+      {
+        path: 'empresas',
+        component: EmpresasComponent,
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+      },
+      {
+        path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'evaluadores',
+        component: EvaluadoresComponent,
+      },
+      {
+        path: 'evaluaciones',
+        component: EvaluacionesComponent,
+      },
+      {
+        path: 'ajustes',
+        component: AjustesGeneralesComponent,
+      }
+    ],
+    canActivate: [segGuard],
+    data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
+  },
+  {
     path: 'homes',
     component: HomeComponent,
     canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
@@ -24,12 +78,13 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [segGuard],
-    data: { roles: ['ADMIN', 'Segundo rol ejm'] }, // solo construcciones, se debe agregar a cada uno
+    data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'evaluador',
     component: EvaluadorComponent,
     canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
-    data: { roles: ['EVALUADOR', 'ADMIN'] }
-  }
+    data: { roles: ['EVALUADOR', 'ADMIN'] },
+  },
+  { path: '**', redirectTo: '/homes', pathMatch: 'full' }
 ];

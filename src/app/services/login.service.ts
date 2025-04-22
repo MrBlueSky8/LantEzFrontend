@@ -6,10 +6,10 @@ import { environment } from '../../environments/environment';
 const base_url = environment.base;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-  private url = `${base_url}/login`
+  private url = `${base_url}/login`;
   constructor(private http: HttpClient) {}
 
   login(request: JwtRequest) {
@@ -37,5 +37,23 @@ export class LoginService {
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(token);
     return decodedToken?.sub;
+  }
+
+  isTokenExpired(): boolean {
+    let token = localStorage.getItem('token');
+    if (!token) return true;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp;
+      const now = Math.floor(Date.now() / 1000);
+      if(now > exp){
+        console.log('evento: token expirado efectivamente');
+      }
+      return now > exp; // true si ya expiró
+    } catch (e) {
+      console.log('evento: error atrapado, terrible situación');
+      return true; // por seguridad, si no puede parsear
+    }
   }
 }

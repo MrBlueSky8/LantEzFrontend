@@ -29,10 +29,8 @@
 }
 
 .image-section img {
-  width: 140%; /* Aumenta el tamaño para que sobresalga */
-  height: 140%;
-  object-fit: cover;
-  position: absolute;
+  width: 100%;
+  height: auto;
 }
 
 .form-section {
