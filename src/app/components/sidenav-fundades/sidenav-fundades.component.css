@@ -51,6 +51,10 @@
     background-color: transparent;
     border: none;
   }
+
+  .btn-close{
+    margin-bottom: auto !important; 
+  }
   
   .sidenav .logo-container .btn-close .fa-times {
     color: #000000;
