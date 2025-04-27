@@ -7,8 +7,8 @@
           {{ username ? (username.charAt(0) | uppercase) : '-' }}
         </button>
         <div class="logo-user-info" *ngIf="collapsed" @fadeInOut>
-          <div class="logo-text">{{ username }}</div>
-          <div class="logo-role">{{ userrole }}</div>
+            <div class="logo-text" [attr.title]="username">{{ username }}</div>
+            <div class="logo-role" [attr.title]="userrole">{{ userrole }}</div>
         </div>
         <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
           <i class="fal fa-times close-icon"></i>
