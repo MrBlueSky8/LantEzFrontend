@@ -41,6 +41,8 @@ export class SidenavFundadesComponent implements OnInit{
   multiple: boolean = false;
   username: string = '';
   userrole:string = '';
+  isUsernameOverflow = false;
+  isUserroleOverflow = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -64,11 +66,13 @@ export class SidenavFundadesComponent implements OnInit{
       
       this.usuarioService.findNameByEmail(this.loginService.showUser()).subscribe((data) => {
         this.username = data;
+        this.evaluateOverflow();
         //console.log(this.username);
       });
 
       this.RefactorWordingByRole(this.loginService.showRole());
       //console.log('evento: prueba de refactor ' + this.userrole);
+      
   }
 
   toggleCollapse(): void {
@@ -133,6 +137,16 @@ export class SidenavFundadesComponent implements OnInit{
       default:
         this.userrole = 'Sin Privilegios';
         break;
+    }
+  }
+
+  evaluateOverflow(): void {
+    if (this.username.length > 15) { // Puedes ajustar el número según tu diseño
+      this.isUsernameOverflow = true;
+    }
+  
+    if (this.userrole.length > 10) { // También puedes ajustar este
+      this.isUserroleOverflow = true;
     }
   }
 
