@@ -40,6 +40,7 @@ export class SidenavFundadesComponent implements OnInit{
   navData = navbarData;
   multiple: boolean = false;
   username: string = '';
+  userrole:string = '';
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -65,7 +66,9 @@ export class SidenavFundadesComponent implements OnInit{
         this.username = data;
         //console.log(this.username);
       });
-      
+
+      this.RefactorWordingByRole(this.loginService.showRole());
+      //console.log('evento: prueba de refactor ' + this.userrole);
   }
 
   toggleCollapse(): void {
@@ -103,6 +106,34 @@ export class SidenavFundadesComponent implements OnInit{
 
   logout() {
     this.router.navigate(['login']);
+  }
+
+  RefactorWordingByRole(data: string) {
+    switch (data) {
+      case 'ADMINISTRADOR FUNDADES':
+        this.userrole = 'Admin';
+        break;
+
+      case 'SUBADMINISTRADOR FUNDADES':
+        this.userrole = 'SubAdmin';
+        break;
+
+      case 'ADMINISTRADOR':
+        this.userrole = 'Admin';
+        break;
+
+      case 'SUBADMINISTRADOR':
+        this.userrole = 'SubAdmin';
+        break;
+
+      case 'EVALUADOR':
+        this.userrole = 'Evaluador';
+        break;
+
+      default:
+        this.userrole = 'Sin Privilegios';
+        break;
+    }
   }
 
 }

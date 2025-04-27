@@ -204,4 +204,32 @@
     scrollbar-width: thin;
     scrollbar-color: #556268 transparent;
   }
+
+  .logo-user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo-role {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    /*letter-spacing: 0%;*/
+    color: #5E5E5E;
+    margin-top: 2px; /* pequeño margen para separarlo */
+    margin-left: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .logo-text {
+      font-size: 18px !important;
+    }
+  
+    .logo-role {
+      font-size: 10px;
+    }
+  }
+  
+  
   
