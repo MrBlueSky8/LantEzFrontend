@@ -4,6 +4,7 @@ export interface INavbarData {
     routeLink?: string;
     icon?: string;
     svgIcon?: string;
+    svgIconActive?: string;
     label: string;
     expanded?: boolean;
     items?: INavbarData[];

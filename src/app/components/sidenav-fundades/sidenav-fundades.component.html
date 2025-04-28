@@ -28,7 +28,7 @@
                     [ngClass]="getActiveClass(data)"
                 >
                     <ng-container *ngIf="data.svgIcon; else faIcon">
-                        <img [src]="data.svgIcon" alt="icon" class="sidenav-link-icon svg-icon" />
+                        <img [src]="getIcon(data)" alt="icon" class="sidenav-link-icon svg-icon" />
                     </ng-container>
                     <ng-template #faIcon>
                         <i class="sidenav-link-icon" [class]="data.icon"></i>
@@ -49,7 +49,7 @@
                     (click)="shrinkItems(data)"
                     >
                     <ng-container *ngIf="data.svgIcon; else faIcon">
-                        <img [src]="data.svgIcon" alt="icon" class="sidenav-link-icon svg-icon" />
+                        <img [src]="getIcon(data)" alt="icon" class="sidenav-link-icon svg-icon" />
                       </ng-container>
                       <ng-template #faIcon>
                         <i class="sidenav-link-icon" [class]="data.icon"></i>

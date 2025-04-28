@@ -4,49 +4,58 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'homes',
         svgIcon: '../../../assets/Home.svg',
+        svgIconActive: '../../../assets/Home-hover.svg',
         //icon: 'fal fa-home', // Dashboard
         label: 'Home',
     },
     {
         routeLink: 'logs',
         svgIcon: '../../../assets/logs.svg',
+        svgIconActive: '../../../assets/logs-hover.svg',
         //icon: 'fa fa-industry', 
         label: 'Logs',
     },
     {
         routeLink: 'dashboard',
         svgIcon: '../../../assets/dashboard.svg',
+        svgIconActive: '../../../assets/dashboard-hover.svg',
         //icon: 'fal fa-briefcase', 
         label: 'Dashboard',
     },
     {
         routeLink: 'empresas',
         svgIcon: '../../../assets/empresas.svg', 
+        svgIconActive: '../../../assets/empresas-hover.svg',
         label: 'Empresas',
     },
     {
         routeLink: 'usuarios',
         svgIcon: '../../../assets/users.svg',
+        svgIconActive: '../../../assets/users-hover.svg',
         label: 'Usuarios'
     },
     {
         routeLink: 'postulantes',
         svgIcon: '../../../assets/postulante.svg',
+        svgIconActive: '../../../assets/postulante-hover.svg',
         label: 'Postulantes',
     },
     {
         routeLink: 'evaluadores',
         svgIcon: '../../../assets/evaluadores.svg',
+        svgIconActive: '../../../assets/evaluadores-hover.svg',
         label: 'Evaluadores',
     },
     {
         routeLink: 'evaluaciones',
         svgIcon: '../../../assets/evaluaciones.svg',
+        svgIconActive: '../../../assets/evaluaciones-hover.svg',
         label: 'Evaluaciones',
     },
     {
         routeLink: 'ajustes',
         svgIcon: '../../../assets/settings.svg',
+        svgIconActive: '../../../assets/settings-hover.svg',
         label: 'Ajustes',
         
         items: [

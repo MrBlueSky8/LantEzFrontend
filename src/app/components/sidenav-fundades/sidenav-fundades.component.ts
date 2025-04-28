@@ -102,7 +102,8 @@ export class SidenavFundadesComponent implements OnInit{
         }
       }
     }
-    console.log('Item clicked:', item);
+    //console.log('Item clicked:', item);
+
     if(item.action){
       item.action();
     }
@@ -141,13 +142,21 @@ export class SidenavFundadesComponent implements OnInit{
   }
 
   evaluateOverflow(): void {
-    if (this.username.length > 15) { // Puedes ajustar el número según tu diseño
+    if (this.username.length > 15) { // a que longitud activar overflow
       this.isUsernameOverflow = true;
     }
   
-    if (this.userrole.length > 10) { // También puedes ajustar este
+    if (this.userrole.length > 10) { 
       this.isUserroleOverflow = true;
     }
+  }
+
+  getIcon(data: INavbarData): string | undefined {
+    const isActive = this.router.url.includes(data.routeLink ?? '');
+    if (isActive && data.svgIconActive) {
+      return data.svgIconActive;
+    }
+    return data.svgIcon;
   }
 
 }
