@@ -256,6 +256,13 @@
     animation: fadeInTooltip 0.2s forwards;
   }
 
+  .divider-after {
+    border-bottom: 1px solid #D9D9D9; /* Color exacto del Figma */
+    margin-bottom: 20px !important; /* Separación visual para dar "aire" */
+    padding-bottom: 20px; /* Opcional, para que no quede pegado */
+  }
+  
+
   @keyframes fadeInTooltip {
     to { opacity: 1; }
   }

@@ -6,6 +6,7 @@ export interface INavbarData {
     svgIcon?: string;
     svgIconActive?: string;
     label: string;
+    dividerAfter?: boolean;
     expanded?: boolean;
     items?: INavbarData[];
     action?: () => void; // NUEVO: función personalizada a ejecutar

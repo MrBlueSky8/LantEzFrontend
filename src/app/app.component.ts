@@ -16,8 +16,8 @@ import { filter } from 'rxjs';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    RouterLink,
-    NgIf,
+    //RouterLink,
+    //NgIf,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

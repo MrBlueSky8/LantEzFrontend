@@ -14,6 +14,7 @@ export const navbarData: INavbarData[] = [
         svgIconActive: '../../../assets/logs-hover.svg',
         //icon: 'fa fa-industry', 
         label: 'Logs',
+        dividerAfter: true,
     },
     {
         routeLink: 'dashboard',

@@ -22,7 +22,11 @@
       </div>
     <div class="scrollwrap scrollwrap_delayed">
         <ul class="sidenav-nav">
-            <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <li 
+                class="sidenav-nav-item"
+                *ngFor="let data of navData"
+                [class.divider-after]="data.dividerAfter"
+                >
                 <a class="sidenav-nav-link" (click)="handleClick(data)"
                     *ngIf="data.items && data.items.length > 0"
                     [ngClass]="getActiveClass(data)"
