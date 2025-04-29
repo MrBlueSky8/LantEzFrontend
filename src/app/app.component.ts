@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
 
       case 'EVALUADOR':
         // Redirige a la vista del evaluador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-evaluador']);
         break;
 
       default:
