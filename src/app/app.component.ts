@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
 
       case 'ADMINISTRADOR':
         // Redirige al dashboard de administrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-admin']);
         break;
 
       case 'SUBADMINISTRADOR':

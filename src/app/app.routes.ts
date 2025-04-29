@@ -14,6 +14,8 @@ import { PostulantesComponent } from './components/shared/postulantes/postulante
 import { EvaluadoresComponent } from './components/admin/evaluadores/evaluadores.component';
 import { EvaluacionesComponent } from './components/shared/evaluaciones/evaluaciones.component';
 import { AjustesGeneralesComponent } from './components/shared/ajustes-generales/ajustes-generales.component';
+import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.component';
+import { MiEmpresaComponent } from './components/admin/mi-empresa/mi-empresa.component';
 
 export const routes: Routes = [
   {
@@ -68,6 +70,50 @@ export const routes: Routes = [
     ],
     canActivate: [segGuard],
     data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
+  },
+  {
+    path: 'sidenav-admin',
+    component: SidenavAdminComponent,
+    children: [
+      {
+        path: 'homes',
+        component: HomeComponent,
+      },
+      {
+        path: 'logs',
+        component: LogsComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardFundadesComponent,
+      },
+      {
+        path: 'mi-empresa',
+        component: MiEmpresaComponent,
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+      },
+      {
+        path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'evaluadores',
+        component: EvaluadoresComponent,
+      },
+      {
+        path: 'evaluaciones',
+        component: EvaluacionesComponent,
+      },
+      {
+        path: 'ajustes',
+        component: AjustesGeneralesComponent,
+      }
+    ],
+    canActivate: [segGuard],
+    data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'homes',
