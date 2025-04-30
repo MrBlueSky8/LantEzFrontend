@@ -18,6 +18,7 @@ import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.
 import { MiEmpresaComponent } from './components/admin/mi-empresa/mi-empresa.component';
 import { SidenavEvaluadorComponent } from './components/sidenav-evaluador/sidenav-evaluador.component';
 import { MisTrabajosComponent } from './components/shared/mis-trabajos/mis-trabajos.component';
+import { AppModuloEnDesarrolloComponent } from './components/shared/app-modulo-en-desarrollo/app-modulo-en-desarrollo.component';
 
 export const routes: Routes = [
   {
@@ -69,6 +70,7 @@ export const routes: Routes = [
         path: 'ajustes',
         component: AjustesGeneralesComponent,
       }
+      
     ],
     canActivate: [segGuard],
     data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
