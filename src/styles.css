@@ -35,3 +35,26 @@ html, body {
         padding: 1rem 1.5rem; 
     }
 }
+
+:host {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 1rem;
+    min-height: 100vh;
+    background-color: #F3E5CC; /* fondo global si deseas */
+    transition: margin-left 0.5s ease;
+  }
+
+  .main-content-collapsed {
+    margin-left: 5rem; /* igual al width de .sidenav */
+  }
+
+  .main-content-expanded{
+    margin-left: 17.1525rem; /* igual al width de .sidenav */
+  }
+

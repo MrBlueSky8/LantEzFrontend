@@ -60,6 +60,12 @@ export const navbarData: INavbarData[] = [
         
         action: () => {
             //console.log('evento: action de ajustes clickeado');
+            const sidenavexpanded = document.querySelector('body > app-root > app-sidenav-fundades > div.sidenav.sidenav-collapsed');
+            const buttonlogo = document.querySelector('div.logo-container > button');
+
+            if (!sidenavexpanded && buttonlogo instanceof HTMLButtonElement) {
+                buttonlogo.click();
+            }
         }
         
     }
