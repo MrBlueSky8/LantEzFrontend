@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { filter } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { filter } from 'rxjs';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    MatDialogModule
     //RouterLink,
     //NgIf,
   ],

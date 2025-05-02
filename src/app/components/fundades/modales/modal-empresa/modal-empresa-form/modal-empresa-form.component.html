@@ -1,0 +1,58 @@
+<div class="overlay">
+  <div class="empresa-modal">
+    <h2 class="modal-title">
+      {{ esEdicion ? 'Editar Empresa' : 'Registrar Empresa' }}
+    </h2>
+
+    <form [formGroup]="formEmpresa" (ngSubmit)="guardar()" class="empresa-form">
+
+      <!-- Campos obligatorios -->
+      <input class="custom-input" placeholder="Nombre" formControlName="nombre" />
+      <input class="custom-input" placeholder="RUC" formControlName="ruc" />
+      <input class="custom-input" placeholder="Razón Social" formControlName="razon_social" />
+      <input class="custom-input" placeholder="Teléfono" formControlName="telefono" />
+      <input class="custom-input" placeholder="E-mail" formControlName="email_contacto" />
+      <input class="custom-input" type="number" placeholder="N° de Empleados" formControlName="num_empleados" />
+
+      <!-- Select: Sector -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Sector</mat-label>
+        <mat-select formControlName="sector_id">
+          <mat-option *ngFor="let sector of tiposSectores" [value]="sector.id">
+            {{ sector.nombre_sector }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Select: Ciudad -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="ciudad_id">
+          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
+            {{ ciudad.ciudad }}, {{ ciudad.pais.nombre_pais }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Select: Estado -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="true">Habilitado</mat-option>
+          <mat-option [value]="false">Deshabilitado</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Campos opcionales -->
+      <input class="custom-input" placeholder="Dirección" formControlName="direccion" />
+      <input class="custom-input" placeholder="Prefijo Teléfono" formControlName="prefijo_telefono" />
+      <input class="custom-input" placeholder="Logo URL" formControlName="logo_url" />
+      <input class="custom-input" placeholder="Web URL" formControlName="web_url" />
+      <textarea class="custom-input" placeholder="Descripción" formControlName="descripcion"></textarea>
+
+      <!-- Botón -->
+      <button class="btn-submit" type="submit">Guardar Información</button>
+
+    </form>
+  </div>
+</div>
