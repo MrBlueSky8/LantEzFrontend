@@ -49,5 +49,9 @@ export class UsuariosService {
     return this.http.get<number>(`${this.url}/findid/${email}`);;
   }
 
+  findIdEmpresaByEmail(email: string): Observable<number> {
+    return this.http.get<number>(`${this.url}/findidempresa/${email}`);;
+  }
+
 
 }
