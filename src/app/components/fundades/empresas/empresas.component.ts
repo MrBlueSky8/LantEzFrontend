@@ -61,7 +61,7 @@ export class EmpresasComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ModalEmpresaFormComponent, {
       width: 'auto',
-      data: { empresa }
+      data: { empresa, verDetalle: false }
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {

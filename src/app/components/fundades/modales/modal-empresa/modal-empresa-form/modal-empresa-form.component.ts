@@ -33,7 +33,7 @@ export class ModalEmpresaFormComponent implements OnInit{
 
   constructor(
     private dialogRef: MatDialogRef<ModalEmpresaFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { empresa?: Empresas },
+    @Inject(MAT_DIALOG_DATA) public data: { empresa?: Empresas, verDetalle?: boolean },
     private fb: FormBuilder,
     private empresaService: EmpresasService,
     private tiposSectorService: TipoSectorService,
@@ -75,6 +75,10 @@ export class ModalEmpresaFormComponent implements OnInit{
       estado: [this.data.empresa?.estado ?? true, Validators.required],
 
      });
+
+     if(this.data.verDetalle){
+      this.formEmpresa.disable();
+     }
   }
 
   guardar(): void {

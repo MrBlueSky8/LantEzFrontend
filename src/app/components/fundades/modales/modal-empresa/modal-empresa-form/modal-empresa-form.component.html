@@ -6,8 +6,8 @@
     </button>
 
     <h2 class="modal-title">
-      {{ esEdicion ? 'Editar Empresa' : 'Registrar Empresa' }}
-    </h2>
+      {{ data.verDetalle ? 'Detalles de la Empresa' : (esEdicion ? 'Editar Empresa' : 'Registrar Empresa') }}
+    </h2>    
 
     <form [formGroup]="formEmpresa" (ngSubmit)="guardar()" class="empresa-form">
 
@@ -100,7 +100,7 @@
       <textarea class="custom-input" placeholder="Descripción" formControlName="descripcion"></textarea>
 
       <!-- Botón -->
-      <button class="btn-submit" type="submit">Guardar Información</button>
+      <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
 
     </form>
   </div>
