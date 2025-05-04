@@ -29,15 +29,26 @@ export class EmpresasComponent implements OnInit {
       this.empresas = data;
     });
 
-    this.usuarioService.findIdEmpresaByEmail(this.loginService.showUser()).subscribe((data) => {
-      const id = data;
-
-      this.empresaService.listId(id).subscribe((data) => {
-        this.miEmpresa = data;
-      });
-
-      //console.log('evento id de mi empresa: ' + id, 'mi empresa data: ' + JSON.stringify(this.miEmpresa));
+    this.usuarioService.findIdEmpresaByEmail(this.loginService.showUser()).subscribe({
+      next: (id) => {
+        this.empresaService.listId(id).subscribe({
+          next: (empresa) => {
+            this.miEmpresa = empresa;
+            //console.log('evento id de mi empresa: ' + id, 'mi empresa data: ' + JSON.stringify(this.miEmpresa));
+          },
+          error: (err) => console.error('Error al obtener la empresa:', err)
+        });
+      },
+      error: (err) => console.error('Error al obtener ID de empresa:', err),
     });
+  }
+
+  gestionarAreas(): void{
+    console.log('evento: click gestionar areas');
+  }
+
+  gestionarPuestos(): void{
+    console.log('evento: click gestionar puestos');
   }
 
   abrirModalCrear(): void {

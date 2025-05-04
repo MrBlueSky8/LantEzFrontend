@@ -1,0 +1,87 @@
+/* Encabezado MI EMPRESA */
+.mi-empresa-header {
+    width: 1088px;
+    height: 58px;
+    background: #E3B05E;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  /* Contenedor general */
+  .mi-empresa-container {
+    width: 1088px;
+    height: 272px;
+    background: #E4E4E4;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Card logo */
+  .mi-empresa-card {
+    position: relative;
+    width: 748px;
+    height: 252px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 43px 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  
+  .mi-empresa-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100%;
+  }
+  
+  /* Icono editar */
+  .editar-icono {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  /* Botones laterales */
+  .mi-empresa-botones {
+    width: 304px;
+    height: 241px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .mi-empresa-botones button {
+    width: 284px;
+    height: 100px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-weight: 700;
+    font-style: italic; /* <-- CAMBIO */
+    font-family: 'Inter', sans-serif; /* <-- CAMBIO */
+    font-size: 24px; /* <-- CAMBIO */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
