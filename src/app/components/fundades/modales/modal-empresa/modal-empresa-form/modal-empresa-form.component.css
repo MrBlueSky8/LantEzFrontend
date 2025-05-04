@@ -6,7 +6,21 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
-  }  
+  }    
+
+  .error {
+    color: #D32F2F;
+    font-size: 10px;
+    margin-top: -1rem !important;
+    margin-left: 0.3rem;
+    text-align: left;
+    width: 100%;
+  }
+  
+  textarea.custom-input {
+    min-height: 90px;
+    resize: vertical;
+  }
   
   .empresa-modal {
     background: #ffffff;
@@ -20,6 +34,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    animation: fadeInModal 0.5s ease;
   }
   
   .modal-title {
@@ -80,7 +96,67 @@
   .btn-submit:hover {
     transform: translateY(-2px);
   }
+
+  @keyframes fadeInModal {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
   
+
+  @media (max-width: 768px) {
+    .custom-input {
+      font-size: 14px;
+      height: 40px;
+    }
+  
+    .modal-title {
+      font-size: 18px;
+    }
+  
+    .btn-submit {
+      width: 100%;
+      font-size: 20px;
+      height: 70px;
+    }
+  
+    .error {
+      font-size: 9px;
+      margin-top: -0.8rem;
+    }
+
+    .empresa-modal {
+      padding: 1rem;
+      border-radius: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .empresa-form {
+      gap: 0.8rem;
+    }
+  
+    .btn-submit {
+      width: 100%;
+      font-size: 16px;
+      height: 60px;
+    }
+  
+    .modal-title {
+      font-size: 16px;
+    }
+  }
+  
+  
+  
+  
+  /*
   @media (max-width: 768px) {
     .empresa-modal {
       padding: 1.5rem;
@@ -97,4 +173,5 @@
       font-size: 20px;
     }
   }
+    */
   

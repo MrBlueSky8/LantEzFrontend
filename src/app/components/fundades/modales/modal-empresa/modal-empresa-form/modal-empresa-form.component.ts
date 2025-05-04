@@ -110,4 +110,8 @@ export class ModalEmpresaFormComponent implements OnInit{
       });
   }
 
+  cerrar(): void {
+    this.dialogRef.close();
+  }
+
 }

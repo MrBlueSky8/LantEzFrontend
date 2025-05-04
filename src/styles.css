@@ -58,3 +58,22 @@ html, body {
     margin-left: 17.1525rem; /* igual al width de .sidenav */
   }
 
+  .close-button {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 26px;
+    /*font-weight: bold;*/
+    color: #333;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s;
+  }
+  
+  .close-button:hover {
+    transform: scale(1.2);
+    color: #000;
+  }
+

@@ -1,18 +1,52 @@
 <div class="overlay">
   <div class="empresa-modal">
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">
+      &times;
+    </button>
+
     <h2 class="modal-title">
       {{ esEdicion ? 'Editar Empresa' : 'Registrar Empresa' }}
     </h2>
 
     <form [formGroup]="formEmpresa" (ngSubmit)="guardar()" class="empresa-form">
 
-      <!-- Campos obligatorios -->
+      <!-- Obligatorios -->
       <input class="custom-input" placeholder="Nombre" formControlName="nombre" />
+      <div class="error" *ngIf="formEmpresa.get('nombre')?.touched && formEmpresa.get('nombre')?.hasError('required')">
+        El nombre es obligatorio.
+      </div>
+
       <input class="custom-input" placeholder="RUC" formControlName="ruc" />
+      <div class="error" *ngIf="formEmpresa.get('ruc')?.touched && formEmpresa.get('ruc')?.invalid">
+        <div *ngIf="formEmpresa.get('ruc')?.hasError('required')">El RUC es obligatorio.</div>
+        <div *ngIf="formEmpresa.get('ruc')?.hasError('pattern')">Solo se permiten letras y números.</div>
+        <div *ngIf="formEmpresa.get('ruc')?.hasError('maxLength')">Máximo 20 caracteres.</div>
+      </div>
+
       <input class="custom-input" placeholder="Razón Social" formControlName="razon_social" />
+      <div class="error" *ngIf="formEmpresa.get('razon_social')?.touched && formEmpresa.get('razon_social')?.hasError('required')">
+        Este campo es obligatorio.
+      </div>
+
       <input class="custom-input" placeholder="Teléfono" formControlName="telefono" />
+      <div class="error" *ngIf="formEmpresa.get('telefono')?.touched && formEmpresa.get('telefono')?.invalid">
+        <div *ngIf="formEmpresa.get('telefono')?.hasError('required')">El teléfono es obligatorio.</div>
+        <div *ngIf="formEmpresa.get('telefono')?.hasError('maxLength')">Máximo 15 caracteres.</div>
+      </div>
+
       <input class="custom-input" placeholder="E-mail" formControlName="email_contacto" />
+      <div class="error" *ngIf="formEmpresa.get('email_contacto')?.touched && formEmpresa.get('email_contacto')?.invalid">
+        <div *ngIf="formEmpresa.get('email_contacto')?.hasError('required')">El correo es obligatorio.</div>
+        <div *ngIf="formEmpresa.get('email_contacto')?.hasError('email')">Debe ser un email válido.</div>
+      </div>
+
       <input class="custom-input" type="number" placeholder="N° de Empleados" formControlName="num_empleados" />
+      <div class="error" *ngIf="formEmpresa.get('num_empleados')?.touched && formEmpresa.get('num_empleados')?.invalid">
+        <div *ngIf="formEmpresa.get('num_empleados')?.hasError('required')">Este campo es obligatorio.</div>
+        <div *ngIf="formEmpresa.get('num_empleados')?.hasError('min')">Debe ser al menos 1.</div>
+        <div *ngIf="formEmpresa.get('num_empleados')?.hasError('pattern')">Solo números enteros.</div>
+      </div>
 
       <!-- Select: Sector -->
       <mat-form-field appearance="fill" class="custom-select">
@@ -22,6 +56,9 @@
             {{ sector.nombre_sector }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="formEmpresa.get('sector_id')?.touched && formEmpresa.get('sector_id')?.hasError('required')">
+          Seleccione un sector.
+        </mat-error>
       </mat-form-field>
 
       <!-- Select: Ciudad -->
@@ -32,6 +69,9 @@
             {{ ciudad.ciudad }}, {{ ciudad.pais.nombre_pais }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="formEmpresa.get('ciudad_id')?.touched && formEmpresa.get('ciudad_id')?.hasError('required')">
+          Seleccione una ciudad.
+        </mat-error>
       </mat-form-field>
 
       <!-- Select: Estado -->
@@ -43,11 +83,20 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Campos opcionales -->
+      <!-- Opcionales -->
       <input class="custom-input" placeholder="Dirección" formControlName="direccion" />
       <input class="custom-input" placeholder="Prefijo Teléfono" formControlName="prefijo_telefono" />
+
       <input class="custom-input" placeholder="Logo URL" formControlName="logo_url" />
+      <div class="error" *ngIf="formEmpresa.get('logo_url')?.touched && formEmpresa.get('logo_url')?.hasError('pattern')">
+        URL no válida.
+      </div>
+
       <input class="custom-input" placeholder="Web URL" formControlName="web_url" />
+      <div class="error" *ngIf="formEmpresa.get('web_url')?.touched && formEmpresa.get('web_url')?.hasError('pattern')">
+        URL no válida.
+      </div>
+
       <textarea class="custom-input" placeholder="Descripción" formControlName="descripcion"></textarea>
 
       <!-- Botón -->
