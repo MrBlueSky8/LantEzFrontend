@@ -3,6 +3,7 @@ import { Empresas } from '../../../models/empresas';
 import { EmpresasService } from '../../../services/empresas.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalEmpresaFormComponent } from '../modales/modal-empresa/modal-empresa-form/modal-empresa-form.component';
+import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 
 @Component({
   selector: 'app-empresas',
@@ -32,7 +33,7 @@ export class EmpresasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
-        console.log('Empresa creada o actualizada');
+        console.log('Empresa creada');
       }
     });
   }
@@ -51,6 +52,14 @@ export class EmpresasComponent implements OnInit {
         console.log('Empresa editada');
         this.empresaService.list().subscribe((data) => {
           this.empresas = data;
+        });
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: 'Información Actualizada',
+            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+          },
         });
       }
     });
