@@ -77,19 +77,19 @@
   }
   
   .btn-submit {
-    width: 505px;
-    height: 90px;
+    width: 360px;
+    height: 70px;
     background-color: #000000;
     color: white;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 32px;
+    font-size: 24px;
     line-height: 100%;
     border-radius: 15px;
     box-shadow: 8px 8px 8px #00000066;
     border: none;
     cursor: pointer;
-    margin-top: 1.5rem;
+    /*margin-top: 1.5rem;*/
     transition: transform 0.2s;
   }
   
@@ -122,8 +122,8 @@
   
     .btn-submit {
       width: 100%;
-      font-size: 20px;
-      height: 70px;
+      font-size: 18px;
+      height: 60px;
     }
   
     .error {
@@ -145,13 +145,70 @@
     .btn-submit {
       width: 100%;
       font-size: 16px;
-      height: 60px;
+      height: 52px;
     }
   
     .modal-title {
       font-size: 16px;
     }
   }
+
+  @media (max-height: 800px) {
+    .empresa-modal {
+      max-height: 85vh;
+      padding: 1.2rem;
+    }
+  
+    .empresa-form {
+      gap: 1rem;
+    }
+  
+    .modal-title {
+      font-size: 20px;
+    }
+  
+    .custom-input {
+      height: 42px;
+      font-size: 15px;
+    }
+  
+    .btn-submit {
+      height: 60px;
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-height: 600px) {
+    .empresa-modal {
+      max-height: 78vh;
+      padding: 1rem;
+    }
+  
+    .empresa-form {
+      gap: 0.8rem;
+    }
+  
+    .modal-title {
+      font-size: 18px;
+    }
+  
+    .custom-input {
+      height: 38px;
+      font-size: 14px;
+    }
+  
+    .btn-submit {
+      height: 52px;
+      font-size: 18px;
+    }
+  
+    .error {
+      font-size: 8.5px;
+      margin-top: -0.6rem;
+    }
+  }
+  
+  
   
   
   
