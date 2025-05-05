@@ -187,20 +187,23 @@
   }
 
   /* === BOTÓN + BARRA DE BÚSQUEDA === */
-.clientes-header-bar {
+  .clientes-header-bar {
     width: 100%;
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    flex-wrap: nowrap; /* Asegura que no se quiebren de línea */
     align-items: center;
-    justify-content: space-between;
   }
   
   .btn-agregar-empresa {
+    flex: 0 0 auto; /* Tamaño fijo basado en su contenido */
+    height: 56px;
     background: #f5d39d;
     border-radius: 20px;
-    padding: 13px 43px;
+    padding: 13px 30px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -210,18 +213,18 @@
     gap: 10px;
     border: none;
     cursor: pointer;
-    height: 56px;
   }
   
   .barra-busqueda {
+    flex: 1; /* Ocupará todo el espacio restante */
     height: 56px;
-    width: 763px;
     background: white;
     border-radius: 20px;
     padding: 0 20px;
     display: flex;
     align-items: center;
-    gap: 21px;
+    gap: 20px;
+    min-width: 0; /* Para evitar overflow en contenedores flexibles */
   }
   
   .barra-busqueda input {
