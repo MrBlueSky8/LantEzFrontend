@@ -1,6 +1,7 @@
 /* Encabezado MI EMPRESA */
 .mi-empresa-header {
-    width: 1088px;
+    /*width: 1200px;*/
+    max-width: 95%;
     height: 58px;
     background: #E3B05E;
     border-radius: 20px;
@@ -9,29 +10,32 @@
     align-items: center;
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    font-size: 32px;
-    text-align: center;
+    font-size: 30px;
     color: white;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
+    text-align: center;
   }
   
   /* Contenedor general */
   .mi-empresa-container {
-    width: 1088px;
-    height: 272px;
+    /*width: 1200px;*/
+    max-width: 95%;
+    height: auto;
     background: #E4E4E4;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px 15px;
     box-sizing: border-box;
+    margin: 0 auto 20px auto;
+    flex-wrap: wrap; /* Para mejor adaptación en pantallas pequeñas */
   }
   
   /* Card logo */
   .mi-empresa-card {
     position: relative;
-    width: 748px;
-    height: 252px;
+    flex: 1 1 55%; /* Se adapta pero mantiene prioridad del 70% */
+    min-width: 320px;
     background: #FFFFFF;
     border-radius: 10px;
     padding: 43px 33px;
@@ -41,8 +45,9 @@
     box-sizing: border-box;
   }
   
+  /* Logo */
   .mi-empresa-logo {
-    width: 100%;
+    width: 75%;
     height: auto;
     object-fit: contain;
     max-height: 100%;
@@ -60,28 +65,126 @@
   
   /* Botones laterales */
   .mi-empresa-botones {
-    width: 304px;
-    height: 241px;
+    flex: 1 1 28%; /* Se adapta y ocupa lo justo */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
+    justify-content: space-around;
+    padding: 15px 15px;
+    min-width: 300px;
     box-sizing: border-box;
   }
   
   .mi-empresa-botones button {
-    width: 284px;
-    height: 100px;
+    width: 100%;
+    height: 45%;
+    max-height: 45%;
     background: #FFFFFF;
     border-radius: 10px;
     padding: 16px 20px;
     font-weight: 700;
-    font-style: italic; /* <-- CAMBIO */
-    font-family: 'Inter', sans-serif; /* <-- CAMBIO */
-    font-size: 24px; /* <-- CAMBIO */
+    font-style: italic;
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
     border: none;
     cursor: pointer;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
+
+/* === Responsive para tablets (max-width: 1024px) === */
+  @media (max-width: 1024px) {
+    .mi-empresa-header {
+      font-size: 26px;
+    }
+  
+    .mi-empresa-container {
+      padding: 10px;
+    }
+  
+    .mi-empresa-card {
+      padding: 30px 25px;
+    }
+  
+    .mi-empresa-logo {
+      width: 80%;
+    }
+  
+    .mi-empresa-botones button {
+      font-size: 18px;
+      margin: 2px;
+      padding: 14px 18px;
+    }
+  }
+  
+  /* === Responsive para tablets pequeñas / móviles grandes (max-width: 768px) === */
+  @media (max-width: 768px) {
+    .mi-empresa-container {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+  
+    .mi-empresa-card {
+      width: 100%;
+      margin-bottom: 15px;
+      min-width: auto !important;
+    }
+  
+    .mi-empresa-logo {
+      width: 85%;
+    }
+  
+    .mi-empresa-botones {
+      width: 100%;
+      padding: 0;
+      min-width: auto !important;
+    }
+  
+    .mi-empresa-botones button {
+      font-size: 18px;
+      height: auto;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+  
+    .mi-empresa-header {
+      font-size: 22px;
+    }
+  }
+  
+  /* === Responsive para teléfonos pequeños (max-width: 480px) === */
+  @media (max-width: 480px) {
+    .mi-empresa-header {
+      font-size: 20px;
+      height: auto;
+      padding: 10px;
+      border-radius: 12px;
+    }
+  
+    .mi-empresa-container {
+      padding: 8px;
+    }
+  
+    .mi-empresa-card {
+      padding: 25px 15px;
+    }
+  
+    .mi-empresa-logo {
+      width: 90%;
+    }
+  
+    .mi-empresa-botones button {
+      font-size: 16px;
+      padding: 10px;
+    }
+  
+    .editar-icono {
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  
   
