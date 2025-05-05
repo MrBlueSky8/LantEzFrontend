@@ -6,16 +6,26 @@ import { ModalEmpresaFormComponent } from '../modales/modal-empresa/modal-empres
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
+import { CommonModule } from '@angular/common';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-empresas',
-  imports: [],
+  imports: [
+    CommonModule,
+    MatPaginatorModule
+  ],
   templateUrl: './empresas.component.html',
   styleUrl: './empresas.component.css',
 })
 export class EmpresasComponent implements OnInit {
   empresas: Empresas[] = [];
   miEmpresa: Empresas = new Empresas();
+  empresasPaginadas: Empresas[] = [];
+
+  pageSize: number = 6;
+  pageIndex: number = 0;
 
   constructor(
     private dialog: MatDialog,
@@ -27,10 +37,23 @@ export class EmpresasComponent implements OnInit {
   ngOnInit(): void {
     this.empresaService.list().subscribe((data) => {
       this.empresas = data;
+      this.updateEmpresasPaginadas();
     });
 
     this.asignarMiempresa();
     
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updateEmpresasPaginadas();
+  }
+
+  updateEmpresasPaginadas(): void {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.empresasPaginadas = this.empresas.slice(start, end);
   }
 
   asignarMiempresa(): void{
@@ -71,6 +94,10 @@ export class EmpresasComponent implements OnInit {
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
         console.log('Empresa creada');
+        this.empresaService.list().subscribe((data) => {
+          this.empresas = data;
+          this.updateEmpresasPaginadas();
+        });
       }
     });
   }

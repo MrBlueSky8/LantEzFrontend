@@ -17,3 +17,48 @@
     <button (click)="gestionarPuestos()">Gestionar Puestos de Trabajo</button>
   </div>
 </div>
+
+<!-- TÍTULO MIS CLIENTES -->
+<div class="mi-empresa-header">
+  MIS CLIENTES
+</div>
+
+<!-- CONTENEDOR GENERAL -->
+<div class="mi-empresa-container">
+
+  <!-- Header: Botón + Buscador -->
+  <div class="clientes-header-bar">
+    <button class="btn-agregar-empresa" (click)="abrirModalCrear()">
+      <img src="/assets/plus.svg" alt="Agregar" />
+      AGREGAR EMPRESA
+    </button>
+
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input type="text" placeholder="BUSCAR EMPRESA" />
+    </div>
+  </div>
+
+  <!-- Grid de Empresas -->
+  <!-- Grid de Empresas paginado -->
+<div class="clientes-grid">
+  <div class="cliente-card" *ngFor="let empresa of empresasPaginadas">
+    <img [src]="empresa.logo_url" alt="{{empresa.razon_social}}" />
+    <div class="hover-opciones">
+      <h3>{{ empresa.nombre }}</h3>
+      <button><img src="/assets/miniEdit.svg" /> Editar Datos</button>
+      <button><img src="/assets/miniOjo.svg" /> Ver Detalles</button>
+      <button class="deshabilitar"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MatPaginator -->
+<mat-paginator
+  [length]="empresas.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[3, 6, 9, 12]"
+  (page)="onPageChange($event)">
+</mat-paginator>
+
+
