@@ -29,6 +29,11 @@ export class EmpresasComponent implements OnInit {
       this.empresas = data;
     });
 
+    this.asignarMiempresa();
+    
+  }
+
+  asignarMiempresa(): void{
     this.usuarioService.findIdEmpresaByEmail(this.loginService.showUser()).subscribe({
       next: (id) => {
         this.empresaService.listId(id).subscribe({
@@ -51,6 +56,12 @@ export class EmpresasComponent implements OnInit {
     console.log('evento: click gestionar puestos');
   }
 
+  editarMiEmpresa(): void{
+
+    this.abrirModalEditar(this.miEmpresa);
+
+  }
+
   abrirModalCrear(): void {
     const dialogRef = this.dialog.open(ModalEmpresaFormComponent, {
       width: 'auto',
@@ -64,8 +75,8 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
-  abrirModalEditar(): void {
-    const empresa = this.empresas[0];
+  abrirModalEditar(empresa: Empresas): void {
+    //const empresa = this.empresas[0];
     if (!empresa) return;
 
     //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
@@ -81,6 +92,10 @@ export class EmpresasComponent implements OnInit {
         this.empresaService.list().subscribe((data) => {
           this.empresas = data;
         });
+
+        if(empresa.id === this.miEmpresa.id){
+          this.asignarMiempresa();
+        }
 
         const dialogSucces = this.dialog.open(ModalExitoComponent, {
           data: {
