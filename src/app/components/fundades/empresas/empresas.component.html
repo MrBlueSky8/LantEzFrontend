@@ -39,19 +39,19 @@
     </div>
   </div>
 
-  <!-- Grid de Empresas -->
-  <!-- Grid de Empresas paginado -->
-<div class="clientes-grid">
-  <div class="cliente-card" *ngFor="let empresa of empresasPaginadas">
-    <img [src]="empresa.logo_url" alt="{{empresa.razon_social}}" />
-    <div class="hover-opciones">
-      <h3>{{ empresa.nombre }}</h3>
-      <button><img src="/assets/miniEdit.svg" /> Editar Datos</button>
-      <button><img src="/assets/miniOjo.svg" /> Ver Detalles</button>
-      <button class="deshabilitar"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>
+<!-- Grid de Empresas + Paginador juntos -->
+<div class="clientes-grid-container">
+  <div class="clientes-grid">
+    <div class="cliente-card" *ngFor="let empresa of empresasPaginadas">
+      <img [src]="empresa.logo_url" alt="{{empresa.razon_social}}" />
+      <div class="hover-opciones">
+        <h3>{{ empresa.nombre }}</h3>
+        <button><img src="/assets/miniEdit.svg" /> Editar Datos</button>
+        <button><img src="/assets/miniOjo.svg" /> Ver Detalles</button>
+        <button class="deshabilitar"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>
+      </div>
     </div>
   </div>
-</div>
 
 <!-- MatPaginator -->
 <mat-paginator
@@ -60,5 +60,7 @@
   [pageSizeOptions]="[3, 6, 9, 12]"
   (page)="onPageChange($event)">
 </mat-paginator>
+
+</div>
 
 

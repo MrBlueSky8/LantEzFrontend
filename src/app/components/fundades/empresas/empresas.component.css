@@ -242,6 +242,14 @@
     gap: 24px;
     justify-content: center;
   }
+
+  .clientes-grid-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
   
   .cliente-card {
     width: 324px;
@@ -253,7 +261,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    /*cursor: pointer;*/
     transition: transform 0.2s;
   }
   
@@ -315,35 +323,51 @@
   }
 
   mat-paginator {
-    margin-top: 20px;
-    background: #f3f3f3;
-    border-radius: 10px;
-  }
-  
-  
-  /* === PAGINADOR === */
-  .paginador {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+    background: none;
+    margin: 30px auto 10px auto;
+    width: fit-content;
   }
   
-  .paginador .page,
-  .paginador .arrow {
-    padding: 8px 12px;
+  .mat-mdc-paginator-container {
+    justify-content: center !important;
+    gap: 12px;
+  }
+  
+  .mat-mdc-paginator-page-size-label,
+  .mat-mdc-paginator-page-size-select,
+  .mat-mdc-paginator-range-label {
+    display: none; /* Oculta la selección de items por página */
+  }
+  
+  .mat-mdc-icon-button {
     border-radius: 8px;
-    background: #fff;
     border: none;
-    cursor: pointer;
+    background: #ffffff;
     font-weight: 600;
+    color: #000;
   }
   
-  .paginador .page.active {
-    background: #000;
-    color: white;
+  .mat-mdc-paginator-navigation-next,
+  .mat-mdc-paginator-navigation-previous {
+    background: #ffffff;
+    padding: 6px 10px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: none;
   }
+  
+  .mat-mdc-paginator-range-actions button.mat-mdc-icon-button {
+    font-weight: bold;
+  }
+  
+  .mat-mdc-button-base.mat-mdc-button.mat-primary {
+    color: white;
+    background: #000000;
+    border-radius: 8px;
+  }
+  
   
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
