@@ -391,6 +391,28 @@
       width: 90%;
     }
   }
+
+  @media (max-width: 480px) {
+    .cliente-card {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      margin-right: auto;
+    }
+  
+    .clientes-grid {
+      gap: 16px;
+    }
+  
+    .clientes-grid-container {
+      padding: 0 10px;
+    }
+
+    .clientes-header-bar {
+      margin-right: auto;
+    }
+  }
+  
   
   
   
