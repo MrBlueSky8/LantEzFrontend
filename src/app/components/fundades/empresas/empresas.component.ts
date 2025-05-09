@@ -132,6 +132,46 @@ export class EmpresasComponent implements OnInit {
     console.log('evento: click ver Detalle a la empresa: ' + empresa.nombre);
   }
 
+  toggleEstadoEmpresa(empresa: Empresas): void {
+    const accion = empresa.estado ? 'deshabilitar' : 'habilitar';
+
+    const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+      width: 'auto',
+      data: {
+        titulo: `¿Estás seguro de ${empresa.estado ? 'deshabilitar' : 'habilitar'} esta empresa?`,
+      }
+    });
+
+    dialogConfirmation.afterClosed().subscribe(confirmado => {
+      if (!confirmado) return;
+
+      const operacion = empresa.estado
+        ? this.empresaService.deshabilitar(empresa.id!)
+        : this.empresaService.habilitar(empresa.id!);
+
+      operacion.subscribe({
+        next: () => {
+          console.log(`Empresa ${empresa.nombre} fue ${accion} correctamente`);
+          this.empresaService.list().subscribe(todas => {
+            this.empresas = todas.filter(e => e.id !== this.miEmpresa.id);
+            this.filtrarEmpresas(); // reaplica filtro si había
+          });
+
+          this.dialog.open(ModalExitoComponent, {
+            data: {
+              titulo: `Empresa ${accion === 'deshabilitar' ? 'deshabilitada' : 'habilitada'}`,
+              iconoUrl: '/assets/checkicon.svg'
+            }
+          });
+        },
+        error: () => {
+          console.error(`Error al ${accion} empresa ${empresa.nombre}`);
+        }
+      });
+    });
+  }
+
+
   deshabilitarEmpresa(empresa: Empresas): void{
     console.log('evento: click Deshabilitar a la empresa: ' + empresa.nombre);
     const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
