@@ -39,4 +39,12 @@ export class EmpresasService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  deshabilitar(id: number) {
+    return this.http.put(`${this.url}/deshabilitar/${id}`, {});
+  }
+
+  habilitar(id: number) {
+    return this.http.put(`${this.url}/habilitar/${id}`, {});
+  }
 }

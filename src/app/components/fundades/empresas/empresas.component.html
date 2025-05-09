@@ -58,7 +58,12 @@
         <button (click)="editarEmpresa(empresa)"><img src="/assets/miniEdit.svg" /> Editar Datos</button>
         <button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjo.svg" /> Ver Detalles</button>
         <!--<button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjo.svg" /> Ver Status</button> -->
-        <button class="deshabilitar" (click)="deshabilitarEmpresa(empresa)"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>
+        <!--<button class="deshabilitar" (click)="deshabilitarEmpresa(empresa)"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>-->
+        <button class="deshabilitar" (click)="toggleEstadoEmpresa(empresa)">
+          <img src="/assets/miniDisable.svg" />
+          {{ empresa.estado ? 'Deshabilitar' : 'Habilitar' }}
+        </button>
+
       </div>
     </div>
   </div>
