@@ -51,7 +51,7 @@
   
   .modal-botones {
     display: flex;
-    gap: 24px;
+    gap: 8.0rem;
     margin-top: 12px;
   }
   
@@ -130,17 +130,24 @@
   
     .modal-titulo {
       font-size: 20px;
+      display: block;
+      word-break: break-word;
+      white-space: normal; /* permite el salto */
+      max-width: 90%;
     }
   
     .modal-mensaje {
       font-size: 14px;
     }
   
-    .modal-icono,
-    .btn-cancelar img,
-    .btn-confirmar img {
+    .modal-icono {
       width: 24px;
       height: 24px;
     }
+
+    .modal-botones {
+        gap: 24px;
+      }
   }
+  
   
