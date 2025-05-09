@@ -8,6 +8,7 @@ import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { forkJoin, switchMap } from 'rxjs';
 
 
 @Component({
@@ -35,12 +36,25 @@ export class EmpresasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.empresaService.list().subscribe((data) => {
-      this.empresas = data;
-      this.updateEmpresasPaginadas();
-    });
-
-    this.asignarMiempresa();
+    this.usuarioService
+      .findIdEmpresaByEmail(this.loginService.showUser())
+      .pipe(
+        switchMap(id =>
+          forkJoin({
+            miEmpresa: this.empresaService.listId(id),
+            todas: this.empresaService.list()
+          })
+        )
+      )
+      .subscribe({
+        next: ({ miEmpresa, todas }) => {
+          this.miEmpresa = miEmpresa;
+          // 2) Filtramos tu propia empresa
+          this.empresas = todas.filter(e => e.id !== miEmpresa.id);
+          this.updateEmpresasPaginadas();
+        },
+        error: err => console.error('Error inicializando empresas:', err)
+      });
     
   }
 
@@ -85,6 +99,19 @@ export class EmpresasComponent implements OnInit {
 
   }
 
+  editarEmpresa(empresa: Empresas): void{
+    console.log('evento: click editar a la empresa: ' + empresa.nombre);
+    this.abrirModalEditar(empresa);
+  }
+
+  verDetalleEmpresa(empresa: Empresas): void{
+    console.log('evento: click ver Detalle a la empresa: ' + empresa.nombre);
+  }
+
+  deshabilitarEmpresa(empresa: Empresas): void{
+    console.log('evento: click Deshabilitar a la empresa: ' + empresa.nombre);
+  }
+
   abrirModalCrear(): void {
     const dialogRef = this.dialog.open(ModalEmpresaFormComponent, {
       width: 'auto',
@@ -94,8 +121,9 @@ export class EmpresasComponent implements OnInit {
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
         console.log('Empresa creada');
-        this.empresaService.list().subscribe((data) => {
-          this.empresas = data;
+        this.empresaService.list().subscribe(todas => {
+          this.empresas = todas.filter(e => e.id !== this.miEmpresa.id);
+          this.pageIndex = 0;
           this.updateEmpresasPaginadas();
         });
       }
@@ -116,8 +144,10 @@ export class EmpresasComponent implements OnInit {
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
         console.log('Empresa editada');
-        this.empresaService.list().subscribe((data) => {
-          this.empresas = data;
+        // recargar y filtrar
+        this.empresaService.list().subscribe(todas => {
+          this.empresas = todas.filter(e => e.id !== this.miEmpresa.id);
+          this.updateEmpresasPaginadas();
         });
 
         if(empresa.id === this.miEmpresa.id){
