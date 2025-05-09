@@ -38,7 +38,11 @@
 
     <div class="barra-busqueda">
       <img src="/assets/search.svg" alt="Buscar" />
-      <input type="text" placeholder="BUSCAR EMPRESA" />
+      <input
+      type="text"
+      placeholder="BUSCAR EMPRESA"
+      [(ngModel)]="filtroBusqueda"
+      (input)="filtrarEmpresas()" />
     </div>
   </div>
 
@@ -61,9 +65,10 @@
 
 <!-- MatPaginator -->
 <mat-paginator
-  [length]="empresas.length"
+  [length]="empresasFiltradas.length"
   [pageSize]="pageSize"
   [pageSizeOptions]="[3, 6, 9, 12]"
+  [pageIndex]="pageIndex"
   (page)="onPageChange($event)">
 </mat-paginator>
 

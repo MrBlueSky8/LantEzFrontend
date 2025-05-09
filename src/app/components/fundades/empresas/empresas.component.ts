@@ -9,13 +9,15 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { forkJoin, switchMap } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-empresas',
   imports: [
     CommonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule,
   ],
   templateUrl: './empresas.component.html',
   styleUrl: './empresas.component.css',
@@ -23,8 +25,10 @@ import { forkJoin, switchMap } from 'rxjs';
 export class EmpresasComponent implements OnInit {
   empresas: Empresas[] = [];
   miEmpresa: Empresas = new Empresas();
+  empresasFiltradas: Empresas[] = [];
   empresasPaginadas: Empresas[] = [];
 
+  filtroBusqueda: string = '';
   pageSize: number = 6;
   pageIndex: number = 0;
 
@@ -51,11 +55,25 @@ export class EmpresasComponent implements OnInit {
           this.miEmpresa = miEmpresa;
           // 2) Filtramos tu propia empresa
           this.empresas = todas.filter(e => e.id !== miEmpresa.id);
+          this.empresasFiltradas = [...this.empresas];
           this.updateEmpresasPaginadas();
         },
         error: err => console.error('Error inicializando empresas:', err)
       });
     
+  }
+
+  filtrarEmpresas(): void {
+    const filtro = this.filtroBusqueda.toLowerCase();
+  
+    this.empresasFiltradas = this.empresas.filter(e =>
+      e.nombre?.toLowerCase().includes(filtro) ||
+      e.razon_social?.toLowerCase().includes(filtro) ||
+      e.ruc?.toLowerCase().includes(filtro)
+    );
+  
+    this.pageIndex = 0;
+    this.updateEmpresasPaginadas();
   }
 
   onPageChange(event: PageEvent): void {
@@ -67,7 +85,7 @@ export class EmpresasComponent implements OnInit {
   updateEmpresasPaginadas(): void {
     const start = this.pageIndex * this.pageSize;
     const end = start + this.pageSize;
-    this.empresasPaginadas = this.empresas.slice(start, end);
+    this.empresasPaginadas = this.empresasFiltradas.slice(start, end);
   }
 
   asignarMiempresa(): void{
