@@ -11,6 +11,7 @@ import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/materi
 import { forkJoin, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es'; // Ajusta la ruta
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 
 
 
@@ -133,6 +134,21 @@ export class EmpresasComponent implements OnInit {
 
   deshabilitarEmpresa(empresa: Empresas): void{
     console.log('evento: click Deshabilitar a la empresa: ' + empresa.nombre);
+    const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+      width: 'auto',
+      data: {
+        titulo: '¿Estás seguro?',
+        //mensajeSecundario: 'Esta acción no se puede deshacer.'
+      }
+    });
+  
+    dialogConfirmation.afterClosed().subscribe(confirmado => {
+      if (confirmado) {
+        console.log(`Empresa ${empresa.nombre} fue deshabilitada`);
+      } else {
+        console.log('Acción cancelada por el usuario.');
+      }
+    });
   }
 
   abrirModalCrear(): void {
