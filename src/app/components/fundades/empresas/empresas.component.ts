@@ -7,9 +7,11 @@ import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exit
 import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { CommonModule } from '@angular/common';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { forkJoin, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es'; // Ajusta la ruta
+
 
 
 @Component({
@@ -21,6 +23,9 @@ import { FormsModule } from '@angular/forms';
   ],
   templateUrl: './empresas.component.html',
   styleUrl: './empresas.component.css',
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() }
+  ]
 })
 export class EmpresasComponent implements OnInit {
   empresas: Empresas[] = [];
