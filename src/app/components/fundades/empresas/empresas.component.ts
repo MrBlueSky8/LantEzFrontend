@@ -135,4 +135,13 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
+  onImgError(event: Event): void {
+    const element = event.target as HTMLImageElement;
+    
+    if (!element.src.includes('empresaDefault.png')) {
+      element.src = '/assets/empresaDefault.png';
+    }
+  }
+  
+
 }
