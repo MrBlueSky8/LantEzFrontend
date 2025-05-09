@@ -7,12 +7,33 @@
     justify-content: center;
     z-index: 1000;
   }
+
+  .close-button {
+  position: absolute;
+  top: calc(50% - 170px); /* Ajuste vertical estimado para modal centrado */
+  right: calc(50% - 210px); /* Se basa en el ancho del modal (máx 461px) */
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #333;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+@media (max-width: 480px) {
+  .close-button {
+    right: 12px;
+    top: 12px;
+    font-size: 20px;
+  }
+}
+
   
   .modal-contenido {
     background-color: white;
     width: 100%;
     max-width: 461px;
-    padding: 19px 40px; /* Ajustado padding horizontal para mejor legibilidad */
+    padding: 32px 40px 24px; /* Ajustado padding horizontal para mejor legibilidad */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -38,6 +59,7 @@
     line-height: 100%;
     color: #000000;
     margin: 0;
+    margin-top: 8px;
   }
   
   .modal-mensaje {
