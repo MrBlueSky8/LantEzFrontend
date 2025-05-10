@@ -203,7 +203,8 @@ export class EmpresasComponent implements OnInit {
         this.empresaService.list().subscribe(todas => {
           this.empresas = todas.filter(e => e.id !== this.miEmpresa.id);
           this.pageIndex = 0;
-          this.updateEmpresasPaginadas();
+          //this.updateEmpresasPaginadas();
+          this.filtrarEmpresas();
         });
       }
     });
@@ -226,7 +227,9 @@ export class EmpresasComponent implements OnInit {
         // recargar y filtrar
         this.empresaService.list().subscribe(todas => {
           this.empresas = todas.filter(e => e.id !== this.miEmpresa.id);
-          this.updateEmpresasPaginadas();
+          this.empresasFiltradas = [...this.empresas];
+          //this.updateEmpresasPaginadas();
+          this.filtrarEmpresas();
         });
 
         if(empresa.id === this.miEmpresa.id){
