@@ -19,6 +19,8 @@ import { MiEmpresaComponent } from './components/admin/mi-empresa/mi-empresa.com
 import { SidenavEvaluadorComponent } from './components/sidenav-evaluador/sidenav-evaluador.component';
 import { MisTrabajosComponent } from './components/shared/mis-trabajos/mis-trabajos.component';
 import { AppModuloEnDesarrolloComponent } from './components/shared/app-modulo-en-desarrollo/app-modulo-en-desarrollo.component';
+import { AreasComponent } from './components/admin/areas/areas.component';
+import { PuestosTrabajoComponent } from './components/admin/puestos-trabajo/puestos-trabajo.component';
 
 export const routes: Routes = [
   {
@@ -69,6 +71,14 @@ export const routes: Routes = [
       {
         path: 'ajustes',
         component: AjustesGeneralesComponent,
+      },
+      {
+      path: 'empresas/areas',
+      component: AreasComponent,
+      },
+      {
+        path: 'empresas/puestos-trabajo',
+        component: PuestosTrabajoComponent,
       }
       
     ],

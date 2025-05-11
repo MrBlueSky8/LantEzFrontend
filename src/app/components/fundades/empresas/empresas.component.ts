@@ -12,6 +12,7 @@ import { forkJoin, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es'; // Ajusta la ruta
 import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
+import { Router } from '@angular/router';
 
 
 
@@ -42,7 +43,8 @@ export class EmpresasComponent implements OnInit {
     private dialog: MatDialog,
     private empresaService: EmpresasService,
     private loginService: LoginService,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -111,10 +113,12 @@ export class EmpresasComponent implements OnInit {
 
   gestionarAreas(): void{
     console.log('evento: click gestionar areas');
+    this.router.navigate(['/sidenav-fundades/empresas/areas']);
   }
 
   gestionarPuestos(): void{
     console.log('evento: click gestionar puestos');
+    this.router.navigate(['/sidenav-fundades/empresas/puestos-trabajo']);
   }
 
   editarMiEmpresa(): void{
