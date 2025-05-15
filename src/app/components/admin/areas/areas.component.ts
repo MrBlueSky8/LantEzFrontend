@@ -9,6 +9,8 @@ import { Areas } from '../../../models/area';
 import { AreasService } from '../../../services/areas.service';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 
 @Component({
   selector: 'app-areas',
@@ -19,6 +21,9 @@ import { FormsModule } from '@angular/forms';
   ],
   templateUrl: './areas.component.html',
   styleUrl: './areas.component.css',
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() }
+  ]
 })
 export class AreasComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
