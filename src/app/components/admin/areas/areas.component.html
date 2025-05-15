@@ -1,11 +1,8 @@
 <!-- HEADER -->
-<div class="mi-empresa-header">
-  LISTA DE ÁREAS
-</div>
+<div class="mi-empresa-header">LISTA DE ÁREAS</div>
 
 <!-- CONTENEDOR DE ÁREAS -->
 <div class="contenedor-areas">
-
   <!-- Barra de acciones -->
   <div class="clientes-header-bar">
     <button class="btn-agregar-empresa" (click)="agregarArea()">
@@ -19,7 +16,8 @@
         type="text"
         placeholder="BUSCAR ÁREA"
         [(ngModel)]="filtroBusqueda"
-        (input)="filtrarAreas()" />
+        (input)="filtrarAreas()"
+      />
     </div>
   </div>
 
@@ -27,17 +25,16 @@
   <div class="tabla-areas">
     <!-- Encabezado -->
     <div class="fila-header">
-      <div class="columna-area">ÁREA</div>
-      <div class="columna-acciones">ACCIONES</div>
+      <div class="columna-header-area">ÁREA</div>
+      <div class="columna-header-acciones">ACCIONES</div>
     </div>
 
-    <!-- Filas -->
     <div class="fila-area" *ngFor="let area of areasPaginadas">
-      <div class="columna-area">{{ area.nombre_area }}</div>
-      <div class="columna-acciones">
-        <img src="/assets/editarAction.svg" alt="Editar" (click)="editarArea(area)" />
-        <img src="/assets/disableAction.svg" alt="Eliminar" (click)="eliminarArea(area)" />
-      </div>
+        <div class="columna-area">{{ area.nombre_area }}</div>
+        <div class="columna-acciones">
+            <img src="/assets/editarAction.svg" alt="Editar" (click)="editarArea(area)" />
+            <img src="/assets/disableAction.svg" alt="Eliminar" (click)="eliminarArea(area)" />
+        </div>
     </div>
   </div>
 
@@ -47,6 +44,7 @@
     [pageSize]="pageSize"
     [pageSizeOptions]="[5, 10, 15]"
     [pageIndex]="pageIndex"
-    (page)="onPageChange($event)">
+    (page)="onPageChange($event)"
+  >
   </mat-paginator>
 </div>

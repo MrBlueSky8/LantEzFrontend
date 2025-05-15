@@ -173,28 +173,46 @@ mat-paginator {
   gap: 10px;
 }
 
+/* HEADER DE TABLA */
 .fila-header {
   width: 1042px;
   height: 36px;
   background: #EBC484;
   border-radius: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  font-family: 'Poppins';
+}
+
+/* Tipografía correcta para columnas del header */
+.columna-header-area,
+.columna-header-acciones {
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 24px;
+  line-height: 100%;
+  text-align: center;
+  letter-spacing: 0%;
   color: black;
 }
 
+.columna-header-area {
+  flex: 3;
+}
+
+.columna-header-acciones {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Reutilizar en filas de contenido */
 .fila-area {
   width: 1042px;
   height: 46px;
   background: #FFFFFF;
   border-radius: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 5px 10px;
 }
@@ -204,14 +222,14 @@ mat-paginator {
   font-weight: 400;
   font-size: 16px;
   text-align: center;
-  flex: 1;
+  flex: 3;
 }
 
 .columna-acciones {
+  flex: 1;
   display: flex;
-  gap: 12px;
-  align-items: center;
   justify-content: center;
+  gap: 12px;
 }
 
 .columna-acciones img {
