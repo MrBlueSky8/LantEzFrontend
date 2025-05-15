@@ -30,6 +30,7 @@ export class AreasComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.asignarMiempresa();
   }
 
   asignarMiempresa(): void{
@@ -47,5 +48,5 @@ export class AreasComponent implements OnInit{
     });
   }
 
-  
+
 }
