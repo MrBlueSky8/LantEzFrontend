@@ -37,7 +37,7 @@ export class AreasService {
   }
 
   listbyEmpresaId(id: number) {
-    return this.http.get<Areas>(`${this.url}/empresa/${id}`);
+    return this.http.get<Areas[]>(`${this.url}/empresa/${id}`);
   }
 
   eliminarCascade(id: number) {
