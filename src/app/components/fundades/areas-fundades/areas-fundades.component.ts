@@ -1,30 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
+import { Areas } from '../../../models/area';
+import { Empresas } from '../../../models/empresas';
 import { MatDialog } from '@angular/material/dialog';
 import { EmpresasService } from '../../../services/empresas.service';
-import { UsuariosService } from '../../../services/usuarios.service';
 import { LoginService } from '../../../services/login.service';
-import { Empresas } from '../../../models/empresas';
-import { Areas } from '../../../models/area';
+import { UsuariosService } from '../../../services/usuarios.service';
 import { AreasService } from '../../../services/areas.service';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { FormsModule } from '@angular/forms';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
-import { ModalAreaFormComponent } from '../modales/modal-area/modal-area-form/modal-area-form.component';
+import { ModalAreaFormComponent } from '../../admin/modales/modal-area/modal-area-form/modal-area-form.component';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 
 @Component({
-  selector: 'app-areas',
+  selector: 'app-areas-fundades',
   imports: [CommonModule, MatPaginatorModule, FormsModule],
-  templateUrl: './areas.component.html',
-  styleUrl: './areas.component.css',
+  templateUrl: './areas-fundades.component.html',
+  styleUrl: './areas-fundades.component.css',
   providers: [
     { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
   ],
 })
-export class AreasComponent implements OnInit {
+export class AreasFundadesComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
   areas: Areas[] = [];
   areasFiltradas: Areas[] = [];

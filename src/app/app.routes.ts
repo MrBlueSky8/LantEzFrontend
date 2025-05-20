@@ -21,6 +21,7 @@ import { MisTrabajosComponent } from './components/shared/mis-trabajos/mis-traba
 import { AppModuloEnDesarrolloComponent } from './components/shared/app-modulo-en-desarrollo/app-modulo-en-desarrollo.component';
 import { AreasComponent } from './components/admin/areas/areas.component';
 import { PuestosTrabajoComponent } from './components/admin/puestos-trabajo/puestos-trabajo.component';
+import { AreasFundadesComponent } from './components/fundades/areas-fundades/areas-fundades.component';
 
 export const routes: Routes = [
   {
@@ -74,7 +75,8 @@ export const routes: Routes = [
       },
       {
       path: 'empresas/areas',
-      component: AreasComponent,
+      component:AreasFundadesComponent,
+      //component: AreasComponent,
       },
       {
         path: 'empresas/puestos-trabajo',
