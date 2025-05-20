@@ -1,0 +1,35 @@
+<div class="overlay">
+  <div class="empresa-modal">
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+   <h2 class="modal-title">
+    {{
+        data.verDetalle
+        ? 'Detalle del Área'
+        : (esEdicion ? 'Editar Área' : 'Registrar Área')
+    }}
+    <ng-container *ngIf="data.area?.empresas?.nombre || data.empresa?.nombre; else empresaDesconocida">
+        para {{ data.area?.empresas?.nombre || data.empresa?.nombre }}
+    </ng-container>
+    </h2>
+
+    <ng-template #empresaDesconocida>
+    <span>para empresa desconocida</span>
+    </ng-template>
+
+    <form [formGroup]="formArea" (ngSubmit)="guardar()" class="empresa-form">
+      <!-- Nombre del Área -->
+      <input class="custom-input" placeholder="Nombre del Área" formControlName="nombre_area" />
+      <div class="error" *ngIf="formArea.get('nombre_area')?.touched && formArea.get('nombre_area')?.invalid">
+        El nombre del área es obligatorio.
+      </div>
+
+      <!-- Botón de acción -->
+      <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
+
+      <button class="btn-clear" type="button" (click)="formArea.reset()" *ngIf="!data.verDetalle">
+        Borrar Casillas
+      </button>
+    </form>
+  </div>
+</div>

@@ -11,19 +11,18 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
+import { ModalAreaFormComponent } from '../modales/modal-area/modal-area-form/modal-area-form.component';
+import { ɵcamelCaseToDashCase } from '@angular/animations/browser';
+import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 
 @Component({
   selector: 'app-areas',
-  imports: [
-    CommonModule, 
-    MatPaginatorModule,
-    FormsModule
-  ],
+  imports: [CommonModule, MatPaginatorModule, FormsModule],
   templateUrl: './areas.component.html',
   styleUrl: './areas.component.css',
   providers: [
-    { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() }
-  ]
+    { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
+  ],
 })
 export class AreasComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
@@ -69,7 +68,7 @@ export class AreasComponent implements OnInit {
 
   filtrarAreas(): void {
     const filtro = this.filtroBusqueda.toLowerCase();
-    this.areasFiltradas = this.areas.filter(area =>
+    this.areasFiltradas = this.areas.filter((area) =>
       area.nombre_area?.toLowerCase().includes(filtro)
     );
     this.pageIndex = 0;
@@ -90,10 +89,58 @@ export class AreasComponent implements OnInit {
 
   agregarArea(): void {
     console.log('Click agregar área');
+    const dialogRef = this.dialog.open(ModalAreaFormComponent, {
+      width: 'auto',
+      data: { empresa: this.miEmpresa },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        console.log('Area creada');
+        this.areaService
+          .listbyEmpresaId(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.areas = todas;
+            this.pageIndex = 0;
+            //this.updateEmpresasPaginadas();
+            this.filtrarAreas();
+          });
+      }
+    });
   }
 
   editarArea(area: Areas): void {
     console.log('Click editar área:', area.nombre_area);
+    if (!area) return;
+
+    //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+
+    const dialogRef = this.dialog.open(ModalAreaFormComponent, {
+      width: 'auto',
+      data: { area, verDetalle: false },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        console.log('Area editada');
+        // recargar y filtrar
+        this.areaService.listbyEmpresaId(this.miEmpresa.id).subscribe((todas) => {
+          this.areas = todas;
+          this.areasFiltradas = [...this.areas];
+          //this.updateEmpresasPaginadas();
+          this.filtrarAreas();
+        });
+
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: 'Información Actualizada',
+            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+          },
+        });
+      }
+    });
   }
 
   eliminarArea(area: Areas): void {
