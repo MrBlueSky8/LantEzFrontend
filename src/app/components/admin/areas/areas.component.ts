@@ -14,6 +14,7 @@ import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-
 import { ModalAreaFormComponent } from '../modales/modal-area/modal-area-form/modal-area-form.component';
 import { ɵcamelCaseToDashCase } from '@angular/animations/browser';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 
 @Component({
   selector: 'app-areas',
@@ -124,13 +125,14 @@ export class AreasComponent implements OnInit {
       if (resultado) {
         console.log('Area editada');
         // recargar y filtrar
-        this.areaService.listbyEmpresaId(this.miEmpresa.id).subscribe((todas) => {
-          this.areas = todas;
-          this.areasFiltradas = [...this.areas];
-          //this.updateEmpresasPaginadas();
-          this.filtrarAreas();
-        });
-
+        this.areaService
+          .listbyEmpresaId(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.areas = todas;
+            this.areasFiltradas = [...this.areas];
+            //this.updateEmpresasPaginadas();
+            this.filtrarAreas();
+          });
 
         const dialogSucces = this.dialog.open(ModalExitoComponent, {
           data: {
@@ -143,7 +145,87 @@ export class AreasComponent implements OnInit {
     });
   }
 
+  private refrescarAreas(): void {
+    this.areaService.listbyEmpresaId(this.miEmpresa.id).subscribe((todas) => {
+      this.areas = todas;
+      this.pageIndex = 0;
+      this.filtrarAreas();
+    });
+  }
+
   eliminarArea(area: Areas): void {
     console.log('Click eliminar área:', area.nombre_area);
+    // Intento de eliminación normal
+
+    const dialogConfirmationEliminar = this.dialog.open(
+      ModalConfirmacionComponent,
+      {
+        width: 'auto',
+        data: {
+          titulo: '¿Estás seguro?',
+          //mensajeSecundario: 'Esta acción no se puede deshacer.'
+        },
+      }
+    );
+
+    dialogConfirmationEliminar.afterClosed().subscribe((confirmado) => {
+      if (confirmado) {
+        this.areaService.eliminar(area.id).subscribe({
+          next: () => {
+            console.log(`Área ${area.nombre_area} eliminada correctamente`);
+            this.refrescarAreas();
+
+            this.dialog.open(ModalExitoComponent, {
+              data: {
+                titulo: 'Área eliminada correctamente',
+                iconoUrl: '/assets/checkicon.svg',
+              },
+            });
+          },
+          error: (err) => {
+            console.warn(`Error al eliminar área ${area.nombre_area}`, err);
+
+            // Mostrar confirmación para eliminación forzada
+            const dialogConfirmacion = this.dialog.open(
+              ModalConfirmacionComponent,
+              {
+                width: 'auto',
+                data: {
+                  titulo: 'No se puede eliminar',
+                  mensajeSecundario: `Esta área ya fue usada en registros relacionados. ¿Deseas forzar su eliminación? Esta acción puede causar pérdida de datos relacionados.`,
+                },
+              }
+            );
+
+            dialogConfirmacion.afterClosed().subscribe((confirmado) => {
+              if (!confirmado) return;
+
+              this.areaService.eliminarCascade(area.id).subscribe({
+                next: () => {
+                  console.log(
+                    `Área ${area.nombre_area} eliminada forzadamente`
+                  );
+                  this.refrescarAreas();
+
+                  this.dialog.open(ModalExitoComponent, {
+                    data: {
+                      titulo: 'Área eliminada forzadamente',
+                      iconoUrl: '/assets/checkicon.svg',
+                    },
+                  });
+                },
+                error: () => {
+                  console.error(
+                    `Error al eliminar forzadamente el área ${area.nombre_area}`
+                  );
+                },
+              });
+            });
+          },
+        });
+      } else {
+        console.log('Acción cancelada por el usuario.');
+      }
+    });
   }
 }
