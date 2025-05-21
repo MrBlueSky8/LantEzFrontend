@@ -77,3 +77,56 @@ html, body {
     color: #000;
   }
 
+  .mat-mdc-paginator-container {
+  justify-content: center !important;
+  gap: 12px;
+  } 
+
+  /*
+  mat-paginator {
+  display: flex;
+  justify-content: center;
+  background: none;
+  margin: 30px auto 10px auto;
+  width: fit-content;
+}
+
+.mat-mdc-paginator-container {
+  justify-content: center !important;
+  gap: 12px;
+}
+
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-paginator-page-size-select,
+.mat-mdc-paginator-range-label {
+  display: none;
+}
+
+.mat-mdc-icon-button {
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  font-weight: 600;
+  color: #000;
+}
+
+.mat-mdc-paginator-navigation-next,
+.mat-mdc-paginator-navigation-previous {
+  background: #ffffff;
+  padding: 6px 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.mat-mdc-paginator-range-actions button.mat-mdc-icon-button {
+  font-weight: bold;
+}
+
+.mat-mdc-button-base.mat-mdc-button.mat-primary {
+  color: white;
+  background: #000000;
+  border-radius: 8px;
+}
+  */
+

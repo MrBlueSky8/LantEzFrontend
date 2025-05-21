@@ -102,6 +102,15 @@
       <!-- Botón -->
       <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
 
+      <!-- Botón Borrar Casillas -->
+      <button
+        type="button"
+        class="btn-clear"
+        (click)="formEmpresa.reset()"
+        *ngIf="!data.verDetalle">
+        Borrar Casillas
+      </button>
+
     </form>
   </div>
 </div>
