@@ -55,6 +55,11 @@ export class UsuariosService {
   update(u: Usuarios){
     return this.http.put(this.url, u);
   }
+
+  updatePublico(u: UsuariosLight){
+    return this.http.put(this.url, u);
+  }
+
   eliminar(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }

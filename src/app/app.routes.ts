@@ -126,6 +126,15 @@ export const routes: Routes = [
       {
         path: 'ajustes',
         component: AjustesGeneralesComponent,
+      },
+      {
+      path: 'empresas/areas',
+      component:AreasComponent,
+      //component: AreasComponent,
+      },
+      {
+        path: 'empresas/puestos-trabajo',
+        component: PuestosTrabajoComponent,
       }
     ],
     canActivate: [segGuard],
