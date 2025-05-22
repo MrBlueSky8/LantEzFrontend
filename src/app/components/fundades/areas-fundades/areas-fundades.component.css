@@ -96,6 +96,11 @@
   .combo-empresa {
     width: 100%; /* Se adapta como el botón */
     min-width: 0; /* Permite contraerse sin romper diseño */
+    height: 56px; /* igual que el botón */
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 20px;
+    box-sizing: border-box;
   }
   
   .mi-empresa-header {
