@@ -237,7 +237,74 @@ mat-paginator {
 }
 
 /* RESPONSIVE ESPECÍFICO PARA LA TABLA */
-@media (max-width: 480px) {
+/* ---------- AJUSTES RESPONSIVE ------------- */
+
+@media (max-width: 1024px) {
+  .mi-empresa-header {
+    font-size: 26px;
+  }
+
+  .columna-header-area,
+  .columna-header-acciones {
+    font-size: 22px;
+  }
+
+  .columna-area {
+    font-size: 15px;
+  }
+
+  .columna-acciones img {
+    width: 40px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mi-empresa-header {
+    font-size: 22px;
+  }
+
+  .contenedor-areas {
+    padding: 50px 20px;
+    gap: 16px;
+  }
+
+  .columna-header-area,
+  .columna-header-acciones {
+    font-size: 18px;
+  }
+
+  .columna-area {
+    font-size: 14px;
+  }
+
+  .columna-acciones img {
+    width: 36px;
+    height: 28px;
+  }
+
+  .btn-agregar-empresa {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .barra-busqueda input {
+    font-size: 14px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .mi-empresa-header {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .contenedor-areas {
+    padding: 40px 12px;
+    gap: 14px;
+  }
+
   .fila-header,
   .fila-area {
     flex-direction: column;
@@ -252,19 +319,34 @@ mat-paginator {
   .columna-acciones {
     width: 100%;
     flex: none;
+    text-align: center;
   }
 
   .columna-header-area,
   .columna-header-acciones {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   .columna-area {
-    font-size: 16px;
+    font-size: 13.5px;
   }
 
-  .columna-acciones {
-    justify-content: center;
-    gap: 16px;
+  .columna-acciones img {
+    width: 32px;
+    height: 26px;
+  }
+
+  .btn-agregar-empresa {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  .barra-busqueda {
+    gap: 12px;
+  }
+
+  .barra-busqueda input {
+    font-size: 13px;
   }
 }
+
