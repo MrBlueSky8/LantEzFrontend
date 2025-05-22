@@ -96,8 +96,12 @@ export class UsuariosComponent implements OnInit {
     console.log('Click agregar usuario');
   }
 
-  editarUsuario(usuario: Usuarios): void {
+  editarUsuario(usuario: UsuariosLight): void {
     console.log('Click editar usuario:', usuario.primer_nombre);
+  }
+
+  verDetalleUsuario(usuario: UsuariosLight): void {
+    console.log('Click detalle usuario:', usuario.primer_nombre);
   }
 
   private refrescarUsuarios(): void {
@@ -108,7 +112,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  eliminarUsuario(usuario: Usuarios): void {
-      console.log('Click eliminar usuario:', usuario.primer_nombre);
+  deshabilitarUsuario(usuario: UsuariosLight): void {
+      console.log('Click deshabilitar usuario:', usuario.primer_nombre);
   }
 }
