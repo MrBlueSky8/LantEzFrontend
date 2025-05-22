@@ -14,6 +14,8 @@ import { EmpresasService } from '../../../services/empresas.service';
 import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { UsuariosLight } from '../../../models/usuariosLight';
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
+import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -150,7 +152,40 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  deshabilitarUsuario(usuario: UsuariosLight): void {
-      console.log('Click deshabilitar usuario:', usuario.primer_nombre);
-  }
+  toogleEstadoUsuario(usuario: UsuariosLight): void {
+  const accion = usuario.estado ? 'deshabilitar' : 'habilitar';
+
+  const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+    width: 'auto',
+    data: {
+      titulo: `¿Estás seguro de ${accion} este usuario?`,
+    }
+  });
+
+  dialogConfirmation.afterClosed().subscribe(confirmado => {
+    if (!confirmado) return;
+
+    const operacion = usuario.estado
+      ? this.usuarioService.deshabilitar(usuario.id)
+      : this.usuarioService.habilitar(usuario.id);
+
+    operacion.subscribe({
+      next: () => {
+        console.log(`Usuario ${usuario.primer_nombre} fue ${accion} correctamente`);
+        this.refrescarUsuarios(); // actualiza la lista filtrada
+
+        this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: `Usuario ${accion === 'deshabilitar' ? 'deshabilitado' : 'habilitado'}`,
+            iconoUrl: '/assets/checkicon.svg'
+          }
+        });
+      },
+      error: () => {
+        console.error(`Error al ${accion} usuario ${usuario.primer_nombre}`);
+      }
+    });
+  });
+}
+
 }
