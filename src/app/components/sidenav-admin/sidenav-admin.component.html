@@ -48,7 +48,7 @@
                 <a class="sidenav-nav-link"
                     *ngIf="!data.items || (data.items && data.items.length === 0)"
                     [routerLink]="data.routeLink ? [data.routeLink] : null"
-                    [routerLinkActiveOptions]="{exact: true}"
+                    [routerLinkActiveOptions]="{exact: false}"
                     routerLinkActive="active"
                     (click)="shrinkItems(data)"
                     >
