@@ -28,7 +28,7 @@
       <div class="columna-header-area">NOMBRES</div>
       <div class="columna-header-area">APELLIDOS</div>
       <div class="columna-header-area">ROL</div>
-      <div class="columna-header-area">FECHA – HORA</div>
+      <div class="columna-header-area">ESTADO</div>
       <div class="columna-header-acciones">ACCIONES</div>
     </div>
 
@@ -40,7 +40,11 @@
         {{ usuario.apellido_p }}{{ usuario.apellido_m ? ' ' + usuario.apellido_m : '' }}
       </div>
       <div class="columna-area">{{ usuario.roles.nombre_rol }}</div>
-      <div class="columna-area">{{ usuario.fecha_registro | date: 'yyyy-MM-dd HH:mm:ss' }}</div>
+      <div class="columna-area">
+        <span [ngStyle]="{ color: usuario.estado ? '#28a745' : '#dc3545', 'font-weight': '600' }">
+            {{ usuario.estado ? 'Habilitado' : 'Deshabilitado' }}
+        </span>
+        </div>
       <div class="columna-acciones">
         <img src="/assets/eyeDetail.svg" alt="Ver Detalle" (click)="verDetalleUsuario(usuario)" />
         <img src="/assets/editarAction.svg" alt="Editar" (click)="editarUsuario(usuario)" />
