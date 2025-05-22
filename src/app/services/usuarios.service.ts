@@ -75,5 +75,17 @@ export class UsuariosService {
     return this.http.get<number>(`${this.url}/findidempresa/${email}`);;
   }
 
+  listbyEmpresaId(id: number) {
+      return this.http.get<UsuariosLight[]>(`${this.url}/empresa/${id}`);
+  }
+
+  deshabilitar(id: number) {
+    return this.http.put(`${this.url}/deshabilitar/${id}`, {});
+  }
+
+  habilitar(id: number) {
+    return this.http.put(`${this.url}/habilitar/${id}`, {});
+  }
+
 
 }

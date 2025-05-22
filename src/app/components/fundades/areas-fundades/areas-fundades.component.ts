@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 import { Areas } from '../../../models/area';
 import { Empresas } from '../../../models/empresas';
@@ -33,6 +37,9 @@ export class AreasFundadesComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 0;
 
+  empresas: Empresas[] = [];
+  empresaSeleccionadaId: number | null = null;
+
   constructor(
     private dialog: MatDialog,
     private empresaService: EmpresasService,
@@ -63,6 +70,31 @@ export class AreasFundadesComponent implements OnInit {
         },
         error: (err) => console.error('Error al obtener ID:', err),
       });
+
+    this.empresaService.list().subscribe({
+      next: (empresasTodas) => {
+        this.empresas = empresasTodas;
+      },
+      error: (err) =>
+        console.error('Error al listar empresas para el combo:', err),
+    });
+  }
+
+  onEmpresaSeleccionadaChange(): void {
+    const id = this.empresaSeleccionadaId;
+    if (!id || id === this.miEmpresa.id) {
+      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
+      this.refrescarAreas();
+      return;
+    }
+
+    this.empresaService.listId(id).subscribe({
+      next: (empresa) => {
+        this.miEmpresa = empresa;
+        this.refrescarAreas();
+      },
+      error: (err) => console.error('Error al cambiar de empresa:', err),
+    });
   }
 
   filtrarAreas(): void {

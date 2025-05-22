@@ -5,6 +5,16 @@
 <div class="contenedor-areas">
   <!-- Barra de acciones -->
   <div class="clientes-header-bar">
+    <select
+      class="combo-empresa"
+      [(ngModel)]="empresaSeleccionadaId"
+      (change)="onEmpresaSeleccionadaChange()"
+      [ngClass]="{ 'placeholder': !empresaSeleccionadaId }"
+    >
+      <option [ngValue]="null" disabled>Selecciona Empresa</option>
+      <option *ngFor="let empresa of empresas" [ngValue]="empresa.id">{{ empresa.nombre }}</option>
+    </select>
+
     <button class="btn-agregar-empresa" (click)="agregarArea()">
       <img src="/assets/plus.svg" alt="Agregar" />
       AGREGAR ÁREA
