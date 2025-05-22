@@ -51,7 +51,8 @@ export class UsuariosComponent implements OnInit {
               this.miEmpresa = empresa;
               this.usuarioService.listbyEmpresaId(empresa.id!).subscribe({
                 next: (data: UsuariosLight[]) => {
-                  this.usuarios = data;
+                  const miCorreo = this.loginService.showUser();
+                  this.usuarios = data.filter(u => u.email !== miCorreo);
                   this.usuariosFiltrados = [...this.usuarios];
                   this.updateUsuariosPaginados();
                 },
@@ -106,7 +107,8 @@ export class UsuariosComponent implements OnInit {
 
   private refrescarUsuarios(): void {
     this.usuarioService.listbyEmpresaId(this.miEmpresa.id).subscribe((todas) => {
-      this.usuarios = todas;
+      const miCorreo = this.loginService.showUser();
+      this.usuarios = todas.filter(u => u.email !== miCorreo);
       this.pageIndex = 0;
       this.filtrarUsuarios();
     });
