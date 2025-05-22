@@ -75,5 +75,9 @@ export class UsuariosService {
     return this.http.get<number>(`${this.url}/findidempresa/${email}`);;
   }
 
+  listbyEmpresaId(id: number) {
+      return this.http.get<UsuariosLight[]>(`${this.url}/empresa/${id}`);
+  }
+
 
 }
