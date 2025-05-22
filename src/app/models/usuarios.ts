@@ -10,6 +10,7 @@ export class Usuarios {
     segundo_nombre: string = '';
     apellido_p: string = '';
     apellido_m: string = '';
+    foto_url: string = '';
     genero: string = '';
     prefijo_telefono: string = '';
     telefono: string = '';

@@ -7,4 +7,5 @@ export class Requerimientos_minimos_puesto {
     puestos_trabajo: PuestosTrabajo = new PuestosTrabajo();
     pregunta_perfil: Preguntas_perfil = new Preguntas_perfil();
     fecha_update: Date = new Date(Date.now());
+    estado: boolean = false;
 }
