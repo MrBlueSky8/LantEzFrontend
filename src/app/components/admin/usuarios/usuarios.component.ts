@@ -42,6 +42,9 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const miCorreo = this.loginService.showUser();
+    const miRol = this.loginService.showRole();
+
     this.usuarioService
       .findIdEmpresaByEmail(this.loginService.showUser())
       .subscribe({
@@ -51,12 +54,30 @@ export class UsuariosComponent implements OnInit {
               this.miEmpresa = empresa;
               this.usuarioService.listbyEmpresaId(empresa.id!).subscribe({
                 next: (data: UsuariosLight[]) => {
-                  const miCorreo = this.loginService.showUser();
-                  this.usuarios = data.filter(u => u.email !== miCorreo);
+                  //const miCorreo = this.loginService.showUser();
+                  this.usuarios = data.filter(u => {
+                    // No mostrarme a mí mismo
+                    if (u.email === miCorreo) return false;
+
+                    // SUBADMINISTRADOR común: no puede ver ADMIN ni SUBADMIN
+                    if (miRol === 'SUBADMINISTRADOR') {
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR', 'ADMINISTRADOR'].includes(u.roles.nombre_rol);
+                    }
+
+                    // SUBADMINISTRADOR FUNDADES: no puede ver ADMIN ni SUBADMIN FUNDADES
+                    if (miRol === 'SUBADMINISTRADOR FUNDADES') {
+                      //console.log('evento: filtrando excepciones de subadmin fundades');
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'].includes(u.roles.nombre_rol);
+                    }
+
+                    // Otros roles (e.g. ADMINISTRADOR, ADMINISTRADOR FUNDADES): sin restricción
+                    return true;
+                  });
+
                   this.usuariosFiltrados = [...this.usuarios];
                   this.updateUsuariosPaginados();
                 },
-                error: (err) => console.error('Error al obtener áreas:', err),
+                error: (err) => console.error('Error al obtener usuarios:', err),
               });
             },
             error: (err) => console.error('Error al obtener empresa:', err),
@@ -106,9 +127,24 @@ export class UsuariosComponent implements OnInit {
   }
 
   private refrescarUsuarios(): void {
+    const miCorreo = this.loginService.showUser();
+    const miRol = this.loginService.showRole();
+
     this.usuarioService.listbyEmpresaId(this.miEmpresa.id).subscribe((todas) => {
-      const miCorreo = this.loginService.showUser();
-      this.usuarios = todas.filter(u => u.email !== miCorreo);
+      this.usuarios = todas.filter(u => {
+        if (u.email === miCorreo) return false;
+
+        if (miRol === 'SUBADMINISTRADOR') {
+          return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR', 'ADMINISTRADOR'].includes(u.roles.nombre_rol);
+        }
+
+        if (miRol === 'SUBADMINISTRADOR FUNDADES') {
+          return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'].includes(u.roles.nombre_rol);
+        }
+
+        return true;
+      });
+
       this.pageIndex = 0;
       this.filtrarUsuarios();
     });
