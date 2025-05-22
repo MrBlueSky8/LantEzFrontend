@@ -98,7 +98,8 @@ export class UsuariosComponent implements OnInit {
         e.apellido_p?.toLowerCase().includes(filtro) ||
         e.apellido_m?.toLowerCase().includes(filtro) ||
         e.numero_doc?.toLowerCase().includes(filtro) ||
-        e.telefono?.toLowerCase().includes(filtro)
+        e.telefono?.toLowerCase().includes(filtro) ||
+        e.roles.nombre_rol?.toLowerCase().includes(filtro)
     );
     this.pageIndex = 0;
     this.updateUsuariosPaginados();
