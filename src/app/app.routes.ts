@@ -129,12 +129,12 @@ export const routes: Routes = [
         component: AjustesGeneralesComponent,
       },
       {
-      path: 'empresas/areas',
+      path: 'mi-empresa/areas',
       component:AreasComponent,
       //component: AreasComponent,
       },
       {
-        path: 'empresas/puestos-trabajo',
+        path: 'mi-empresa/puestos-trabajo',
         component: PuestosTrabajoComponent,
       }
     ],

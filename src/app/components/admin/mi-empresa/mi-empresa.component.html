@@ -1,1 +1,24 @@
-<p>mi-empresa works!</p>
+<!-- TÍTULO MI EMPRESA -->
+<div class="mi-empresa-header">
+  MI EMPRESA
+</div>
+
+<!-- CONTENEDOR MI EMPRESA -->
+<div class="mi-empresa-container">
+  <!-- CARD CON LOGO -->
+  <div class="mi-empresa-card">
+    <img [src]="miEmpresa.logo_url"
+     alt="Logo Empresa"
+     class="mi-empresa-logo"
+     (error)="onImgError($event)" />
+    <img src="/assets/edit.svg" alt="Editar" class="editar-icono" (click)="editarMiEmpresa()" />
+  </div>
+
+  <!-- BOTONES -->
+  <div class="mi-empresa-botones">
+    <button (click)="gestionarAreas()">Gestionar Áreas</button>
+    <button (click)="gestionarPuestos()">Gestionar Puestos de Trabajo</button>
+  </div>
+</div>
+
+
