@@ -23,18 +23,26 @@
     <form [formGroup]="formUsuario" (ngSubmit)="guardar()" class="empresa-form">
 
       <!-- Correo -->
-      <input class="custom-input" placeholder="Email" formControlName="email" />
+      <input class="custom-input" placeholder="Email*" formControlName="email" />
       <div class="error" *ngIf="formUsuario.get('email')?.touched && formUsuario.get('email')?.invalid">
         <div *ngIf="formUsuario.get('email')?.hasError('required')">El correo es obligatorio.</div>
         <div *ngIf="formUsuario.get('email')?.hasError('email')">Correo inválido.</div>
       </div>
 
       <!-- Nombres -->
-      <input class="custom-input" placeholder="Primer Nombre" formControlName="primer_nombre" />
+      <!-- Primer Nombre -->
+      <input class="custom-input" placeholder="Primer Nombre*" formControlName="primer_nombre" />
+      <div class="error" *ngIf="formUsuario.get('primer_nombre')?.touched && formUsuario.get('primer_nombre')?.hasError('required')">
+      Este campo es obligatorio.
+      </div>
       <input class="custom-input" placeholder="Segundo Nombre (opcional)" formControlName="segundo_nombre" />
 
       <!-- Apellidos -->
-      <input class="custom-input" placeholder="Apellido Paterno" formControlName="apellido_p" />
+      <!-- Apellido Paterno -->
+      <input class="custom-input" placeholder="Apellido Paterno*" formControlName="apellido_p" />
+      <div class="error" *ngIf="formUsuario.get('apellido_p')?.touched && formUsuario.get('apellido_p')?.hasError('required')">
+      Este campo es obligatorio.
+      </div>
       <input class="custom-input" placeholder="Apellido Materno (opcional)" formControlName="apellido_m" />
 
       <!-- Foto URL -->
@@ -56,30 +64,50 @@
       <input class="custom-input" placeholder="Teléfono" formControlName="telefono" />
 
       <!-- Tipo Documento -->
-      <mat-form-field appearance="fill" class="custom-select">
-        <mat-label>Tipo Documento</mat-label>
-        <mat-select formControlName="tipo_documento_id">
-          <mat-option *ngFor="let tipo of tipoDocumentos" [value]="tipo.id">
-            {{ tipo.tipo_doc }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+     <mat-form-field appearance="fill" class="custom-select">
+     <mat-label>Tipo Documento</mat-label>
+     <mat-select formControlName="tipo_documento_id">
+         <mat-option *ngFor="let tipo of tipoDocumentos" [value]="tipo.id">
+         {{ tipo.tipo_doc }}
+         </mat-option>
+     </mat-select>
+     <mat-error *ngIf="formUsuario.get('tipo_documento_id')?.touched && formUsuario.get('tipo_documento_id')?.hasError('required')">
+         Seleccione un tipo de documento.
+     </mat-error>
+     </mat-form-field>
 
       <!-- Número Documento -->
-      <input class="custom-input" placeholder="Número de Documento" formControlName="numero_doc" />
+     <input class="custom-input" placeholder="Número de Documento*" formControlName="numero_doc" />
+     <div class="error" *ngIf="formUsuario.get('numero_doc')?.touched && formUsuario.get('numero_doc')?.hasError('required')">
+     Este campo es obligatorio.
+     </div>
 
       <!-- Fecha Nacimiento -->
-      <input class="custom-input" type="date" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento" />
+     <input class="custom-input" type="date" placeholder="Fecha de Nacimiento*" formControlName="fechanacimiento" />
+     <div class="error" *ngIf="formUsuario.get('fechanacimiento')?.touched && formUsuario.get('fechanacimiento')?.invalid">
+     <div *ngIf="formUsuario.get('fechanacimiento')?.hasError('required')">
+         La fecha de nacimiento es obligatoria.
+     </div>
+     <div *ngIf="formUsuario.get('fechanacimiento')?.hasError('fechaFutura')">
+         La fecha no puede ser futura.
+     </div>
+     <div *ngIf="formUsuario.get('fechanacimiento')?.hasError('menorDeEdad')">
+         El usuario debe ser mayor de edad (mínimo 18 años).
+     </div>
+     </div>
 
       <!-- Rol -->
-      <mat-form-field appearance="fill" class="custom-select">
-        <mat-label>Rol</mat-label>
-        <mat-select formControlName="rol_id">
-          <mat-option *ngFor="let rol of roles" [value]="rol.id">
-            {{ rol.nombre_rol }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+     <mat-form-field appearance="fill" class="custom-select">
+     <mat-label>Rol</mat-label>
+     <mat-select formControlName="rol_id">
+         <mat-option *ngFor="let rol of roles" [value]="rol.id">
+         {{ rol.nombre_rol }}
+         </mat-option>
+     </mat-select>
+     <mat-error *ngIf="formUsuario.get('rol_id')?.touched && formUsuario.get('rol_id')?.hasError('required')">
+         Seleccione un rol.
+     </mat-error>
+     </mat-form-field>
 
       <!-- Estado -->
       <mat-form-field appearance="fill" class="custom-select">
@@ -91,7 +119,7 @@
       </mat-form-field>
 
       <!-- Restablecer Password (solo edición) -->
-      <div class="checkbox-row" *ngIf="esEdicion">
+      <div class="checkbox-row" *ngIf="esEdicion && !data.verDetalle">
         <label>
           <input type="checkbox" formControlName="restablecerPassword" />
           Restablecer contraseña al número de documento

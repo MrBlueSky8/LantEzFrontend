@@ -101,7 +101,7 @@ export class ModalUsuarioFormComponent implements OnInit{
         telefono: [this.data.usuario?.telefono || '', Validators.maxLength(15)],
         tipo_documento_id: [this.data.usuario?.tipoDocumento.id || '', Validators.required],
         numero_doc: [this.data.usuario?.numero_doc || '', Validators.required],
-        fechanacimiento: [this.data.usuario?.fechanacimiento || '', Validators.required],
+        fechanacimiento: [this.data.usuario?.fechanacimiento || '', [Validators.required, this.validarFechaNacimiento]],
         rol_id: [this.data.usuario?.roles.id || '', Validators.required],
         //empresa_id: [this.data.usuario?.empresas.id || '', Validators.required],
 
@@ -158,5 +158,27 @@ export class ModalUsuarioFormComponent implements OnInit{
 
   cerrar(): void {
     this.dialogRef.close();
+  }
+
+  validarFechaNacimiento(control: any) {
+    const fecha = new Date(control.value);
+    const hoy = new Date();
+    const edadMinima = 18;
+
+    if (fecha > hoy) {
+      return { fechaFutura: true };
+    }
+
+    const edad = hoy.getFullYear() - fecha.getFullYear();
+    const mes = hoy.getMonth() - fecha.getMonth();
+    const dia = hoy.getDate() - fecha.getDate();
+
+    const edadFinal = mes < 0 || (mes === 0 && dia < 0) ? edad - 1 : edad;
+
+    if (edadFinal < edadMinima) {
+      return { menorDeEdad: true };
+    }
+
+    return null;
   }
 }
