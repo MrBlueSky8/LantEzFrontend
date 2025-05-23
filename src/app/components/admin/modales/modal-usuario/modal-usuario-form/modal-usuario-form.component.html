@@ -1,1 +1,109 @@
-<p>modal-usuario-form works!</p>
+<div class="overlay">
+  <div class="empresa-modal">
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">
+      {{
+        data.verDetalle
+          ? 'Detalle del Usuario'
+          : (esEdicion ? 'Editar Usuario' : 'Registrar Usuario')
+      }}
+      <ng-container *ngIf="data.usuario?.empresas?.nombre || data.empresa?.nombre; else empresaDesconocida">
+        para {{ data.usuario?.empresas?.nombre || data.empresa?.nombre }}
+      </ng-container>
+    </h2>
+
+    <ng-template #empresaDesconocida>
+      <span>para empresa desconocida</span>
+    </ng-template>
+
+    <!-- Formulario -->
+    <form [formGroup]="formUsuario" (ngSubmit)="guardar()" class="empresa-form">
+
+      <!-- Correo -->
+      <input class="custom-input" placeholder="Email" formControlName="email" />
+      <div class="error" *ngIf="formUsuario.get('email')?.touched && formUsuario.get('email')?.invalid">
+        <div *ngIf="formUsuario.get('email')?.hasError('required')">El correo es obligatorio.</div>
+        <div *ngIf="formUsuario.get('email')?.hasError('email')">Correo inválido.</div>
+      </div>
+
+      <!-- Nombres -->
+      <input class="custom-input" placeholder="Primer Nombre" formControlName="primer_nombre" />
+      <input class="custom-input" placeholder="Segundo Nombre (opcional)" formControlName="segundo_nombre" />
+
+      <!-- Apellidos -->
+      <input class="custom-input" placeholder="Apellido Paterno" formControlName="apellido_p" />
+      <input class="custom-input" placeholder="Apellido Materno (opcional)" formControlName="apellido_m" />
+
+      <!-- Foto URL -->
+      <input class="custom-input" placeholder="Foto URL" formControlName="foto_url" />
+      <div class="error" *ngIf="formUsuario.get('foto_url')?.hasError('pattern')">URL no válida.</div>
+
+      <!-- Género -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="genero">
+          <mat-option *ngFor="let genero of listaGeneros" [value]="genero.value">
+            {{ genero.viewvalue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Prefijo y Teléfono -->
+      <input class="custom-input" placeholder="Prefijo" formControlName="prefijo_telefono" />
+      <input class="custom-input" placeholder="Teléfono" formControlName="telefono" />
+
+      <!-- Tipo Documento -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Tipo Documento</mat-label>
+        <mat-select formControlName="tipo_documento_id">
+          <mat-option *ngFor="let tipo of tipoDocumentos" [value]="tipo.id">
+            {{ tipo.tipo_doc }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Número Documento -->
+      <input class="custom-input" placeholder="Número de Documento" formControlName="numero_doc" />
+
+      <!-- Fecha Nacimiento -->
+      <input class="custom-input" type="date" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento" />
+
+      <!-- Rol -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="rol_id">
+          <mat-option *ngFor="let rol of roles" [value]="rol.id">
+            {{ rol.nombre_rol }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Estado -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="true">Habilitado</mat-option>
+          <mat-option [value]="false">Deshabilitado</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Restablecer Password (solo edición) -->
+      <div class="checkbox-row" *ngIf="esEdicion">
+        <label>
+          <input type="checkbox" formControlName="restablecerPassword" />
+          Restablecer contraseña al número de documento
+        </label>
+      </div>
+
+      <!-- Botones -->
+      <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
+      <button class="btn-clear" type="button" (click)="formUsuario.reset()" *ngIf="!data.verDetalle">
+        Borrar Casillas
+      </button>
+
+    </form>
+  </div>
+</div>

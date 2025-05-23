@@ -16,6 +16,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { UsuariosLight } from '../../../models/usuariosLight';
 import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
+import { ModalUsuarioFormComponent } from '../modales/modal-usuario/modal-usuario-form/modal-usuario-form.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -31,6 +32,8 @@ export class UsuariosComponent implements OnInit {
   usuarios: UsuariosLight[] = [];
   usuariosFiltrados: UsuariosLight[] = [];
   usuariosPaginados: UsuariosLight[] = [];
+  miCorreo: string = '';
+  miRol: string = '';
 
   filtroBusqueda: string = '';
   pageSize: number = 10;
@@ -44,8 +47,8 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const miCorreo = this.loginService.showUser();
-    const miRol = this.loginService.showRole();
+    this.miCorreo = this.loginService.showUser();
+    this.miRol = this.loginService.showRole();
 
     this.usuarioService
       .findIdEmpresaByEmail(this.loginService.showUser())
@@ -59,15 +62,15 @@ export class UsuariosComponent implements OnInit {
                   //const miCorreo = this.loginService.showUser();
                   this.usuarios = data.filter(u => {
                     // No mostrarme a mí mismo
-                    if (u.email === miCorreo) return false;
+                    if (u.email === this.miCorreo) return false;
 
                     // SUBADMINISTRADOR común: no puede ver ADMIN ni SUBADMIN
-                    if (miRol === 'SUBADMINISTRADOR') {
+                    if (this.miRol === 'SUBADMINISTRADOR') {
                       return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR', 'ADMINISTRADOR'].includes(u.roles.nombre_rol);
                     }
 
                     // SUBADMINISTRADOR FUNDADES: no puede ver ADMIN ni SUBADMIN FUNDADES
-                    if (miRol === 'SUBADMINISTRADOR FUNDADES') {
+                    if (this.miRol === 'SUBADMINISTRADOR FUNDADES') {
                       //console.log('evento: filtrando excepciones de subadmin fundades');
                       return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'].includes(u.roles.nombre_rol);
                     }
@@ -119,14 +122,113 @@ export class UsuariosComponent implements OnInit {
 
   agregarUsuario(): void {
     console.log('Click agregar usuario');
+    const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
+          width: 'auto',
+          data: { empresa: this.miEmpresa },
+        });
+    
+        dialogRef.afterClosed().subscribe((resultado) => {
+          if (resultado) {
+            console.log('Usuario creado');
+            /*
+            const miCorreo = this.loginService.showUser();
+            const miRol = this.loginService.showRole();
+            */
+
+            this.usuarioService
+              .listbyEmpresaId(this.miEmpresa.id)
+              .subscribe((todas) => {
+                this.usuarios = todas.filter(u => {
+                    // No mostrarme a mí mismo
+                    if (u.email === this.miCorreo) return false;
+
+                    // SUBADMINISTRADOR común: no puede ver ADMIN ni SUBADMIN
+                    if (this.miRol === 'SUBADMINISTRADOR') {
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR', 'ADMINISTRADOR'].includes(u.roles.nombre_rol);
+                    }
+
+                    // SUBADMINISTRADOR FUNDADES: no puede ver ADMIN ni SUBADMIN FUNDADES
+                    if (this.miRol === 'SUBADMINISTRADOR FUNDADES') {
+                      //console.log('evento: filtrando excepciones de subadmin fundades');
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'].includes(u.roles.nombre_rol);
+                    }
+
+                    // Otros roles (e.g. ADMINISTRADOR, ADMINISTRADOR FUNDADES): sin restricción
+                    return true;
+                  });
+
+
+                this.pageIndex = 0;
+                //this.updateEmpresasPaginadas();
+                this.filtrarUsuarios();
+              });
+          }
+        });
   }
 
   editarUsuario(usuario: UsuariosLight): void {
     console.log('Click editar usuario:', usuario.primer_nombre);
+    if (!usuario) return;
+    
+        //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+    
+        const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
+          width: 'auto',
+          data: { usuario, verDetalle: false },
+        });
+    
+        dialogRef.afterClosed().subscribe((resultado) => {
+          if (resultado) {
+            console.log('Area editada');
+            // recargar y filtrar
+            this.usuarioService
+              .listbyEmpresaId(this.miEmpresa.id)
+              .subscribe((todas) => {
+                this.usuarios = todas.filter(u => {
+                    // No mostrarme a mí mismo
+                    if (u.email === this.miCorreo) return false;
+
+                    // SUBADMINISTRADOR común: no puede ver ADMIN ni SUBADMIN
+                    if (this.miRol === 'SUBADMINISTRADOR') {
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR', 'ADMINISTRADOR'].includes(u.roles.nombre_rol);
+                    }
+
+                    // SUBADMINISTRADOR FUNDADES: no puede ver ADMIN ni SUBADMIN FUNDADES
+                    if (this.miRol === 'SUBADMINISTRADOR FUNDADES') {
+                      //console.log('evento: filtrando excepciones de subadmin fundades');
+                      return !['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'].includes(u.roles.nombre_rol);
+                    }
+
+                    // Otros roles (e.g. ADMINISTRADOR, ADMINISTRADOR FUNDADES): sin restricción
+                    return true;
+                  });
+
+                this.usuariosFiltrados = [...this.usuarios];
+                //this.updateEmpresasPaginadas();
+                this.filtrarUsuarios();
+              });
+    
+            const dialogSucces = this.dialog.open(ModalExitoComponent, {
+              data: {
+                titulo: 'Información Actualizada',
+                iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+              },
+            });
+          }
+        });
   }
 
   verDetalleUsuario(usuario: UsuariosLight): void {
     console.log('Click detalle usuario:', usuario.primer_nombre);
+
+     if (!usuario) return;
+    
+        //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+        const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
+          width: 'auto',
+          data: { usuario, verDetalle: true },
+        });
   }
 
   private refrescarUsuarios(): void {
