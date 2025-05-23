@@ -47,7 +47,7 @@ export class ModalUsuarioFormComponent implements OnInit{
     private usuarioService: UsuariosService,
     private tipoDocumentoService: TipoDocumentoService,
     private rolesService: RolesService,
-    private empresaService: EmpresasService, 
+    //private empresaService: EmpresasService, 
   ) {}
   
   ngOnInit(): void {
@@ -56,7 +56,20 @@ export class ModalUsuarioFormComponent implements OnInit{
     });
 
     this.rolesService.list().subscribe((data) => {
-      this.roles = data;
+      const idEmpresa = this.data.empresa?.id || this.data.usuario?.empresas?.id;
+
+      if (!idEmpresa) {
+        this.roles = data.filter(r => r.nombre_rol !== 'ADMINISTRADOR FUNDADES' && r.nombre_rol !== 'SUBADMINISTRADOR FUNDADES'); // seguridad por defecto
+        return;
+      }
+
+      this.usuarioService.validarPrivilegiosEmpresa(idEmpresa).subscribe(tienePrivilegios => {
+        if (tienePrivilegios) {
+          this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR' && rol.nombre_rol !== 'SUBADMINISTRADOR' && rol.nombre_rol !== 'ADMINISTRADOR FUNDADES'); // incluye todos
+        } else {
+          this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'SUBADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'ADMINISTRADOR'); // excluye ADMIN y SUBADMIN Fundades
+        }
+      });
     });
 
     /*

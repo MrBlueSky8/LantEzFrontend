@@ -92,5 +92,8 @@ export class UsuariosService {
     return this.http.put(`${this.url}/habilitar/${id}`, {});
   }
 
+  validarPrivilegiosEmpresa(empresaId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.url}/validar-privilegios/${empresaId}`);
+  }
 
 }
