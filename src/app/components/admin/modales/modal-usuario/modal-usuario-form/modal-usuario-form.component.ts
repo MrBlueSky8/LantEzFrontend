@@ -14,6 +14,7 @@ import { TipoDocumentoService } from '../../../../../services/tipo-documento.ser
 import { RolesService } from '../../../../../services/roles.service';
 import { EmpresasService } from '../../../../../services/empresas.service';
 import { UsuariosLight } from '../../../../../models/usuariosLight';
+import { LoginService } from '../../../../../services/login.service';
 
 @Component({
   selector: 'app-modal-usuario-form',
@@ -35,6 +36,8 @@ export class ModalUsuarioFormComponent implements OnInit{
   roles: Roles[] = [];
   //empresas: Empresas[] = [];
 
+  miEmpresa: Empresas = new Empresas();
+
   listaGeneros: { value: string; viewvalue: string }[] = [
     { value: 'Masculino', viewvalue: 'Masculino' },
     { value: 'Femenino', viewvalue: 'Femenino' },
@@ -47,7 +50,8 @@ export class ModalUsuarioFormComponent implements OnInit{
     private usuarioService: UsuariosService,
     private tipoDocumentoService: TipoDocumentoService,
     private rolesService: RolesService,
-    //private empresaService: EmpresasService, 
+    private loginService: LoginService,
+    private empresaService: EmpresasService, 
   ) {}
   
   ngOnInit(): void {
@@ -67,7 +71,31 @@ export class ModalUsuarioFormComponent implements OnInit{
         if (tienePrivilegios) {
           this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR' && rol.nombre_rol !== 'SUBADMINISTRADOR' && rol.nombre_rol !== 'ADMINISTRADOR FUNDADES'); // incluye todos
         } else {
-          this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'SUBADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'ADMINISTRADOR'); // excluye ADMIN y SUBADMIN Fundades
+
+          this.usuarioService
+                .findIdEmpresaByEmail(this.loginService.showUser())
+                .subscribe({
+                  next: (idEmpresaUsuario) => {
+                    this.empresaService.listId(idEmpresaUsuario).subscribe({
+                      next: (empresaUsuario) => {
+                        this.miEmpresa = empresaUsuario;
+
+                         this.usuarioService.validarPrivilegiosEmpresa(this.miEmpresa.id).subscribe(tienePrivilegiosEspeciales => {
+                          if(tienePrivilegiosEspeciales){
+                            console.log('evento: fundades asistiendo a otra empresa');
+                            this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'SUBADMINISTRADOR FUNDADES'); // excluye ADMIN y SUBADMIN Fundades
+                          }else{
+                            this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'SUBADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'ADMINISTRADOR'); // excluye ADMIN y SUBADMIN Fundades y admin
+                          }
+                         });
+                      },
+                      error: (err) => console.error('Error al obtener empresa:', err),
+                    });
+                  },
+                  error: (err) => console.error('Error al obtener ID:', err),
+                });
+
+          //this.roles = data.filter(rol => rol.nombre_rol !== 'ADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'SUBADMINISTRADOR FUNDADES' && rol.nombre_rol !== 'ADMINISTRADOR'); // excluye ADMIN y SUBADMIN Fundades
         }
       });
     });
@@ -162,8 +190,8 @@ export class ModalUsuarioFormComponent implements OnInit{
 
       obs.subscribe(() => {
         // Después del insert/update, actualizar la lista compartida
-        this.usuarioService.list().subscribe((data) => {
-          this.usuarioService.setList(data);
+        this.usuarioService.listPublico().subscribe((data) => {
+          this.usuarioService.setListPublico(data);
           this.dialogRef.close(true); // cerrar el modal después de actualizar la lista
         });
       });
