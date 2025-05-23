@@ -3,7 +3,7 @@
     /*width: 1200px;*/
     max-width: 95%;
     height: 58px;
-    background: #E3B05E;
+    background: #004A75;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -21,7 +21,7 @@
     /*width: 1200px;*/
     max-width: 95%;
     height: auto;
-    background: #E4E4E4;
+    background: #EDEDED;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
@@ -202,7 +202,7 @@
     flex: 1; /* Le damos flexibilidad pero menor prioridad que la barra */
     /*min-width: 180px; /* Para evitar que se haga muy pequeño */
     height: 56px;
-    background: #f5d39d;
+    background: #004A75;
     border-radius: 20px;
     padding: 13px 30px;
     font-family: 'Poppins', sans-serif;
@@ -216,6 +216,7 @@
     cursor: pointer;
     white-space: nowrap;
     justify-content: center;
+    color: #FFFFFF;
   }
   
   .barra-busqueda {
@@ -321,7 +322,8 @@
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    background: #f5d39d;
+    background: #004A75;
+    color: #FFFFFF;
   }
 
   /* Efecto adicional al hacer hover sobre los botones dentro del hover */
@@ -335,7 +337,7 @@
 
   
   .hover-opciones .deshabilitar {
-    color: black;
+    color: #FFFFFF;
   }
 
   mat-paginator {

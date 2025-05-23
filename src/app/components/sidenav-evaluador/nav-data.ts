@@ -4,7 +4,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'homes',
         svgIcon: '../../../assets/Home.svg',
-        svgIconActive: '../../../assets/Home-hover.svg',
+        svgIconActive: '../../../assets/Home-hoverBlue.svg',
         //icon: 'fal fa-home', // Dashboard
         label: 'Home',
         dividerAfter: true,
@@ -12,32 +12,32 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'dashboard',
         svgIcon: '../../../assets/dashboard.svg',
-        svgIconActive: '../../../assets/dashboard-hover.svg',
+        svgIconActive: '../../../assets/dashboard-hoverBlue.svg',
         //icon: 'fal fa-briefcase', 
         label: 'Dashboard',
     },
     {
         routeLink: 'mis-trabajos',
         svgIcon: '../../../assets/empresas.svg', 
-        svgIconActive: '../../../assets/empresas-hover.svg',
+        svgIconActive: '../../../assets/empresas-hoverBlue.svg',
         label: 'Mis Trabajos',
     },
     {
         routeLink: 'postulantes',
         svgIcon: '../../../assets/postulante.svg',
-        svgIconActive: '../../../assets/postulante-hover.svg',
+        svgIconActive: '../../../assets/postulante-hoverBlue.svg',
         label: 'Postulantes',
     },
     {
         routeLink: 'evaluaciones',
         svgIcon: '../../../assets/evaluaciones.svg',
-        svgIconActive: '../../../assets/evaluaciones-hover.svg',
+        svgIconActive: '../../../assets/evaluaciones-hoverBlue.svg',
         label: 'Evaluaciones',
     },
     {
         routeLink: 'ajustes',
         svgIcon: '../../../assets/settings.svg',
-        svgIconActive: '../../../assets/settings-hover.svg',
+        svgIconActive: '../../../assets/settings-hoverBlue.svg',
         label: 'Ajustes',
         
         items: [

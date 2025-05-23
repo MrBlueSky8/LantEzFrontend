@@ -1,7 +1,7 @@
 .mi-empresa-header {
   max-width: 95%;
   height: 58px;
-  background: #E3B05E;
+  background: #004A75;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@
 .btn-agregar-empresa {
   flex: 1;
   height: 56px;
-  background: #f5d39d;
+  background: #004A75;
   border-radius: 20px;
   padding: 13px 30px;
   font-family: 'Poppins', sans-serif;
@@ -64,6 +64,7 @@
   cursor: pointer;
   white-space: nowrap;
   justify-content: center;
+  color: #FFFFFF;
 }
 
 .combo-empresa {
@@ -196,7 +197,7 @@ mat-paginator {
 .contenedor-areas {
   width: 100%;
   max-width: 95%;
-  background: #F5DAB0;
+  background: #EDEDED;
   border-radius: 20px;
   padding: 72px 30px;
   display: flex;
@@ -217,7 +218,7 @@ mat-paginator {
 .fila-header {
   width: 100%;
   height: 36px;
-  background: #EBC484;
+  background: #004A75;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -232,7 +233,7 @@ mat-paginator {
   font-weight: 700;
   font-size: 24px;
   text-align: center;
-  color: black;
+  color: #FFFFFF;
   display: flex;
   justify-content: center;
   align-items: center;

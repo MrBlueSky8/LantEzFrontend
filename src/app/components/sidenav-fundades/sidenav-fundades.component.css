@@ -16,7 +16,7 @@
   }
   
   .sidenav .logo-container .logo {
-    background: #e6bb7f;
+    background: #004A75;
     font-family: 'Poppins', sans-serif;
     text-align: center;
     width: 3rem;
@@ -27,6 +27,7 @@
     font-weight: 900;
     cursor: pointer;
     border: none;
+    color: #FEC70C;
   }
   
   .sidenav .logo-container .logo-image {
@@ -103,7 +104,7 @@
   }
   
   .sidenav-nav .sidenav-nav-item .sidenav-nav-link:hover {
-    background-color: #FFE5BB;
+    background-color: #FEC70CCC;
     color: #000;
   }
   
@@ -112,18 +113,18 @@
   }
   
   .active {
-    background-color: #FFE5BB;
+    background-color: #FEC70CCC;
   }
   
   .active .menu-collapse-icon,
   .active .sidenav-link-icon,
   .active .sidenav-link-text {
-    color: #DA8804;
+    color: #004A75;
   }
   
   .active-sublevel {
-    color: #DA8804 !important;
-    /*background-color: #FFE5BB;*/ /*quitar comentario para poner estilo clownfer*/
+    color: #004A75 !important;
+    /*background-color: #FEC70CCC;*/ /*quitar comentario para poner estilo clownfer*/
   }
   
   .menu-collapse-icon {
@@ -163,8 +164,8 @@
   }
   
   .sublevel-nav .sublevel-nav-item .sublevel-nav-link:hover {
-    /*color: #FFE5BB;*/
-    background-color: #FFE5BB;
+    /*color: #FEC70CCC;*/
+    background-color: #FEC70CCC;
   }
   
   /* Scrollbar y visibilidad */

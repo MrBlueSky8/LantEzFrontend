@@ -32,7 +32,7 @@
   <!-- Header: Botón + Buscador -->
   <div class="clientes-header-bar">
     <button class="btn-agregar-empresa" (click)="abrirModalCrear()">
-      <img src="/assets/plus.svg" alt="Agregar" />
+      <img src="/assets/plusWhite.svg" alt="Agregar" />
       AGREGAR EMPRESA
     </button>
 
@@ -55,12 +55,12 @@
         (error)="onImgError($event)" />
       <div class="hover-opciones">
         <h3>{{ empresa.nombre }}</h3>
-        <button (click)="editarEmpresa(empresa)"><img src="/assets/miniEdit.svg" /> Editar Datos</button>
-        <button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjo.svg" /> Ver Detalles</button>
+        <button (click)="editarEmpresa(empresa)"><img src="/assets/miniEditWhite.svg" /> Editar Datos</button>
+        <button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjoWhite.svg" /> Ver Detalles</button>
         <!--<button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjo.svg" /> Ver Status</button> -->
         <!--<button class="deshabilitar" (click)="deshabilitarEmpresa(empresa)"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>-->
         <button class="deshabilitar" (click)="toggleEstadoEmpresa(empresa)">
-          <img src="/assets/miniDisable.svg" />
+          <img src="/assets/miniDisableWhite.svg" />
           {{ empresa.estado ? 'Deshabilitar' : 'Habilitar' }}
         </button>
 
