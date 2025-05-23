@@ -274,6 +274,13 @@ mat-paginator {
   height: 36px;
   cursor: pointer;
   object-fit: contain;
+  transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.columna-acciones img:hover {
+  filter: brightness(0.9);
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* RESPONSIVE ESPECÍFICO PARA LA TABLA */
