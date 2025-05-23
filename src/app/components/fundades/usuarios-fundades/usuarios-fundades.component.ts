@@ -1,33 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MatPaginatorIntl,
-  MatPaginatorModule,
-  PageEvent,
-} from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 import { Empresas } from '../../../models/empresas';
-import { Usuarios } from '../../../models/usuarios';
+import { UsuariosLight } from '../../../models/usuariosLight';
 import { MatDialog } from '@angular/material/dialog';
 import { EmpresasService } from '../../../services/empresas.service';
 import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
-import { UsuariosLight } from '../../../models/usuariosLight';
-import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
+import { ModalUsuarioFormComponent } from '../../admin/modales/modal-usuario/modal-usuario-form/modal-usuario-form.component';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
-import { ModalUsuarioFormComponent } from '../modales/modal-usuario/modal-usuario-form/modal-usuario-form.component';
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-usuarios-fundades',
   imports: [CommonModule, MatPaginatorModule, FormsModule],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.css',
+  templateUrl: './usuarios-fundades.component.html',
+  styleUrl: './usuarios-fundades.component.css',
   providers: [
     { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
   ],
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosFundadesComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
   usuarios: UsuariosLight[] = [];
   usuariosFiltrados: UsuariosLight[] = [];
@@ -38,6 +33,9 @@ export class UsuariosComponent implements OnInit {
   filtroBusqueda: string = '';
   pageSize: number = 10;
   pageIndex: number = 0;
+
+  empresas: Empresas[] = [];
+  empresaSeleccionadaId: number | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -90,6 +88,31 @@ export class UsuariosComponent implements OnInit {
         },
         error: (err) => console.error('Error al obtener ID:', err),
       });
+
+      this.empresaService.list().subscribe({
+      next: (empresasTodas) => {
+        this.empresas = empresasTodas;
+      },
+      error: (err) =>
+        console.error('Error al listar empresas para el combo:', err),
+    });
+  }
+
+  onEmpresaSeleccionadaChange(): void {
+    const id = this.empresaSeleccionadaId;
+    if (!id || id === this.miEmpresa.id) {
+      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
+      this.refrescarUsuarios();
+      return;
+    }
+
+    this.empresaService.listId(id).subscribe({
+      next: (empresa) => {
+        this.miEmpresa = empresa;
+        this.refrescarUsuarios();
+      },
+      error: (err) => console.error('Error al cambiar de empresa:', err),
+    });
   }
 
   filtrarUsuarios(): void {
@@ -292,3 +315,4 @@ export class UsuariosComponent implements OnInit {
 }
 
 }
+

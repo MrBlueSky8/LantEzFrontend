@@ -55,6 +55,11 @@ export class UsuariosService {
   update(u: Usuarios){
     return this.http.put(this.url, u);
   }
+
+  updatePublico(u: UsuariosLight){
+    return this.http.put(this.url, u);
+  }
+
   eliminar(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
@@ -87,5 +92,8 @@ export class UsuariosService {
     return this.http.put(`${this.url}/habilitar/${id}`, {});
   }
 
+  validarPrivilegiosEmpresa(empresaId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.url}/validar-privilegios/${empresaId}`);
+  }
 
 }

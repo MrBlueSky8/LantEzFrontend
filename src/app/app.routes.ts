@@ -22,6 +22,7 @@ import { AppModuloEnDesarrolloComponent } from './components/shared/app-modulo-e
 import { AreasComponent } from './components/admin/areas/areas.component';
 import { PuestosTrabajoComponent } from './components/admin/puestos-trabajo/puestos-trabajo.component';
 import { AreasFundadesComponent } from './components/fundades/areas-fundades/areas-fundades.component';
+import { UsuariosFundadesComponent } from './components/fundades/usuarios-fundades/usuarios-fundades.component';
 
 export const routes: Routes = [
   {
@@ -55,7 +56,7 @@ export const routes: Routes = [
       },
       {
         path: 'usuarios',
-        component: UsuariosComponent,
+        component: UsuariosFundadesComponent,
       },
       {
         path: 'postulantes',
@@ -126,6 +127,15 @@ export const routes: Routes = [
       {
         path: 'ajustes',
         component: AjustesGeneralesComponent,
+      },
+      {
+      path: 'empresas/areas',
+      component:AreasComponent,
+      //component: AreasComponent,
+      },
+      {
+        path: 'empresas/puestos-trabajo',
+        component: PuestosTrabajoComponent,
       }
     ],
     canActivate: [segGuard],
