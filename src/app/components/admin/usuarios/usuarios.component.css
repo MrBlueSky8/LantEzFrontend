@@ -294,6 +294,11 @@ mat-paginator {
   .btn-agregar-empresa {
     font-size: 14px;
     padding: 10px 20px;
+
+    white-space: normal;         /* Permite salto de línea */
+    word-break: break-word;      /* Rompe si es necesario */
+    text-align: center;          /* Centra texto */
+    text-wrap: balance;          /* Opcional, mejora balance de línea */
   }
 
   .barra-busqueda input {
