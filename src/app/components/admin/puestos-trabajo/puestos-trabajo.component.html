@@ -1,1 +1,71 @@
-<p>puestos-trabajo works!</p>
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE PUESTOS DE TRABAJO</div>
+
+<!-- CONTENEDOR -->
+<div class="contenedor-areas">
+  <!-- Barra de acciones -->
+  <div class="clientes-header-bar">
+    <button class="btn-agregar-empresa" (click)="agregarPuesto()">
+      <img src="/assets/plusWhite.svg" alt="Agregar" />
+      AGREGAR PUESTO DE TRABAJO
+    </button>
+
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR PUESTO DE TRABAJO"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarPuestos()"
+      />
+    </div>
+  </div>
+
+  <!-- Tabla de puestos -->
+  <div class="tabla-areas">
+    <!-- Encabezado -->
+    <div class="fila-header">
+      <div class="columna-header-area">NOMBRE</div>
+      <div class="columna-header-area">USUARIO</div>
+      <div class="columna-header-area">ESTADO</div>
+      <div class="columna-header-area">APROBADO</div>
+      <div class="columna-header-area">FECHA</div>
+      <div class="columna-header-acciones">ACCIONES</div>
+    </div>
+
+    <!-- Filas -->
+    <div class="fila-area" *ngFor="let puesto of puestosPaginados">
+      <div class="columna-area">{{ puesto.nombre_puesto }}</div>
+      <div class="columna-area">
+        {{ puesto.usuarios.primer_nombre }} {{ puesto.usuarios.apellido_p }}
+      </div>
+      <div class="columna-area">
+        <span [ngStyle]="{ color: puesto.estado ? '#28a745' : '#dc3545', 'font-weight': '600' }">
+          {{ puesto.estado ? 'Finalizado' : 'Pendiente' }}
+        </span>
+      </div>
+      <div class="columna-area">
+        {{ puesto.aprobado ? 'Sí' : 'No' }}
+      </div>
+      <div class="columna-area">
+        {{ puesto.fecha_actualizacion | date: 'yyyy-MM-dd HH:mm:ss' }}
+      </div>
+      <div class="columna-acciones">
+        <img src="/assets/eyeDetail.svg" alt="Ver Detalle" (click)="verDetallePuesto(puesto)" />
+        <img src="/assets/editarAction.svg" alt="Editar" (click)="editarPuesto(puesto)" />
+        <img src="/assets/fichaIcon.svg" alt="Llenar Ficha" (click)="llenarFichaPuesto(puesto)" />
+        <img src="/assets/disableAction.svg" alt="Eliminar" (click)="eliminarPuesto(puesto)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [length]="puestosFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>

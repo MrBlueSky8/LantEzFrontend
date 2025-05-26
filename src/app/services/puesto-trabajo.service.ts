@@ -29,6 +29,11 @@ export class PuestoTrabajoService {
   listId(id:number){
     return this.http.get<PuestosTrabajo>(`${this.url}/${id}`)
   }
+
+  listbyEmpresaId(id: number) {
+        return this.http.get<PuestosTrabajo[]>(`${this.url}/empresa/${id}`);
+  }
+
   update(u: PuestosTrabajo){
     return this.http.put(this.url, u);
   }
