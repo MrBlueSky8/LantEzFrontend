@@ -29,7 +29,6 @@
       <div class="columna-header-area">USUARIO</div>
       <div class="columna-header-area">ESTADO</div>
       <div class="columna-header-area">APROBADO</div>
-      <div class="columna-header-area">FECHA</div>
       <div class="columna-header-acciones">ACCIONES</div>
     </div>
 
@@ -47,9 +46,7 @@
       <div class="columna-area">
         {{ puesto.aprobado ? 'Sí' : 'No' }}
       </div>
-      <div class="columna-area">
-        {{ puesto.fecha_actualizacion | date: 'yyyy-MM-dd HH:mm:ss' }}
-      </div>
+      
       <div class="columna-acciones">
         <img src="/assets/eyeDetail.svg" alt="Ver Detalle" (click)="verDetallePuesto(puesto)" />
         <img src="/assets/editarAction.svg" alt="Editar" (click)="editarPuesto(puesto)" />
