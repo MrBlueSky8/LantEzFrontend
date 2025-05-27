@@ -47,4 +47,8 @@ export class EmpresasService {
   habilitar(id: number) {
     return this.http.put(`${this.url}/habilitar/${id}`, {});
   }
+
+  listByPuestoId(id:number){
+    return this.http.get<Empresas>(`${this.url}/por-puesto/${id}`)
+  }
 }
