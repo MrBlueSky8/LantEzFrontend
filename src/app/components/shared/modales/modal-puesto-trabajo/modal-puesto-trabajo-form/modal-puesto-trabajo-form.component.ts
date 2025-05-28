@@ -17,6 +17,7 @@ import { EmpresasService } from '../../../../../services/empresas.service';
 import { AreasService } from '../../../../../services/areas.service';
 import { UsuariosService } from '../../../../../services/usuarios.service';
 import { UsuariosLight } from '../../../../../models/usuariosLight';
+import { LoginService } from '../../../../../services/login.service';
 
 @Component({
   selector: 'app-modal-puesto-trabajo-form',
@@ -51,9 +52,12 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
     private empresaService: EmpresasService,
     private areaService: AreasService,
     private usuarioService: UsuariosService,
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
+    const miRol = this.loginService.showRole();
+
     if (this.data.empresa) {
       this.empresaSeleccionada = this.data.empresa;
 
@@ -61,9 +65,25 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
         this.misAreas = data;
       });
 
-      this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+      if(miRol==='EVALUADOR'){
+        this.usuarioService
+        .findIdByEmail(this.loginService.showUser())
+        .subscribe({
+          next: (idusr) => {
+            this.usuarioService.listIdPublico(idusr).subscribe({
+              next: (usuario) => {
+                this.misUsuarios = [usuario];
+              },
+              error: (err) => console.error('Error al obtener usuario:', err),
+            });
+          },
+          error: (err) => console.error('Error al obtener ID:', err),
+        });
+      }else{
+        this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
         this.misUsuarios = data;
       });
+      }
 
     } else if (this.data.puesto?.id) {
       this.empresaService
