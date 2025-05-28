@@ -8,7 +8,6 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ModalAreaFormComponent } from '../../../../admin/modales/modal-area/modal-area-form/modal-area-form.component';
 import { PuestosTrabajo } from '../../../../../models/puestos-trabajo';
 import { Empresas } from '../../../../../models/empresas';
 import { PuestoTrabajoService } from '../../../../../services/puesto-trabajo.service';
@@ -57,21 +56,30 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.empresa) {
       this.empresaSeleccionada = this.data.empresa;
+
+        this.areaService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+        this.misAreas = data;
+      });
+
+      this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+        this.misUsuarios = data;
+      });
+
     } else if (this.data.puesto?.id) {
       this.empresaService
         .listByPuestoId(this.data.puesto.id)
         .subscribe((data) => {
           this.empresaSeleccionada = data;
+          this.areaService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+            this.misAreas = data;
+          });
+
+          this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+            this.misUsuarios = data;
+          });
         });
     }
 
-    this.areaService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
-      this.misAreas = data;
-    });
-
-    this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
-      this.misUsuarios = data;
-    });
 
     this.esEdicion = !!this.data.puesto;
 
@@ -106,7 +114,7 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
       areas: this.misAreas.find(c => c.id === this.formPuesto.value.area_id)!,
       usuarios: this.misUsuarios.find(c => c.id === this.formPuesto.value.usuario_id)!,
       fecha_actualizacion: new Date(Date.now()),
-      fecha_creacion: this.data.puesto?.fecha_actualizacion || new Date(Date.now())
+      fecha_creacion: this.data.puesto?.fecha_creacion || new Date(Date.now())
     };
     delete (nuevoPuesto as any).area_id;
     delete (nuevoPuesto as any).usuario_id;
