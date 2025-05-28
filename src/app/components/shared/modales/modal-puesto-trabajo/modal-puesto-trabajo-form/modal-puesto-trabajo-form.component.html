@@ -37,7 +37,7 @@
 
       <!-- Área -->
       <mat-form-field appearance="fill" class="custom-select">
-        <mat-label>Área*</mat-label>
+        <mat-label>Área</mat-label>
         <mat-select formControlName="area_id">
           <mat-option *ngFor="let area of misAreas" [value]="area.id">
             {{ area.nombre_area }}
@@ -50,7 +50,7 @@
 
       <!-- Usuario Asignado -->
       <mat-form-field appearance="fill" class="custom-select">
-        <mat-label>Usuario Asignado*</mat-label>
+        <mat-label>Usuario Asignado</mat-label>
         <mat-select formControlName="usuario_id">
           <mat-option *ngFor="let usuario of misUsuarios" [value]="usuario.id">
             {{ usuario.primer_nombre }} {{ usuario.apellido_p }}

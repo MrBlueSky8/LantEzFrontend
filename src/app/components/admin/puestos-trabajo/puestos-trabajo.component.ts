@@ -155,6 +155,11 @@ export class PuestosTrabajoComponent implements OnInit {
     console.log('Click detalle puesto:', puesto.nombre_puesto);
   
     if (!puesto) return;
+
+     const dialogRef = this.dialog.open(ModalPuestoTrabajoFormComponent, {
+              width: 'auto',
+              data: { puesto, verDetalle: true },
+            });
   }
 
   private refrescarPuesto(): void {
