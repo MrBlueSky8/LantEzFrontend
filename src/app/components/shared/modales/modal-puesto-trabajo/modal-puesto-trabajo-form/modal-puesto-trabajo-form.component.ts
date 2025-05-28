@@ -81,8 +81,8 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
         });
       }else{
         this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
-        this.misUsuarios = data;
-      });
+          this.misUsuarios = data;
+        });
       }
 
     } else if (this.data.puesto?.id) {
@@ -94,9 +94,25 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
             this.misAreas = data;
           });
 
-          this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
-            this.misUsuarios = data;
-          });
+          if(miRol==='EVALUADOR'){
+            this.usuarioService
+            .findIdByEmail(this.loginService.showUser())
+            .subscribe({
+              next: (idusr) => {
+                this.usuarioService.listIdPublico(idusr).subscribe({
+                  next: (usuario) => {
+                    this.misUsuarios = [usuario];
+                  },
+                  error: (err) => console.error('Error al obtener usuario:', err),
+                });
+              },
+              error: (err) => console.error('Error al obtener ID:', err),
+            });
+          }else{
+            this.usuarioService.listbyEmpresaId(this.empresaSeleccionada.id).subscribe((data) => {
+              this.misUsuarios = data;
+            });
+          }
         });
     }
 
