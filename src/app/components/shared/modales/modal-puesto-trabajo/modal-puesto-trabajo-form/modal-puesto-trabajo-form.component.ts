@@ -90,11 +90,10 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
     if(this.data.verDetalle){
       this.formPuesto.disable();
     }else{
-      this.formPuesto.value.fecha_creacion.disable();
-      this.formPuesto.value.fecha_actualizacion.disable();
-
-      this.formPuesto.value.estado.disable();
-      this.formPuesto.value.aprobado.disable();
+      this.formPuesto.get('fecha_creacion')?.disable();
+      this.formPuesto.get('fecha_actualizacion')?.disable();
+      this.formPuesto.get('estado')?.disable();
+      this.formPuesto.get('aprobado')?.disable();
     }
   }
 
@@ -106,6 +105,8 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
       ...this.formPuesto.value,
       areas: this.misAreas.find(c => c.id === this.formPuesto.value.area_id)!,
       usuarios: this.misUsuarios.find(c => c.id === this.formPuesto.value.usuario_id)!,
+      fecha_actualizacion: new Date(Date.now()),
+      fecha_creacion: this.data.puesto?.fecha_actualizacion || new Date(Date.now())
     };
     delete (nuevoPuesto as any).area_id;
     delete (nuevoPuesto as any).usuario_id;
