@@ -73,7 +73,7 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
       this.misUsuarios = data;
     });
 
-    this.esEdicion = !!this.data.empresa;
+    this.esEdicion = !!this.data.puesto;
 
     this.formPuesto =this.fb.group({
       area_id: [this.data.puesto?.areas.id || '', Validators.required],
