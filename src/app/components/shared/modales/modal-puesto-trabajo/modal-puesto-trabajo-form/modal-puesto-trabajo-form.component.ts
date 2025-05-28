@@ -40,7 +40,7 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
   empresaSeleccionada!: Empresas;
 
   constructor(
-    private dialogRef: MatDialogRef<ModalAreaFormComponent>,
+    private dialogRef: MatDialogRef<ModalPuestoTrabajoFormComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       puesto?: PuestosTrabajo;

@@ -15,6 +15,7 @@ import { LoginService } from '../../../services/login.service';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { ModalPuestoTrabajoFormComponent } from '../../shared/modales/modal-puesto-trabajo/modal-puesto-trabajo-form/modal-puesto-trabajo-form.component';
+import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 
 @Component({
   selector: 'app-puestos-trabajo',
@@ -120,7 +121,34 @@ export class PuestosTrabajoComponent implements OnInit {
   editarPuesto(puesto: PuestosTrabajo): void {
       console.log('Click editar puesto:', puesto.nombre_puesto);
       if (!puesto) return;
-  
+
+      const dialogRef = this.dialog.open(ModalPuestoTrabajoFormComponent, {
+            width: 'auto',
+            data: { puesto, verDetalle: false },
+          });
+      
+          dialogRef.afterClosed().subscribe((resultado) => {
+            if (resultado) {
+              //console.log('Puesto editado');
+              // recargar y filtrar
+              this.puestosService
+                .listbyEmpresaId(this.miEmpresa.id)
+                .subscribe((todas) => {
+                  this.puestosTrabajos = todas;
+                  this.puestosFiltrados = [...this.puestosTrabajos];
+                  //this.updateEmpresasPaginadas();
+                  this.filtrarPuestos();
+                });
+      
+              const dialogSucces = this.dialog.open(ModalExitoComponent, {
+                data: {
+                  titulo: 'Información Actualizada',
+                  iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                  //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+                },
+              });
+            }
+          });
   }
 
   verDetallePuesto(puesto: PuestosTrabajo): void {
