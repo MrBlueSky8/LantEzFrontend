@@ -62,8 +62,8 @@
       </mat-form-field>
 
      <!-- Fechas (solo visuales, no editables) -->
-    <input class="custom-input" type="text" placeholder="Fecha de Creación" formControlName="fecha_creacion" />
-    <input class="custom-input" type="text" placeholder="Última Actualización" formControlName="fecha_actualizacion" />
+    <input class="custom-input" type="text" formControlName="fecha_creacion" readonly />
+    <input class="custom-input" type="text" formControlName="fecha_actualizacion" readonly />
 
     <!-- Estado -->
     <mat-form-field appearance="fill" class="custom-select">
@@ -87,9 +87,10 @@
 
       <!-- Botones -->
       <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
-      <button class="btn-clear" type="button" (click)="formPuesto.reset()" *ngIf="!data.verDetalle">
+      <button class="btn-clear" type="button" (click)="limpiarCamposEditables()" *ngIf="!data.verDetalle">
         Borrar Casillas
       </button>
+
 
     </form>
   </div>

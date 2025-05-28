@@ -80,8 +80,8 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
       usuario_id: [this.data.puesto?.usuarios.id || '', Validators.required],
       nombre_puesto: [this.data.puesto?.nombre_puesto || '', [Validators.required, Validators.maxLength(150)]],
       descripcion: [this.data.puesto?.descripcion || '', Validators.maxLength(500)],
-      fecha_creacion: [this.data.puesto?.fecha_creacion || new Date(Date.now()), Validators.required],
-      fecha_actualizacion: [this.data.puesto?.fecha_actualizacion || new Date(Date.now()), Validators.required],
+      fecha_creacion: [this.formatDateTime(this.data.puesto?.fecha_creacion || new Date()), Validators.required],
+      fecha_actualizacion: [this.formatDateTime(this.data.puesto?.fecha_actualizacion || new Date()), Validators.required],
 
       estado: [this.data.puesto?.estado ?? false, Validators.required],
       aprobado: [this.data.puesto?.aprobado ?? false, Validators.required],
@@ -126,4 +126,28 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
   cerrar(): void {
     this.dialogRef.close();
   }
+
+  private formatDateTime(date: Date): string {
+    const d = new Date(date);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    const ss = String(d.getSeconds()).padStart(2, '0');
+    return `${dd}-${mm}-${yyyy} ${hh}:${min}:${ss}`;
+  }
+
+  limpiarCamposEditables(): void {
+  this.formPuesto.patchValue({
+    area_id: '',
+    usuario_id: '',
+    nombre_puesto: '',
+    descripcion: ''
+  });
+
+  this.formPuesto.markAsPristine();
+  this.formPuesto.markAsUntouched();
+}
+
 }
