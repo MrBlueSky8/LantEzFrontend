@@ -16,6 +16,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { ModalPuestoTrabajoFormComponent } from '../../shared/modales/modal-puesto-trabajo/modal-puesto-trabajo-form/modal-puesto-trabajo-form.component';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-puestos-trabajo',
@@ -41,7 +42,9 @@ export class PuestosTrabajoComponent implements OnInit {
     private empresaService: EmpresasService,
     private loginService: LoginService,
     private usuarioService: UsuariosService,
-    private puestosService: PuestoTrabajoService
+    private puestosService: PuestoTrabajoService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -171,8 +174,13 @@ export class PuestosTrabajoComponent implements OnInit {
   }
 
   llenarFichaPuesto(puesto: PuestosTrabajo): void {
-      console.log('Click llenar Ficha puesto:', puesto.nombre_puesto);
+      console.log('Click llenar Ficha puestoo:', puesto.nombre_puesto);
       if (!puesto) return;
+
+      const currentSidenav = this.router.url.split('/')[1];; // fallback por si falla
+
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/empresas/puestos-trabajo/ficha`, puesto.id]);
   
   }
 
