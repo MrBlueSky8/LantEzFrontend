@@ -73,7 +73,7 @@ export class UsuariosService {
   }
 
   findIdByEmail(email: string): Observable<number> {
-    return this.http.get<number>(`${this.url}/findid/${email}`);;
+    return this.http.get<number>(`${this.url}/findid/${email}`);
   }
 
   findIdEmpresaByEmail(email: string): Observable<number> {

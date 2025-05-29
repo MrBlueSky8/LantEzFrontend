@@ -59,7 +59,12 @@ export class MiEmpresaComponent implements OnInit {
 
   editarMiEmpresa(): void{
 
-    this.abrirModalEditar(this.miEmpresa);
+    //this.abrirModalEditar(this.miEmpresa);
+    
+    const dialogRef = this.dialog.open(ModalEmpresaFormComponent, {
+            width: 'auto',
+            data: { empresa: this.miEmpresa, verDetalle: true },
+          });
 
   }
 
