@@ -141,6 +141,10 @@ export const routes: Routes = [
       {
         path: 'mi-empresa/puestos-trabajo',
         component: PuestosTrabajoComponent,
+      },
+      {
+        path: 'mi-empresa/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
       }
     ],
     canActivate: [segGuard],
