@@ -39,4 +39,10 @@ export class PreguntasPerfilService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+  listtipopuesto(){
+    return this.http.get<Preguntas_perfil[]>(`${this.url}/tipo/puesto`);
+  }
+  listartipotrabajor(){
+    return this.http.get<Preguntas_perfil[]>(`${this.url}/tipo/trabajador`);
+  }
 }

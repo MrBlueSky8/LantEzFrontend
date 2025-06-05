@@ -39,4 +39,8 @@ export class PerfilDelPuntoService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  listbypreguntaPerfilId(id: number) {
+        return this.http.get<Perfil_del_punto[]>(`${this.url}/pregunta/${id}`);
+    }
 }
