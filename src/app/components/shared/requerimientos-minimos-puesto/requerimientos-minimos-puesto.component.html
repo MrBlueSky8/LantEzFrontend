@@ -1,1 +1,16 @@
-<p>requerimientos-minimos-puesto works!</p>
+<div *ngFor="let pregunta of preguntasPerfil">
+  <h3>{{pregunta.pregunta}}</h3>
+  <p>{{pregunta.definicion}}</p>
+  
+  <div *ngFor="let perfil of perfilesPorPregunta[pregunta.id]">
+    <label>
+      <input type="radio" 
+        [name]="'pregunta' + pregunta.id" 
+        [value]="perfil.n_respuesta" 
+        (change)="seleccionarNivel(pregunta.id, perfil.n_respuesta)" />
+      Nivel {{perfil.n_respuesta}}: {{perfil.descripcion}}
+    </label>
+  </div>
+</div>
+
+<button (click)="guardar()">Guardar</button>

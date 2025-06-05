@@ -11,6 +11,7 @@ import { PerfilDelPuntoService } from '../../../services/perfil-del-punto.servic
 import { Perfil_del_punto } from '../../../models/perfil_del_punto';
 import { PreguntasPerfilService } from '../../../services/preguntas-perfil.service';
 import { Preguntas_perfil } from '../../../models/preguntas_perfil';
+import { Requerimientos_minimos_puesto } from '../../../models/requerimientos_minimos_puesto';
 
 @Component({
   selector: 'app-requerimientos-minimos-puesto',
@@ -30,10 +31,17 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
 
   preguntasPerfil: Preguntas_perfil[] = [];
 
+  perfilesPorPregunta: { [preguntaId: number]: Perfil_del_punto[] } = {};
+
+  nivelesSeleccionados: { [preguntaId: number]: number } = {};
+
+
   constructor(
     private route: ActivatedRoute,
     private puestoService: PuestoTrabajoService,
     private preguntaPerfilService: PreguntasPerfilService,
+    private perfilPuntoService: PerfilDelPuntoService,
+    private requerimientosService: RequerimientosMinimosPuestoService,
   ) {}
 
   ngOnInit(): void {
@@ -45,9 +53,7 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
           this.cargando = false;
           console.log('evento: puesto cargado: '+ this.puesto.nombre_puesto);
 
-          this.preguntaPerfilService.listtipopuesto().subscribe((data) => {
-            this.preguntasPerfil = data;
-          });
+          this.cargarPreguntas();
         },
         error: () => {
           this.cargando = false;
@@ -57,4 +63,55 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
     }
   }
 
+  cargarPreguntas(): void {
+    this.preguntaPerfilService.listtipopuesto().subscribe((preguntas) => {
+      this.preguntasPerfil = preguntas;
+      
+      // Ahora cargamos perfiles para cada pregunta
+      preguntas.forEach(pregunta => {
+        this.perfilPuntoService.listbypreguntaPerfilId(pregunta.id).subscribe((perfiles) => {
+          this.perfilesPorPregunta[pregunta.id] = perfiles;
+        });
+      });
+
+      this.cargando = false;
+    });
+  }
+
+  // registrar selección de nivel por pregunta
+  seleccionarNivel(preguntaId: number, nivel: number): void {
+    this.nivelesSeleccionados[preguntaId] = nivel;
+  }
+
+  // preparar datos para enviar
+  guardar(): void {
+    const requerimientosMinimos: Requerimientos_minimos_puesto[] = [];
+
+    this.preguntasPerfil.forEach(pregunta => {
+      const nivelSeleccionado = this.nivelesSeleccionados[pregunta.id];
+
+      if (nivelSeleccionado === undefined) {
+        console.warn(`Pregunta ${pregunta.pregunta} no tiene nivel seleccionado.`);
+        return;
+      }
+
+      const requerimiento = new Requerimientos_minimos_puesto();
+      requerimiento.puestos_trabajo = this.puesto;
+      requerimiento.pregunta_perfil = pregunta;
+      requerimiento.resultado_minimo = nivelSeleccionado;
+      requerimiento.estado = nivelSeleccionado !== 6;
+      requerimiento.fecha_update = new Date();
+
+      requerimientosMinimos.push(requerimiento);
+    });
+
+    this.requerimientosService.insertMultiple(requerimientosMinimos).subscribe({
+      next: () => {
+        console.log('Requerimientos mínimos guardados correctamente.');
+      },
+      error: err => {
+        console.error('Error al guardar requerimientos mínimos:', err);
+      }
+    });
+  }
 }

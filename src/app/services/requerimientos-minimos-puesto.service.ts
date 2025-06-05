@@ -39,4 +39,9 @@ export class RequerimientosMinimosPuestoService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  insertMultiple(requerimientos: Requerimientos_minimos_puesto[]) {
+  return this.http.post(`${this.url}/multiple`, requerimientos);
+}
+
 }
