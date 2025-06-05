@@ -3,29 +3,24 @@
 
 <!-- CONTENEDOR GENERAL -->
 <div class="contenedor-areas">
-
   <!-- BLOQUES POR CADA PREGUNTA -->
   <div class="bloque-pregunta" *ngFor="let pregunta of preguntasPerfil">
-
-    <!-- Cabecera expandible -->
-    <details open class="pregunta-header">
+    <details class="pregunta-header">
       <summary>
-        <span class="pregunta-numero">
-          {{ pregunta.id }}
-        </span>
+        <span class="pregunta-numero">{{ pregunta.pregunta.split('.')[0] }}</span>
         <span class="pregunta-titulo">
-          {{ pregunta.pregunta }}
+          {{ pregunta.pregunta.split('. ')[1] }}
         </span>
         <div class="pregunta-definicion">
           {{ pregunta.definicion }}
         </div>
       </summary>
 
-      <!-- Opciones por nivel -->
       <div class="opciones-nivel" *ngIf="perfilesPorPregunta[pregunta.id]">
         <label
           class="nivel-item"
           *ngFor="let perfil of perfilesPorPregunta[pregunta.id]"
+          [class.nivel-seleccionado]="nivelesSeleccionados[pregunta.id] === perfil.n_respuesta"
         >
           <input
             type="radio"
@@ -34,6 +29,7 @@
             [checked]="nivelesSeleccionados[pregunta.id] === perfil.n_respuesta"
             (change)="seleccionarNivel(pregunta.id, perfil.n_respuesta)"
           />
+          <div class="nivel-numero">{{ perfil.n_respuesta }}</div>
           <div class="nivel-contenido">
             <div class="nivel-titulo">Nivel {{ perfil.n_respuesta }}</div>
             <div class="nivel-descripcion">{{ perfil.descripcion }}</div>
@@ -47,5 +43,4 @@
   <div class="guardar-wrapper">
     <button class="btn-submit" (click)="guardar()">Guardar</button>
   </div>
-
 </div>
