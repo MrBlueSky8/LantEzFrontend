@@ -1,16 +1,51 @@
-<div *ngFor="let pregunta of preguntasPerfil">
-  <h3>{{pregunta.pregunta}}</h3>
-  <p>{{pregunta.definicion}}</p>
-  
-  <div *ngFor="let perfil of perfilesPorPregunta[pregunta.id]">
-    <label>
-      <input type="radio" 
-        [name]="'pregunta' + pregunta.id" 
-        [value]="perfil.n_respuesta" 
-        (change)="seleccionarNivel(pregunta.id, perfil.n_respuesta)" />
-      Nivel {{perfil.n_respuesta}}: {{perfil.descripcion}}
-    </label>
-  </div>
-</div>
+<!-- HEADER -->
+<div class="mi-empresa-header">FICHA DE PUESTO DE TRABAJO</div>
 
-<button (click)="guardar()">Guardar</button>
+<!-- CONTENEDOR GENERAL -->
+<div class="contenedor-areas">
+
+  <!-- BLOQUES POR CADA PREGUNTA -->
+  <div class="bloque-pregunta" *ngFor="let pregunta of preguntasPerfil">
+
+    <!-- Cabecera expandible -->
+    <details open class="pregunta-header">
+      <summary>
+        <span class="pregunta-numero">
+          {{ pregunta.id }}
+        </span>
+        <span class="pregunta-titulo">
+          {{ pregunta.pregunta }}
+        </span>
+        <div class="pregunta-definicion">
+          {{ pregunta.definicion }}
+        </div>
+      </summary>
+
+      <!-- Opciones por nivel -->
+      <div class="opciones-nivel" *ngIf="perfilesPorPregunta[pregunta.id]">
+        <label
+          class="nivel-item"
+          *ngFor="let perfil of perfilesPorPregunta[pregunta.id]"
+        >
+          <input
+            type="radio"
+            [name]="'pregunta_' + pregunta.id"
+            [value]="perfil.n_respuesta"
+            [checked]="nivelesSeleccionados[pregunta.id] === perfil.n_respuesta"
+            (change)="seleccionarNivel(pregunta.id, perfil.n_respuesta)"
+          />
+          <div class="nivel-contenido">
+            <div class="nivel-titulo">Nivel {{ perfil.n_respuesta }}</div>
+            <div class="nivel-descripcion">{{ perfil.descripcion }}</div>
+          </div>
+        </label>
+      </div>
+    </details>
+  </div>
+
+  <!-- BOTÓN GUARDAR -->
+  <div class="guardar-wrapper">
+    <button class="btn-submit" (click)="guardar()">Guardar</button>
+  </div>
+
+</div>
