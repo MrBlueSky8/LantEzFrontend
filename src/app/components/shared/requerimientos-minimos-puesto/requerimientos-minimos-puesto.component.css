@@ -181,6 +181,18 @@
   transform: scale(1.02);
 }
 
+.pregunta-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flecha-icono {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

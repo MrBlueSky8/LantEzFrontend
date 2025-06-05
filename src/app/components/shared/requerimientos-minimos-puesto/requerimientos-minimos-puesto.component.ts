@@ -35,6 +35,7 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
 
   nivelesSeleccionados: { [preguntaId: number]: number } = {};
 
+  estadoPreguntasAbiertas: { [preguntaId: number]: boolean } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +70,7 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
       
       // Ahora cargamos perfiles para cada pregunta
       preguntas.forEach(pregunta => {
+        this.estadoPreguntasAbiertas[pregunta.id] = true;
         this.perfilPuntoService.listbypreguntaPerfilId(pregunta.id).subscribe((perfiles) => {
           this.perfilesPorPregunta[pregunta.id] = perfiles;
         });
