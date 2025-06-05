@@ -19,6 +19,7 @@
           />
         </div>
         <div class="pregunta-definicion">{{ pregunta.definicion }}</div>
+         <div class="divider-after" *ngIf="estadoPreguntasAbiertas[pregunta.id]"></div>
       </summary>
 
       <div class="opciones-nivel" *ngIf="perfilesPorPregunta[pregunta.id]">
