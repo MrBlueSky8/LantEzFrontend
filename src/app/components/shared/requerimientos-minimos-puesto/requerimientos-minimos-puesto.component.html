@@ -5,12 +5,12 @@
 <div class="contenedor-areas">
   <!-- BLOQUES POR CADA PREGUNTA -->
   <div class="bloque-pregunta" *ngFor="let pregunta of preguntasPerfil">
-    <details class="pregunta-header">
+    <details class="pregunta-header" open> <!--eliminar el open para que sea replegado por defecto-->
       <summary>
-        <span class="pregunta-numero">{{ pregunta.pregunta.split('.')[0] }}</span>
-        <span class="pregunta-titulo">
-          {{ pregunta.pregunta.split('. ')[1] }}
-        </span>
+        <div class="pregunta-cabecera">
+          <span class="pregunta-numero">{{ pregunta.pregunta.split('.')[0] }}</span>
+          <span class="pregunta-titulo">{{ pregunta.pregunta.split('. ')[1] }}</span>
+        </div>
         <div class="pregunta-definicion">
           {{ pregunta.definicion }}
         </div>

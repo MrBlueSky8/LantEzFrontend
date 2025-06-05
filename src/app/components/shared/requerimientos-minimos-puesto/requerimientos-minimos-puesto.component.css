@@ -36,6 +36,14 @@
   flex-direction: column;
 }
 
+.pregunta-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+
 .pregunta-numero {
   background: #004A75;
   color: white;
@@ -54,7 +62,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 12px;
-  margin-top: 8px;
+  /*margin-top: 8px;*/
 }
 
 .pregunta-definicion {
@@ -150,6 +158,29 @@
 .btn-submit:hover {
   transform: translateY(-2px);
 }
+
+.nivel-item:hover {
+  background-color: #004A75;
+}
+
+.nivel-item:hover .nivel-titulo,
+.nivel-item:hover .nivel-descripcion {
+  color: #FFFFFF;
+}
+
+.nivel-item:hover .nivel-numero {
+  background: #FFFFFF;
+  color: #004A75;
+}
+
+.nivel-item {
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.nivel-item:hover {
+  transform: scale(1.02);
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
