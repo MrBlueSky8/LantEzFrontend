@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { PuestosTrabajo } from '../../../models/puestos-trabajo';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { RequerimientosMinimosPuestoService } from '../../../services/requerimientos-minimos-puesto.service';
 import { PerfilDelPuntoService } from '../../../services/perfil-del-punto.service';
@@ -12,6 +12,9 @@ import { Perfil_del_punto } from '../../../models/perfil_del_punto';
 import { PreguntasPerfilService } from '../../../services/preguntas-perfil.service';
 import { Preguntas_perfil } from '../../../models/preguntas_perfil';
 import { Requerimientos_minimos_puesto } from '../../../models/requerimientos_minimos_puesto';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalConfirmacionComponent } from '../modales/modal-confirmacion/modal-confirmacion.component';
+import { ModalExitoComponent } from '../modales/modal-exito/modal-exito.component';
 
 @Component({
   selector: 'app-requerimientos-minimos-puesto',
@@ -38,11 +41,13 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
   estadoPreguntasAbiertas: { [preguntaId: number]: boolean } = {};
 
   constructor(
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private puestoService: PuestoTrabajoService,
     private preguntaPerfilService: PreguntasPerfilService,
     private perfilPuntoService: PerfilDelPuntoService,
     private requerimientosService: RequerimientosMinimosPuestoService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -96,33 +101,59 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
 
   // preparar datos para enviar
   guardar(): void {
-    const requerimientosMinimos: Requerimientos_minimos_puesto[] = [];
 
-    this.preguntasPerfil.forEach(pregunta => {
-      let nivelSeleccionado = this.nivelesSeleccionados[pregunta.id];
+    const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+        width: 'auto',
+        data: {
+          titulo: `¿Estás seguro de guardar esta ficha?`,
+        }
+      });
 
-      if (nivelSeleccionado === undefined) {
-        console.warn(`Pregunta ${pregunta.pregunta} no tiene nivel seleccionado. Se asignará como N/A.`);
-        nivelSeleccionado = 6;
-      }
+      dialogConfirmation.afterClosed().subscribe(confirmado => {
+        if (!confirmado) return;
+      
+        const requerimientosMinimos: Requerimientos_minimos_puesto[] = [];
 
-      const requerimiento = new Requerimientos_minimos_puesto();
-      requerimiento.puestos_trabajo = this.puesto;
-      requerimiento.pregunta_perfil = pregunta;
-      requerimiento.resultado_minimo = nivelSeleccionado;
-      requerimiento.estado = nivelSeleccionado !== 6;
-      requerimiento.fecha_update = new Date();
+        this.preguntasPerfil.forEach(pregunta => {
+          let nivelSeleccionado = this.nivelesSeleccionados[pregunta.id];
 
-      requerimientosMinimos.push(requerimiento);
-    });
+          if (nivelSeleccionado === undefined) {
+            console.warn(`Pregunta ${pregunta.pregunta} no tiene nivel seleccionado. Se asignará como N/A.`);
+            nivelSeleccionado = 6;
+          }
 
-    this.requerimientosService.upsertMultiple(requerimientosMinimos).subscribe({
-      next: () => {
-        console.log('Requerimientos mínimos guardados/actualizados correctamente.');
-      },
-      error: err => {
-        console.error('Error al guardar/actualizar requerimientos mínimos:', err);
-      }
-    });
+          const requerimiento = new Requerimientos_minimos_puesto();
+          requerimiento.puestos_trabajo = this.puesto;
+          requerimiento.pregunta_perfil = pregunta;
+          requerimiento.resultado_minimo = nivelSeleccionado;
+          requerimiento.estado = nivelSeleccionado !== 6;
+          requerimiento.fecha_update = new Date();
+
+          requerimientosMinimos.push(requerimiento);
+        });
+
+        this.requerimientosService.upsertMultiple(requerimientosMinimos).subscribe({
+          next: () => {
+            console.log('Requerimientos mínimos guardados/actualizados correctamente.');
+             const dialogSucces = this.dialog.open(ModalExitoComponent, {
+                data: {
+                  titulo: `Ficha actualizada correctamente.`,
+                  iconoUrl: '/assets/checkicon.svg'
+                }
+              });
+
+              dialogSucces.afterClosed().subscribe(() => {
+                const currentSidenav = this.router.url.split('/')[1];; // fallback por si falla
+
+                //console.log('evento: current sidenav: ' + currentSidenav);
+                this.router.navigate([`/${currentSidenav}/empresas/puestos-trabajo`]);
+              });
+          },
+          error: err => {
+            console.error('Error al guardar/actualizar requerimientos mínimos:', err);
+          }
+        });
+          
+      });
   }
 }
