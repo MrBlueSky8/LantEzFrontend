@@ -1,5 +1,7 @@
 <!-- HEADER -->
-<div class="mi-empresa-header">FICHA DE PUESTO DE TRABAJO</div>
+<div class="mi-empresa-header">
+  FICHA DE PUESTO DE TRABAJO: {{ puesto.nombre_puesto }}
+</div>
 
 <!-- CONTENEDOR GENERAL -->
 <div class="contenedor-areas">
@@ -39,6 +41,25 @@
           <div class="nivel-contenido">
             <div class="nivel-titulo">Nivel {{ perfil.n_respuesta }}</div>
             <div class="nivel-descripcion">{{ perfil.descripcion }}</div>
+          </div>
+        </label>
+
+        <!-- Añadir opción adicional para N/A -->
+        <label
+          class="nivel-item"
+          [class.nivel-seleccionado]="nivelesSeleccionados[pregunta.id] === 6"
+        >
+          <input
+            type="radio"
+            [name]="'pregunta_' + pregunta.id"
+            [value]="6"
+            [checked]="nivelesSeleccionados[pregunta.id] === 6"
+            (change)="seleccionarNivel(pregunta.id, 6)"
+          />
+          <div class="nivel-numero">N/A</div>
+          <div class="nivel-contenido">
+            <div class="nivel-titulo">No es requerido</div>
+            <div class="nivel-descripcion">La pregunta no es requerida para este puesto.</div>
           </div>
         </label>
       </div>
