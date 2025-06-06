@@ -99,11 +99,11 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
     const requerimientosMinimos: Requerimientos_minimos_puesto[] = [];
 
     this.preguntasPerfil.forEach(pregunta => {
-      const nivelSeleccionado = this.nivelesSeleccionados[pregunta.id];
+      let nivelSeleccionado = this.nivelesSeleccionados[pregunta.id];
 
       if (nivelSeleccionado === undefined) {
-        console.warn(`Pregunta ${pregunta.pregunta} no tiene nivel seleccionado.`);
-        return;
+        console.warn(`Pregunta ${pregunta.pregunta} no tiene nivel seleccionado. Se asignará como N/A.`);
+        nivelSeleccionado = 6;
       }
 
       const requerimiento = new Requerimientos_minimos_puesto();
