@@ -55,6 +55,7 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
           console.log('evento: puesto cargado: '+ this.puesto.nombre_puesto);
 
           this.cargarPreguntas();
+           this.cargarRequerimientosExistentes(p.id);
         },
         error: () => {
           this.cargando = false;
@@ -77,6 +78,14 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
       });
 
       this.cargando = false;
+    });
+  }
+
+  cargarRequerimientosExistentes(puestoId: number): void {
+    this.requerimientosService.listbyPuestoId(puestoId).subscribe((existentes) => {
+      existentes.forEach(req => {
+        this.nivelesSeleccionados[req.pregunta_perfil.id] = req.estado ? req.resultado_minimo : 6;
+      });
     });
   }
 
@@ -107,12 +116,12 @@ export class RequerimientosMinimosPuestoComponent implements OnInit{
       requerimientosMinimos.push(requerimiento);
     });
 
-    this.requerimientosService.insertMultiple(requerimientosMinimos).subscribe({
+    this.requerimientosService.upsertMultiple(requerimientosMinimos).subscribe({
       next: () => {
-        console.log('Requerimientos mínimos guardados correctamente.');
+        console.log('Requerimientos mínimos guardados/actualizados correctamente.');
       },
       error: err => {
-        console.error('Error al guardar requerimientos mínimos:', err);
+        console.error('Error al guardar/actualizar requerimientos mínimos:', err);
       }
     });
   }

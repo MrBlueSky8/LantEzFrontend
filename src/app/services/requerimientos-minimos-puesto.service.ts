@@ -41,7 +41,15 @@ export class RequerimientosMinimosPuestoService {
   }
 
   insertMultiple(requerimientos: Requerimientos_minimos_puesto[]) {
-  return this.http.post(`${this.url}/multiple`, requerimientos);
-}
+    return this.http.post(`${this.url}/multiple`, requerimientos);
+  }
+
+  listbyPuestoId(id: number) {
+    return this.http.get<Requerimientos_minimos_puesto[]>(`${this.url}/puesto/${id}`);
+  }
+
+  upsertMultiple(requerimientos: Requerimientos_minimos_puesto[]) {
+    return this.http.post(`${this.url}/upsert`, requerimientos);
+  }
 
 }
