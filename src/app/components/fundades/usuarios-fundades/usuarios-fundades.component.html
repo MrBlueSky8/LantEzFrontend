@@ -1,0 +1,75 @@
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE USUARIOS</div>
+
+<!-- CONTENEDOR DE USUARIOS -->
+<div class="contenedor-areas">
+  <!-- Barra de acciones -->
+  <div class="clientes-header-bar">
+     <select
+      class="combo-empresa"
+      [(ngModel)]="empresaSeleccionadaId"
+      (change)="onEmpresaSeleccionadaChange()"
+      [ngClass]="{ 'placeholder': !empresaSeleccionadaId }"
+    >
+      <option [ngValue]="null" disabled>Selecciona Empresa</option>
+      <option *ngFor="let empresa of empresas" [ngValue]="empresa.id">{{ empresa.nombre }}</option>
+    </select>
+    
+    <button class="btn-agregar-empresa" (click)="agregarUsuario()">
+      <img src="/assets/plusWhite.svg" alt="Agregar" />
+      AGREGAR USUARIO
+    </button>
+
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR USUARIO"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarUsuarios()"
+      />
+    </div>
+  </div>
+
+  <!-- Tabla de usuarios -->
+  <div class="tabla-areas">
+    <!-- Encabezado -->
+    <div class="fila-header">
+      <div class="columna-header-area">NOMBRES</div>
+      <div class="columna-header-area">APELLIDOS</div>
+      <div class="columna-header-area">ROL</div>
+      <div class="columna-header-area">ESTADO</div>
+      <div class="columna-header-acciones">ACCIONES</div>
+    </div>
+
+    <div class="fila-area" *ngFor="let usuario of usuariosPaginados">
+      <div class="columna-area">
+        {{ usuario.primer_nombre }}{{ usuario.segundo_nombre ? ' ' + usuario.segundo_nombre : '' }}
+      </div>
+      <div class="columna-area">
+        {{ usuario.apellido_p }}{{ usuario.apellido_m ? ' ' + usuario.apellido_m : '' }}
+      </div>
+      <div class="columna-area">{{ usuario.roles.nombre_rol }}</div>
+      <div class="columna-area">
+        <span [ngStyle]="{ color: usuario.estado ? '#28a745' : '#dc3545', 'font-weight': '600' }">
+            {{ usuario.estado ? 'Habilitado' : 'Deshabilitado' }}
+        </span>
+        </div>
+      <div class="columna-acciones">
+        <img src="/assets/eyeDetail.svg" alt="Ver Detalle" (click)="verDetalleUsuario(usuario)" />
+        <img src="/assets/editarAction.svg" alt="Editar" (click)="editarUsuario(usuario)" />
+        <img src="/assets/disableAction.svg" alt="Eliminar" (click)="toogleEstadoUsuario(usuario)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [length]="usuariosFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>

@@ -1,1 +1,82 @@
-<p>empresas works!</p>
+<!-- TÍTULO MI EMPRESA -->
+<div class="mi-empresa-header">
+  MI EMPRESA
+</div>
+
+<!-- CONTENEDOR MI EMPRESA -->
+<div class="mi-empresa-container">
+  <!-- CARD CON LOGO -->
+  <div class="mi-empresa-card">
+    <img [src]="miEmpresa.logo_url"
+     alt="Logo Empresa"
+     class="mi-empresa-logo"
+     (error)="onImgError($event)" />
+    <img src="/assets/edit.svg" alt="Editar" class="editar-icono" (click)="editarMiEmpresa()" />
+  </div>
+
+  <!-- BOTONES -->
+  <div class="mi-empresa-botones">
+    <button (click)="gestionarAreas()">Gestionar Áreas</button>
+    <button (click)="gestionarPuestos()">Gestionar Puestos de Trabajo</button>
+  </div>
+</div>
+
+<!-- TÍTULO MIS CLIENTES -->
+<div class="mi-empresa-header">
+  MIS CLIENTES
+</div>
+
+<!-- CONTENEDOR GENERAL -->
+<div class="mi-empresa-container">
+
+  <!-- Header: Botón + Buscador -->
+  <div class="clientes-header-bar">
+    <button class="btn-agregar-empresa" (click)="abrirModalCrear()">
+      <img src="/assets/plusWhite.svg" alt="Agregar" />
+      AGREGAR EMPRESA
+    </button>
+
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+      type="text"
+      placeholder="BUSCAR EMPRESA"
+      [(ngModel)]="filtroBusqueda"
+      (input)="filtrarEmpresas()" />
+    </div>
+  </div>
+
+<!-- Grid de Empresas + Paginador juntos -->
+<div class="clientes-grid-container">
+  <div class="clientes-grid">
+    <div class="cliente-card" *ngFor="let empresa of empresasPaginadas">
+      <img [src]="empresa.logo_url"
+        alt="{{ empresa.razon_social }}"
+        (error)="onImgError($event)" />
+      <div class="hover-opciones">
+        <h3>{{ empresa.nombre }}</h3>
+        <button (click)="editarEmpresa(empresa)"><img src="/assets/miniEditWhite.svg" /> Editar Datos</button>
+        <button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjoWhite.svg" /> Ver Detalles</button>
+        <!--<button (click)="verDetalleEmpresa(empresa)"><img src="/assets/miniOjo.svg" /> Ver Status</button> -->
+        <!--<button class="deshabilitar" (click)="deshabilitarEmpresa(empresa)"><img src="/assets/miniDisable.svg" /> Deshabilitar</button>-->
+        <button class="deshabilitar" (click)="toggleEstadoEmpresa(empresa)">
+          <img src="/assets/miniDisableWhite.svg" />
+          {{ empresa.estado ? 'Deshabilitar' : 'Habilitar' }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+<!-- MatPaginator -->
+<mat-paginator
+  [length]="empresasFiltradas.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[3, 6, 9, 12]"
+  [pageIndex]="pageIndex"
+  (page)="onPageChange($event)">
+</mat-paginator>
+
+</div>
+
+

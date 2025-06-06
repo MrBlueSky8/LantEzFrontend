@@ -1,0 +1,27 @@
+<div class="overlay">
+    <div class="modal-contenido">
+      <button class="close-button" type="button" (click)="cerrar()">
+        &times;
+      </button>
+  
+      <!--<img src="/assets/redX.svg" alt="ícono advertencia" class="modal-icono" /> -->
+  
+      <h2 class="modal-titulo">
+        {{ data.titulo }}
+      </h2>
+  
+      <p *ngIf="data.mensajeSecundario" class="modal-mensaje">
+        {{ data.mensajeSecundario }}
+      </p>
+  
+      <div class="modal-botones">
+        <button class="btn-cancelar" (click)="cancelar()">
+          <img src="/assets/redX.svg" alt="Cancelar" />
+        </button>
+        <button class="btn-confirmar" (click)="confirmar()">
+          <img src="/assets/checkicon.svg" alt="Confirmar" />
+        </button>
+      </div>
+    </div>
+  </div>
+  

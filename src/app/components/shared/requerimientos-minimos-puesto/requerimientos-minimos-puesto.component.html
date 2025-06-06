@@ -1,0 +1,73 @@
+<!-- HEADER -->
+<div class="mi-empresa-header" *ngIf="puesto">
+  FICHA DE PUESTO DE TRABAJO: {{ puesto.nombre_puesto }}
+</div>
+
+<!-- CONTENEDOR GENERAL -->
+<div class="contenedor-areas">
+  <!-- BLOQUES POR CADA PREGUNTA -->
+  <div class="bloque-pregunta" *ngFor="let pregunta of preguntasPerfil">
+    <details class="pregunta-header" [open]="estadoPreguntasAbiertas[pregunta.id]"> <!--eliminar el open para que sea replegado por defecto-->
+      <summary (click)="estadoPreguntasAbiertas[pregunta.id] = !estadoPreguntasAbiertas[pregunta.id]">
+        <div class="pregunta-top-row">
+          <div class="pregunta-cabecera">
+            <span class="pregunta-numero">{{ pregunta.pregunta.split('.')[0] }}</span>
+            <span class="pregunta-titulo">{{ pregunta.pregunta.split('. ')[1] }}</span>
+          </div>
+          <img
+            [src]="estadoPreguntasAbiertas[pregunta.id] ? '/assets/arrowUp.svg' : '/assets/arrowDown.svg'"
+            alt="Toggle"
+            class="flecha-icono"
+          />
+        </div>
+        <div class="pregunta-definicion">{{ pregunta.definicion }}</div>
+         <div class="divider-after" *ngIf="estadoPreguntasAbiertas[pregunta.id]"></div>
+      </summary>
+
+      <div class="opciones-nivel" *ngIf="perfilesPorPregunta[pregunta.id]">
+        <label
+          class="nivel-item"
+          *ngFor="let perfil of perfilesPorPregunta[pregunta.id]"
+          [class.nivel-seleccionado]="nivelesSeleccionados[pregunta.id] === perfil.n_respuesta"
+        >
+          <input
+            type="radio"
+            [name]="'pregunta_' + pregunta.id"
+            [value]="perfil.n_respuesta"
+            [checked]="nivelesSeleccionados[pregunta.id] === perfil.n_respuesta"
+            (change)="seleccionarNivel(pregunta.id, perfil.n_respuesta)"
+          />
+          <div class="nivel-numero">{{ perfil.n_respuesta }}</div>
+          <div class="nivel-contenido">
+            <div class="nivel-titulo">Nivel {{ perfil.n_respuesta }}</div>
+            <div class="nivel-descripcion">{{ perfil.descripcion }}</div>
+          </div>
+        </label>
+
+        <!-- Añadir opción adicional para N/A -->
+        <label
+          class="nivel-item"
+          [class.nivel-seleccionado]="nivelesSeleccionados[pregunta.id] === 6"
+        >
+          <input
+            type="radio"
+            [name]="'pregunta_' + pregunta.id"
+            [value]="6"
+            [checked]="nivelesSeleccionados[pregunta.id] === 6"
+            (change)="seleccionarNivel(pregunta.id, 6)"
+          />
+          <div class="nivel-numero">N/A</div>
+          <div class="nivel-contenido">
+            <div class="nivel-titulo">No es requerido</div>
+            <div class="nivel-descripcion">La pregunta no es requerida para este puesto.</div>
+          </div>
+        </label>
+      </div>
+    </details>
+  </div>
+
+  <!-- BOTÓN GUARDAR -->
+  <div class="guardar-wrapper">
+    <button class="btn-submit" (click)="guardar()">Guardar</button>
+  </div>
+</div>

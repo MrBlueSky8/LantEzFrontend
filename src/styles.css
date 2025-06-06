@@ -14,7 +14,8 @@ body {
 }
 
 html, body { 
-    background: #F3E5CC; }
+   background: #FFEEB4;
+ }
 
 .card {
     display: flex;
@@ -35,3 +36,98 @@ html, body {
         padding: 1rem 1.5rem; 
     }
 }
+
+:host {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 1rem;
+    min-height: 100vh;
+    background-color: #FFEEB4; /* fondo global si deseas */
+    transition: margin-left 0.5s ease;
+  }
+
+  .main-content-collapsed {
+    margin-left: 5rem; /* igual al width de .sidenav */
+  }
+
+  .main-content-expanded{
+    margin-left: 17.1525rem; /* igual al width de .sidenav */
+  }
+
+  .close-button {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 26px;
+    /*font-weight: bold;*/
+    color: #333;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s;
+  }
+  
+  .close-button:hover {
+    transform: scale(1.2);
+    color: #000;
+  }
+
+  .mat-mdc-paginator-container {
+  justify-content: center !important;
+  gap: 12px;
+  } 
+
+  /*
+  mat-paginator {
+  display: flex;
+  justify-content: center;
+  background: none;
+  margin: 30px auto 10px auto;
+  width: fit-content;
+}
+
+.mat-mdc-paginator-container {
+  justify-content: center !important;
+  gap: 12px;
+}
+
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-paginator-page-size-select,
+.mat-mdc-paginator-range-label {
+  display: none;
+}
+
+.mat-mdc-icon-button {
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  font-weight: 600;
+  color: #000;
+}
+
+.mat-mdc-paginator-navigation-next,
+.mat-mdc-paginator-navigation-previous {
+  background: #ffffff;
+  padding: 6px 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.mat-mdc-paginator-range-actions button.mat-mdc-icon-button {
+  font-weight: bold;
+}
+
+.mat-mdc-button-base.mat-mdc-button.mat-primary {
+  color: white;
+  background: #000000;
+  border-radius: 8px;
+}
+  */
+

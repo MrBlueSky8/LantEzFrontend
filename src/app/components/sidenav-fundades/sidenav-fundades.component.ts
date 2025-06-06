@@ -40,6 +40,9 @@ export class SidenavFundadesComponent implements OnInit{
   navData = navbarData;
   multiple: boolean = false;
   username: string = '';
+  userrole:string = '';
+  isUsernameOverflow = false;
+  isUserroleOverflow = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -63,8 +66,12 @@ export class SidenavFundadesComponent implements OnInit{
       
       this.usuarioService.findNameByEmail(this.loginService.showUser()).subscribe((data) => {
         this.username = data;
+        this.evaluateOverflow();
         //console.log(this.username);
       });
+
+      this.RefactorWordingByRole(this.loginService.showRole());
+      //console.log('evento: prueba de refactor ' + this.userrole);
       
   }
 
@@ -95,7 +102,8 @@ export class SidenavFundadesComponent implements OnInit{
         }
       }
     }
-    console.log('Item clicked:', item);
+    //console.log('Item clicked:', item);
+
     if(item.action){
       item.action();
     }
@@ -103,6 +111,52 @@ export class SidenavFundadesComponent implements OnInit{
 
   logout() {
     this.router.navigate(['login']);
+  }
+
+  RefactorWordingByRole(data: string) {
+    switch (data) {
+      case 'ADMINISTRADOR FUNDADES':
+        this.userrole = 'Admin';
+        break;
+
+      case 'SUBADMINISTRADOR FUNDADES':
+        this.userrole = 'SubAdmin';
+        break;
+
+      case 'ADMINISTRADOR':
+        this.userrole = 'Admin';
+        break;
+
+      case 'SUBADMINISTRADOR':
+        this.userrole = 'SubAdmin';
+        break;
+
+      case 'EVALUADOR':
+        this.userrole = 'Evaluador';
+        break;
+
+      default:
+        this.userrole = 'Sin Privilegios';
+        break;
+    }
+  }
+
+  evaluateOverflow(): void {
+    if (this.username.length > 15) { // a que longitud activar overflow
+      this.isUsernameOverflow = true;
+    }
+  
+    if (this.userrole.length > 10) { 
+      this.isUserroleOverflow = true;
+    }
+  }
+
+  getIcon(data: INavbarData): string | undefined {
+    const isActive = this.router.url.includes(data.routeLink ?? '');
+    if (isActive && data.svgIconActive) {
+      return data.svgIconActive;
+    }
+    return data.svgIcon;
   }
 
 }

@@ -1,0 +1,18 @@
+<div class="overlay">
+    <div class="modal-contenido">
+      <button class="close-button" type="button" (click)="cerrar()">
+        &times;
+      </button>
+  
+      <img *ngIf="data.iconoUrl" [src]="data.iconoUrl" alt="ícono" class="modal-icono" />
+  
+      <h2 class="modal-titulo">
+        {{ data.titulo }}
+      </h2>
+  
+      <p *ngIf="data.mensajeSecundario" class="modal-mensaje">
+        {{ data.mensajeSecundario }}
+      </p>
+    </div>
+  </div>
+  

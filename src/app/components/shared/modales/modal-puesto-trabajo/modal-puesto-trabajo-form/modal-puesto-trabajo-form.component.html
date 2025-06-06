@@ -1,0 +1,97 @@
+<div class="overlay">
+  <div class="empresa-modal">
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">
+      {{
+        data.verDetalle
+          ? 'Detalle del Puesto'
+          : (esEdicion ? 'Editar Puesto de Trabajo' : 'Registrar Puesto de Trabajo')
+      }}
+      <ng-container *ngIf="empresaSeleccionada?.nombre; else empresaDesconocida">
+        para {{ empresaSeleccionada.nombre }}
+      </ng-container>
+    </h2>
+
+    <ng-template #empresaDesconocida>
+      <span>para empresa desconocida</span>
+    </ng-template>
+
+    <!-- Formulario -->
+    <form [formGroup]="formPuesto" (ngSubmit)="guardar()" class="empresa-form">
+
+      <!-- Nombre del Puesto -->
+      <input class="custom-input" placeholder="Nombre del Puesto*" formControlName="nombre_puesto" />
+      <div class="error" *ngIf="formPuesto.get('nombre_puesto')?.touched && formPuesto.get('nombre_puesto')?.invalid">
+        <div *ngIf="formPuesto.get('nombre_puesto')?.hasError('required')">Este campo es obligatorio.</div>
+        <div *ngIf="formPuesto.get('nombre_puesto')?.hasError('maxLength')">Máximo 150 caracteres.</div>
+      </div>
+
+      <!-- Descripción -->
+      <textarea class="custom-input" placeholder="Descripción del Puesto (opcional)" formControlName="descripcion"></textarea>
+      <div class="error" *ngIf="formPuesto.get('descripcion')?.hasError('maxLength')">
+        Máximo 500 caracteres.
+      </div>
+
+      <!-- Área -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Área</mat-label>
+        <mat-select formControlName="area_id">
+          <mat-option *ngFor="let area of misAreas" [value]="area.id">
+            {{ area.nombre_area }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formPuesto.get('area_id')?.touched && formPuesto.get('area_id')?.hasError('required')">
+          Seleccione un área.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Usuario Asignado -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Usuario Asignado</mat-label>
+        <mat-select formControlName="usuario_id">
+          <mat-option *ngFor="let usuario of misUsuarios" [value]="usuario.id">
+            {{ usuario.primer_nombre }} {{ usuario.apellido_p }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formPuesto.get('usuario_id')?.touched && formPuesto.get('usuario_id')?.hasError('required')">
+          Seleccione un usuario.
+        </mat-error>
+      </mat-form-field>
+
+     <!-- Fechas (solo visuales, no editables) -->
+    <input class="custom-input" type="text" formControlName="fecha_creacion" readonly />
+    <input class="custom-input" type="text" formControlName="fecha_actualizacion" readonly />
+
+    <!-- Estado -->
+    <mat-form-field appearance="fill" class="custom-select">
+    <mat-label>Estado</mat-label>
+    <mat-select formControlName="estado">
+        <mat-option [value]="true">Finalizado</mat-option>
+        <mat-option [value]="false">Pendiente</mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <!-- Aprobado -->
+    <mat-form-field appearance="fill" class="custom-select">
+    <mat-label>Aprobado</mat-label>
+    <mat-select formControlName="aprobado">
+        <mat-option [value]="true">Sí</mat-option>
+        <mat-option [value]="false">No</mat-option>
+    </mat-select>
+    </mat-form-field>
+
+
+
+      <!-- Botones -->
+      <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
+      <button class="btn-clear" type="button" (click)="limpiarCamposEditables()" *ngIf="!data.verDetalle">
+        Borrar Casillas
+      </button>
+
+
+    </form>
+  </div>
+</div>

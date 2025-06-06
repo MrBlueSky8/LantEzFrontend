@@ -14,6 +14,16 @@ import { PostulantesComponent } from './components/shared/postulantes/postulante
 import { EvaluadoresComponent } from './components/admin/evaluadores/evaluadores.component';
 import { EvaluacionesComponent } from './components/shared/evaluaciones/evaluaciones.component';
 import { AjustesGeneralesComponent } from './components/shared/ajustes-generales/ajustes-generales.component';
+import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.component';
+import { MiEmpresaComponent } from './components/admin/mi-empresa/mi-empresa.component';
+import { SidenavEvaluadorComponent } from './components/sidenav-evaluador/sidenav-evaluador.component';
+import { MisTrabajosComponent } from './components/shared/mis-trabajos/mis-trabajos.component';
+import { AppModuloEnDesarrolloComponent } from './components/shared/app-modulo-en-desarrollo/app-modulo-en-desarrollo.component';
+import { AreasComponent } from './components/admin/areas/areas.component';
+import { PuestosTrabajoComponent } from './components/admin/puestos-trabajo/puestos-trabajo.component';
+import { AreasFundadesComponent } from './components/fundades/areas-fundades/areas-fundades.component';
+import { UsuariosFundadesComponent } from './components/fundades/usuarios-fundades/usuarios-fundades.component';
+import { RequerimientosMinimosPuestoComponent } from './components/shared/requerimientos-minimos-puesto/requerimientos-minimos-puesto.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +57,64 @@ export const routes: Routes = [
       },
       {
         path: 'usuarios',
+        component: UsuariosFundadesComponent,
+      },
+      {
+        path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'evaluadores',
+        component: EvaluadoresComponent,
+      },
+      {
+        path: 'evaluaciones',
+        component: EvaluacionesComponent,
+      },
+      {
+        path: 'ajustes',
+        component: AjustesGeneralesComponent,
+      },
+      {
+      path: 'empresas/areas',
+      component:AreasFundadesComponent,
+      //component: AreasComponent,
+      },
+      {
+        path: 'empresas/puestos-trabajo',
+        component: PuestosTrabajoComponent,
+      },
+      {
+        path: 'empresas/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
+      }
+      
+    ],
+    canActivate: [segGuard],
+    data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
+  },
+  {
+    path: 'sidenav-admin',
+    component: SidenavAdminComponent,
+    children: [
+      {
+        path: 'homes',
+        component: HomeComponent,
+      },
+      {
+        path: 'logs',
+        component: LogsComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardFundadesComponent,
+      },
+      {
+        path: 'mi-empresa',
+        component: MiEmpresaComponent,
+      },
+      {
+        path: 'usuarios',
         component: UsuariosComponent,
       },
       {
@@ -64,10 +132,55 @@ export const routes: Routes = [
       {
         path: 'ajustes',
         component: AjustesGeneralesComponent,
+      },
+      {
+      path: 'mi-empresa/areas',
+      component:AreasComponent,
+      //component: AreasComponent,
+      },
+      {
+        path: 'mi-empresa/puestos-trabajo',
+        component: PuestosTrabajoComponent,
+      },
+      {
+        path: 'mi-empresa/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
       }
     ],
     canActivate: [segGuard],
-    data: { roles: ['ADMINISTRADOR FUNDADES', 'SUBADMINISTRADOR FUNDADES'] }, // solo construcciones, se debe agregar a cada uno
+    data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
+  },
+  {
+    path: 'sidenav-evaluador',
+    component: SidenavEvaluadorComponent,
+    children: [
+      {
+        path: 'homes',
+        component: HomeComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardFundadesComponent,
+      },
+      {
+        path: 'mis-trabajos',
+        component: MisTrabajosComponent,
+      },
+      {
+        path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'evaluaciones',
+        component: EvaluacionesComponent,
+      },
+      {
+        path: 'ajustes',
+        component: AjustesGeneralesComponent,
+      }
+    ],
+    canActivate: [segGuard],
+    data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR', 'EVALUADOR'] }, // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'homes',

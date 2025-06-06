@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { filter } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,9 @@ import { filter } from 'rxjs';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    RouterLink,
-    NgIf,
+    MatDialogModule
+    //RouterLink,
+    //NgIf,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -76,12 +78,12 @@ export class AppComponent implements OnInit {
 
       case 'SUBADMINISTRADOR FUNDADES':
         // Redirige al panel de subadministrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-fundades']);
         break;
 
       case 'ADMINISTRADOR':
         // Redirige al dashboard de administrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-admin']);
         break;
 
       case 'SUBADMINISTRADOR':
@@ -91,7 +93,7 @@ export class AppComponent implements OnInit {
 
       case 'EVALUADOR':
         // Redirige a la vista del evaluador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-evaluador']);
         break;
 
       default:
