@@ -94,6 +94,7 @@
   display: none;
 }
 
+/*
 .nivel-numero {
   background: #004A75;
   color: white;
@@ -107,6 +108,28 @@
   justify-content: center;
   align-items: center;
 }
+  */
+
+.nivel-numero {
+  background: #004A75;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
 
 .nivel-titulo {
   font-family: 'Inter', sans-serif;
@@ -202,7 +225,7 @@
 
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
   .btn-submit {
     width: 100%;
     font-size: 20px;
@@ -229,4 +252,97 @@
   .nivel-titulo, .nivel-descripcion {
     font-size: 10px;
   }
+
+  /* Ajustes a partir de 1024px: tablets y laptops pequeñas */
+@media (max-width: 1024px) {
+  .nivel-descripcion {
+    font-size: 10px;
+  }
+
+  .btn-submit {
+    width: 80%;
+    font-size: 22px;
+    height: 52px;
+  }
+}
+
+/* Ajustes a partir de 768px: tablets en vertical y phablets */
+@media (max-width: 768px) {
+  .pregunta-cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .nivel-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nivel-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pregunta-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .flecha-icono {
+    align-self: flex-end;
+  }
+
+  .btn-submit {
+    width: 100%;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .mi-empresa-header {
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+  }
+}
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 480px) {
+  .nivel-numero {
+    width: 22px;
+    height: 22px;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 10px;
+  }
+
+  .nivel-titulo {
+    font-size: 11px;
+  }
+
+  .nivel-descripcion {
+    font-size: 9px;
+  }
+
+  .pregunta-numero {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  .pregunta-titulo {
+    font-size: 11px;
+  }
+
+  .pregunta-definicion {
+    font-size: 9px;
+  }
+
+  .bloque-pregunta {
+    padding: 10px;
+  }
+}
+
 }
