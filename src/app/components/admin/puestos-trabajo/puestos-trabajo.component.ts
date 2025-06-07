@@ -177,10 +177,12 @@ export class PuestosTrabajoComponent implements OnInit {
       console.log('Click llenar Ficha puestoo:', puesto.nombre_puesto);
       if (!puesto) return;
 
-      const currentSidenav = this.router.url.split('/')[1];; // fallback por si falla
+      const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+      const seccionEmpresa = segments[2]; //.includes('empresas') ? 'empresas' : 'mi-empresa';
 
       //console.log('evento: current sidenav: ' + currentSidenav);
-      this.router.navigate([`/${currentSidenav}/empresas/puestos-trabajo/ficha`, puesto.id]);
+      this.router.navigate([`/${currentSidenav}/${seccionEmpresa}/puestos-trabajo/ficha`, puesto.id]);
   
   }
 
