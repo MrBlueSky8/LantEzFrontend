@@ -24,6 +24,7 @@ import { PuestosTrabajoComponent } from './components/admin/puestos-trabajo/pues
 import { AreasFundadesComponent } from './components/fundades/areas-fundades/areas-fundades.component';
 import { UsuariosFundadesComponent } from './components/fundades/usuarios-fundades/usuarios-fundades.component';
 import { RequerimientosMinimosPuestoComponent } from './components/shared/requerimientos-minimos-puesto/requerimientos-minimos-puesto.component';
+import { PuestosTrabajoFundadesComponent } from './components/fundades/puestos-trabajo-fundades/puestos-trabajo-fundades.component';
 
 export const routes: Routes = [
   {
@@ -82,7 +83,7 @@ export const routes: Routes = [
       },
       {
         path: 'empresas/puestos-trabajo',
-        component: PuestosTrabajoComponent,
+        component: PuestosTrabajoFundadesComponent,
       },
       {
         path: 'empresas/puestos-trabajo/ficha/:id',
