@@ -105,7 +105,7 @@ export class SidenavFundadesComponent implements OnInit{
     //console.log('Item clicked:', item);
 
     // Si es una navegación con ruta (y no solo una acción o subnivel)
-    if (item.routeLink && this.screenWidth <= 768 && !item.items) {
+    if (item.routeLink && this.screenWidth <= 820 && !item.items) {
       this.closeSidenav();
     }
 

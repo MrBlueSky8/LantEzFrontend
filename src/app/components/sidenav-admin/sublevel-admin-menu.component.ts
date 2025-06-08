@@ -137,7 +137,7 @@ export class SublevelAdminMenuComponent implements OnInit {
       }
     }
 
-    if (!item.items && item.routeLink && window.innerWidth <= 768) {
+    if (!item.items && item.routeLink && window.innerWidth <= 820) {
       this.closeSidenavRequest.emit();
     }
 
