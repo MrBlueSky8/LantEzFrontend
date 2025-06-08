@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   animate,
   state,
@@ -120,6 +120,7 @@ export class SublevelEvaluadorMenuComponent implements OnInit {
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
+  @Output() closeSidenavRequest = new EventEmitter<void>();
 
   constructor(public router: Router) {}
 
@@ -136,6 +137,10 @@ export class SublevelEvaluadorMenuComponent implements OnInit {
       }
     }
 
+    if (!item.items && item.routeLink && window.innerWidth <= 768) {
+      this.closeSidenavRequest.emit();
+    }
+    
     if (item.action) {
       item.action();
     }

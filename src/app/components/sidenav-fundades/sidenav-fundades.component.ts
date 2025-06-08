@@ -87,7 +87,7 @@ export class SidenavFundadesComponent implements OnInit{
 
   handleClick(item: INavbarData): void {
     this.shrinkItems(item);
-    item.expanded = !item.expanded
+    item.expanded = !item.expanded;
   }
 
   getActiveClass(data: INavbarData): string {
@@ -103,6 +103,11 @@ export class SidenavFundadesComponent implements OnInit{
       }
     }
     //console.log('Item clicked:', item);
+
+    // Si es una navegación con ruta (y no solo una acción o subnivel)
+    if (item.routeLink && this.screenWidth <= 768 && !item.items) {
+      this.closeSidenav();
+    }
 
     if(item.action){
       item.action();

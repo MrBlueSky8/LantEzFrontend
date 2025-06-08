@@ -14,6 +14,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { fadeInOut, INavbarData } from './helper';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sublevel-menu',
@@ -120,6 +121,7 @@ export class SublevelMenuComponent implements OnInit {
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
+  @Output() closeSidenavRequest = new EventEmitter<void>();
 
   constructor(public router: Router) {}
 
@@ -134,6 +136,10 @@ export class SublevelMenuComponent implements OnInit {
           }
         }
       }
+    }
+
+    if (!item.items && item.routeLink && window.innerWidth <= 768) {
+      this.closeSidenavRequest.emit();
     }
 
     if (item.action) {
