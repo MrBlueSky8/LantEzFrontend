@@ -1,0 +1,39 @@
+<div class="overlay">
+  <div class="empresa-modal">
+
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título centrado -->
+    <h2 class="modal-title">¿Qué deseas hacer?</h2>
+
+    <!-- Formulario -->
+    <form [formGroup]="formPuesto" (ngSubmit)="guardar()" class="empresa-form">
+
+      <!-- Estado -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="true">Finalizado</mat-option>
+          <mat-option [value]="false">Pendiente</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Aprobado -->
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Aprobado</mat-label>
+        <mat-select formControlName="aprobado">
+          <mat-option [value]="true">Sí</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Botones de acción -->
+    <div class="botones-columna">
+        <button class="btn-eliminar" type="button" (click)="eliminarPuesto(data.puesto!)">Eliminar</button>
+        <button class="btn-guardar" type="submit">Guardar</button>
+    </div>
+
+    </form>
+  </div>
+</div>
