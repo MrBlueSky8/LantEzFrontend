@@ -81,7 +81,33 @@ html, body {
   .mat-mdc-paginator-container {
   justify-content: center !important;
   gap: 12px;
-  } 
+  }
+
+  .custom-select {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding-inline: 0.25rem; /* Ajusta internamente sin deformar */
+  }
+
+
+  ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: transparent !important;
+    border-radius: 12px;
+    box-shadow: none;
+    padding: 0.5rem 0.75rem;
+  }
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-outline {
+    display: none;
+  }
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    --mdc-filled-text-field-container-color: #D9D9D9;
+  }
+
+
 
   /*
   mat-paginator {
