@@ -244,6 +244,35 @@ mat-paginator {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
+.combo-empresa {
+  height: 56px;
+  border-radius: 20px;
+  padding: 0 40px 0 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: inset 0 0 0 1px #ccc;
+  min-width: 220px;
+  max-width: 100%;
+  flex: 1; /* Permite adaptabilidad */
+  appearance: none;
+  background-image: url('/assets/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 10px;
+  box-sizing: border-box;
+}
+
+.combo-empresa.placeholder {
+  color: #a3a2a3; /* gris claro como placeholder */
+}
+
+.combo-empresa option {
+  color: #000000;
+}
+
 /* RESPONSIVE ESPECÍFICO PARA LA TABLA */
 /* ---------- AJUSTES RESPONSIVE ------------- */
 
@@ -303,6 +332,16 @@ mat-paginator {
 
   .barra-busqueda input {
     font-size: 14px;
+  }
+
+  .combo-empresa {
+    width: 100%; /* Se adapta como el botón */
+    min-width: 0; /* Permite contraerse sin romper diseño */
+    height: 56px; /* igual que el botón */
+    padding: 13px 30px;
+    font-size: 16px;
+    border-radius: 20px;
+    box-sizing: border-box;
   }
 }
 

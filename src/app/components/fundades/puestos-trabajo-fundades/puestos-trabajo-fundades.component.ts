@@ -70,7 +70,32 @@ export class PuestosTrabajoFundadesComponent implements OnInit {
             },
             error: (err) => console.error('Error al obtener ID:', err),
           });
+
+    this.empresaService.list().subscribe({
+      next: (empresasTodas) => {
+        this.empresas = empresasTodas;
+      },
+      error: (err) =>
+        console.error('Error al listar empresas para el combo:', err),
+    });
           
+  }
+
+  onEmpresaSeleccionadaChange(): void {
+    const id = this.empresaSeleccionadaId;
+    if (!id || id === this.miEmpresa.id) {
+      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
+      this.refrescarPuesto();
+      return;
+    }
+
+    this.empresaService.listId(id).subscribe({
+      next: (empresa) => {
+        this.miEmpresa = empresa;
+        this.refrescarPuesto();
+      },
+      error: (err) => console.error('Error al cambiar de empresa:', err),
+    });
   }
 
   filtrarPuestos(): void {
