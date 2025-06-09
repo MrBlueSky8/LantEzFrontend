@@ -39,4 +39,8 @@ export class PostulantesService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  listbyEmpresaId(id: number) {
+    return this.http.get<Postulantes[]>(`${this.url}/empresa/${id}`);
+  }
 }

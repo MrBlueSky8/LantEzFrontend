@@ -18,5 +18,4 @@ export class Postulantes {
   fechanacimiento: Date = new Date(Date.now());
   ciudades: Ciudades = new Ciudades();
   direccion: string = '';
-  estado: boolean = false;
 }

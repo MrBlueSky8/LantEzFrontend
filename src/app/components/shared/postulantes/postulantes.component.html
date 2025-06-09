@@ -1,1 +1,70 @@
-<p>postulantes works!</p>
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE POSTULANTES</div>
+
+<!-- CONTENEDOR -->
+<div class="contenedor-areas">
+  <!-- Barra de acciones -->
+  <div class="clientes-header-bar">
+    <button class="btn-agregar-empresa" (click)="agregarPostulante()">
+      <img src="/assets/plusWhite.svg" alt="Agregar" />
+      AGREGAR POSTULANTE
+    </button>
+
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR POSTULANTE"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarPostulantes()"
+      />
+    </div>
+  </div>
+
+  <!-- Tabla de postulantes -->
+  <div class="tabla-areas">
+    <!-- Encabezado -->
+    <div class="fila-header">
+      <div class="columna-header-area">NOMBRES</div>
+      <div class="columna-header-area">APELLIDOS</div>
+      <div class="columna-header-area">ESTADO</div>
+      <div class="columna-header-acciones">ACCIONES</div>
+    </div>
+
+    <!-- Filas -->
+    <div class="fila-area" *ngFor="let postulante of postulantesPaginados">
+      <div class="columna-area">
+        {{ postulante.primer_nombre }}{{ postulante.segundo_nombre ? ' ' + postulante.segundo_nombre : '' }}
+      </div>
+      <div class="columna-area">
+        {{ postulante.apellido_p }}{{ postulante.apellido_m ? ' ' + postulante.apellido_m : '' }}
+      </div>
+      <div class="columna-area">
+        <span [ngStyle]="{ 
+            color: estadoPostulanteMap[postulante.id] ? '#28a745' : '#dc3545',
+            'font-weight': '600'
+        }">
+            {{ estadoPostulanteMap[postulante.id] ? 'Habilitado' : 'Deshabilitado' }}
+        </span>
+      </div>
+
+
+      <div class="columna-acciones">
+        <img src="/assets/eyeDetail.svg" alt="Ver Detalle" (click)="verDetallePostulante(postulante)" />
+        <img src="/assets/editarAction.svg" alt="Editar" (click)="editarPostulante(postulante)" />
+        <img src="/assets/fichaIcon.svg" alt="Llenar Ficha" (click)="llenarFichaPostulante(postulante)" />
+        <img src="/assets/disableAction.svg" alt="Eliminar" (click)="ToogleEstadoPostulante(postulante)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [length]="postulantesFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
