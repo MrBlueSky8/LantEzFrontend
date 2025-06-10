@@ -1,0 +1,199 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #00000061;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.empresa-modal {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 940px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: fadeInModal 0.5s ease;
+}
+
+.modal-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.empresa-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    align-items: center;
+}
+
+.barra-busqueda {
+  flex: 4;
+  height: auto;
+  background: white;
+  border-radius: 20px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  border: 1px solid #000000
+}
+
+.barra-busqueda input {
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #3c3c3c;
+  background: transparent;
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+}
+
+.error {
+    color: #D32F2F;
+    font-size: 10px;
+    margin-top: -1rem !important;
+    margin-left: 0.3rem;
+    text-align: left;
+    width: 100%;
+}
+
+.btn-clear {
+    background: none;
+    border: none;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn-clear:hover {
+    text-decoration: underline;
+}
+
+.btn-validar {
+  width: 248px;
+  height: 45px;
+  border-radius: 15px;
+  background: #000000;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  box-shadow: 8px 8px 8px 0px #00000066;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-validar:hover {
+  transform: translateY(-2px);
+}
+
+
+@media (max-height: 800px) {
+    .empresa-modal {
+      max-height: 85vh;
+      padding: 1.2rem;
+    }
+
+    .modal-title {
+      font-size: 20px;
+    }
+
+    .empresa-form {
+      gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresa-modal {
+      padding: 1rem;
+      border-radius: 12px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+    }
+
+    .barra-busqueda {
+        width: 100%;
+    }
+
+    .barra-busqueda input {
+        font-size: 14px;
+    }
+
+    .error {
+      font-size: 9px;
+      margin-top: -0.8rem !important;
+    }
+
+    .btn-clear {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+}
+
+@media (max-height: 600px) {
+    .empresa-modal {
+      max-height: 78vh;
+      padding: 1rem;
+    }
+
+    .modal-title {
+      font-size: 18px;
+    }
+
+    .empresa-form {
+      gap: 0.8rem;
+    }
+
+    .barra-busqueda {
+        gap: 12px;
+    }
+
+    .barra-busqueda input {
+        font-size: 13px;
+    }
+
+    .error {
+      font-size: 8.5px;
+      margin-top: -0.6rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-title {
+      font-size: 16px;
+    }
+
+    .empresa-form {
+      gap: 0.8rem;
+    }
+
+    .btn-clear {
+      font-size: 13px;
+      margin-top: 6px;
+    }
+}

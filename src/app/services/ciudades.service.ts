@@ -39,4 +39,9 @@ export class CiudadesService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  listByPaisId(paisId: number) {
+    return this.http.get<Ciudades[]>(`${this.url}/pais/${paisId}`);
+  }
+
 }

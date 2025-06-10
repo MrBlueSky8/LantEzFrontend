@@ -1,0 +1,39 @@
+<div class="overlay">
+  <div class="empresa-modal">
+
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">Validar Documento de Identidad</h2>
+
+    <!-- Formulario -->
+    <form [formGroup]="formDNI" (ngSubmit)="validar()" class="empresa-form">
+
+      <!-- Barra de búsqueda similar a listado -->
+      <div class="barra-busqueda" style="width: 100%;">
+        <img src="/assets/search.svg" alt="Buscar" />
+        <input
+          class="custom-input"
+          type="text"
+          placeholder="BUSCAR"
+          formControlName="numero_doc"
+        />
+      </div>
+
+      <!-- Validaciones -->
+      <div class="error" *ngIf="formDNI.get('numero_doc')?.touched && formDNI.get('numero_doc')?.invalid">
+        <div *ngIf="formDNI.get('numero_doc')?.hasError('required')">Este campo es obligatorio.</div>
+        <div *ngIf="formDNI.get('numero_doc')?.hasError('pattern')">Debe tener exactamente 8 dígitos numéricos.</div>
+      </div>
+
+      <!-- Botón VALIDAR -->
+      <button class="btn-validar" type="submit">Validar</button>
+
+      <!-- Botón borrar -->
+      <button class="btn-clear" type="button" (click)="formDNI.reset()">Borrar Casillas</button>
+
+    </form>
+
+  </div>
+</div>

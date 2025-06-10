@@ -1,0 +1,129 @@
+<div class="overlay">
+  <div class="empresa-modal">
+
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">
+      {{
+        data.verDetalle
+          ? 'Detalle del Postulante'
+          : (esEdicion ? 'Editar Postulante' : 'Registrar Postulante')
+      }}
+      <ng-container *ngIf="data.empresa?.nombre; else empresaDesconocida">
+        para {{ data.empresa?.nombre }}
+      </ng-container>
+    </h2>
+
+    <ng-template #empresaDesconocida>
+      <span>para empresa desconocida</span>
+    </ng-template>
+
+    <!-- Formulario -->
+    <form [formGroup]="formPostulante" (ngSubmit)="guardar()" class="empresa-form">
+
+      <!-- Email -->
+      <input class="custom-input" placeholder="Email*" formControlName="email" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('email')?.touched && formPostulante.get('email')?.invalid">
+        <div *ngIf="formPostulante.get('email')?.hasError('required')">El correo es obligatorio.</div>
+        <div *ngIf="formPostulante.get('email')?.hasError('email')">Correo inválido.</div>
+      </div>
+
+      <!-- Nombres y apellidos -->
+      <input class="custom-input" placeholder="Primer Nombre*" formControlName="primer_nombre" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('primer_nombre')?.touched && formPostulante.get('primer_nombre')?.hasError('required')">
+        Este campo es obligatorio.
+      </div>
+
+      <input class="custom-input" placeholder="Segundo Nombre (opcional)" formControlName="segundo_nombre" [readonly]="data.verDetalle" />
+
+      <input class="custom-input" placeholder="Apellido Paterno*" formControlName="apellido_p" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('apellido_p')?.touched && formPostulante.get('apellido_p')?.hasError('required')">
+        Este campo es obligatorio.
+      </div>
+
+      <input class="custom-input" placeholder="Apellido Materno (opcional)" formControlName="apellido_m" [readonly]="data.verDetalle" />
+
+      <!-- Foto -->
+      <input class="custom-input" placeholder="Foto URL" formControlName="foto_url" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('foto_url')?.hasError('pattern')">
+        URL no válida.
+      </div>
+
+      <!-- Género -->
+      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="genero">
+          <mat-option *ngFor="let genero of listaGeneros" [value]="genero.value">
+            {{ genero.viewvalue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input *ngIf="data.verDetalle" class="custom-input" formControlName="genero" readonly />
+
+      <!-- Teléfono -->
+      <input class="custom-input" placeholder="Prefijo" formControlName="prefijo_telefono" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Teléfono" formControlName="telefono" [readonly]="data.verDetalle" />
+
+      <!-- Tipo Documento -->
+      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+        <mat-label>Tipo Documento</mat-label>
+        <mat-select formControlName="tipo_documento_id">
+          <mat-option *ngFor="let tipo of tipoDocumentos" [value]="tipo.id">
+            {{ tipo.tipo_doc }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input *ngIf="data.verDetalle" class="custom-input" formControlName="tipo_documento_id" readonly />
+
+      <!-- Número Documento -->
+      <input class="custom-input" placeholder="Número de Documento*" formControlName="numero_doc" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('numero_doc')?.touched && formPostulante.get('numero_doc')?.hasError('required')">
+        Este campo es obligatorio.
+      </div>
+
+      <!-- Fecha Nacimiento -->
+      <input class="custom-input" type="date" placeholder="Fecha de Nacimiento*" formControlName="fechanacimiento" [readonly]="data.verDetalle" />
+      <div class="error" *ngIf="formPostulante.get('fechanacimiento')?.touched && formPostulante.get('fechanacimiento')?.invalid">
+        <div *ngIf="formPostulante.get('fechanacimiento')?.hasError('required')">La fecha de nacimiento es obligatoria.</div>
+        <div *ngIf="formPostulante.get('fechanacimiento')?.hasError('fechaFutura')">La fecha no puede ser futura.</div>
+        <div *ngIf="formPostulante.get('fechanacimiento')?.hasError('menorDeEdad')">Debe tener al menos 18 años.</div>
+      </div>
+
+      <!-- País y Ciudad -->
+      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+        <mat-label>País</mat-label>
+        <mat-select formControlName="pais_id">
+          <mat-option *ngFor="let pais of paises" [value]="pais.id">
+            {{ pais.nombre_pais }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input *ngIf="data.verDetalle" class="custom-input" formControlName="pais_id" readonly />
+
+      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="ciudad_id">
+          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
+            {{ ciudad.ciudad }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input *ngIf="data.verDetalle" class="custom-input" formControlName="ciudad_id" readonly />
+
+      <!-- Dirección -->
+      <input class="custom-input" placeholder="Dirección" formControlName="direccion" [readonly]="data.verDetalle" />
+
+      <!-- Fechas -->
+      <input class="custom-input" type="text" formControlName="fecha_registro" readonly />
+
+      <!-- Botones -->
+      <button class="btn-submit" type="submit" *ngIf="!data.verDetalle">Guardar Información</button>
+      <button class="btn-clear" type="button" (click)="limpiarCamposEditables()" *ngIf="!data.verDetalle">
+        Borrar Casillas
+      </button>
+
+    </form>
+  </div>
+</div>

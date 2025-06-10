@@ -37,7 +37,15 @@ export class EstadoPostulanteXEmpresaService {
   }
 
   obtenerEstado(empresaId: number, postulanteId: number) {
-  return this.http.get<boolean>(`${this.url}/estado/${empresaId}/${postulanteId}`);
+    return this.http.get<boolean>(`${this.url}/estado/${empresaId}/${postulanteId}`);
+  }
+
+  deshabilitarPostulante(empresaId: number, postulanteId: number) {
+    return this.http.put(`${this.url}/deshabilitar/${empresaId}/${postulanteId}`, {});
+  }
+
+  habilitarPostulante(empresaId: number, postulanteId: number) {
+    return this.http.put(`${this.url}/habilitar/${empresaId}/${postulanteId}`, {});
   }
 
 }
