@@ -17,7 +17,10 @@ import { PaisService } from '../../../../../services/pais.service';
 import { CiudadesService } from '../../../../../services/ciudades.service';
 import { EstadoPostulanteXEmpresaService } from '../../../../../services/estado-postulante-x-empresa.service';
 import { EstadoPostulanteXEmpresa } from '../../../../../models/estado_postulanteX_empresa';
-import { delay, of, switchMap } from 'rxjs';
+import { delay, forkJoin, of, switchMap } from 'rxjs';
+import { TipoDiscapacidad } from '../../../../../models/tipo-discapacidad';
+import { TipoDiscapacidadService } from '../../../../../services/tipo-discapacidad.service';
+import { PostulanteXDiscapacidadService } from '../../../../../services/postulante-x-discapacidad.service';
 
 @Component({
   selector: 'app-modal-postulante-form',
@@ -39,7 +42,7 @@ export class ModalPostulanteFormComponent implements OnInit {
   ciudades: Ciudades[] = [];
 
   paises: Pais[] = [];
-  //empresas: Empresas[] = [];
+  discapacidades: TipoDiscapacidad[] = [];
 
   miEmpresa: Empresas = new Empresas();
 
@@ -54,8 +57,8 @@ export class ModalPostulanteFormComponent implements OnInit {
     private fb: FormBuilder,
     private postulanteService: PostulantesService,
     private tipoDocumentoService: TipoDocumentoService,
-    private loginService: LoginService,
-    private empresaService: EmpresasService, 
+    private postulantexDiscapacidadService: PostulanteXDiscapacidadService,
+    private tipoDiscapacidadService: TipoDiscapacidadService, 
     private paisService: PaisService,
     private ciudadService: CiudadesService,  
     private estadoPostulanteXEmpresaService: EstadoPostulanteXEmpresaService,
@@ -70,6 +73,10 @@ export class ModalPostulanteFormComponent implements OnInit {
 
     this.paisService.list().subscribe((data) => {
       this.paises = data;
+    });
+
+     this.tipoDiscapacidadService.list().subscribe((data) => {
+      this.discapacidades = data;
     });
 
     this.formPostulante = this.fb.group({
@@ -88,6 +95,7 @@ export class ModalPostulanteFormComponent implements OnInit {
         pais_id: [this.data.postulante?.ciudades.pais.id || '', Validators.required],
         ciudad_id: [this.data.postulante?.ciudades.id || '', Validators.required],
         direccion: [this.data.postulante?.direccion || ''],
+        discapacidades_ids: [[]],  // sin validación, opcional
         fecha_registro: [this.formatDateTime(this.data.postulante?.fecha_registro || new Date()), Validators.required],
         //estado: [this.data.postulante?.estado ?? true, Validators.required],
 
@@ -143,7 +151,21 @@ export class ModalPostulanteFormComponent implements OnInit {
               estado: true
             };
 
-            return this.estadoPostulanteXEmpresaService.insert(estadoNuevo);
+            return this.estadoPostulanteXEmpresaService.insert(estadoNuevo).pipe(
+              switchMap(() => {
+                const idsSeleccionados = this.formPostulante.value.discapacidades_ids;
+                if (!idsSeleccionados?.length) return of(null);
+
+                const inserts$ = idsSeleccionados.map((id: number) =>
+                  this.postulantexDiscapacidadService.insert({
+                    id: 0,
+                    postulantes: postulanteCreado,
+                    tipoDiscapacidad: this.discapacidades.find(s => s.id === id)!,
+                  })
+                );
+                return forkJoin(inserts$);
+              })
+            );
           })
         );
 
@@ -208,8 +230,8 @@ export class ModalPostulanteFormComponent implements OnInit {
       fechanacimiento: '',
       pais_id: '',
       ciudad_id: '',
-      direccion: ''
-      
+      direccion: '',
+      discapacidades_ids: [],
     });
 
   this.formPostulante.markAsPristine();

@@ -115,6 +115,15 @@
       <!-- Dirección -->
       <input class="custom-input" placeholder="Dirección" formControlName="direccion" [readonly]="data.verDetalle" />
 
+      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+        <mat-label>Discapacidad(es) (opcional)</mat-label>
+        <mat-select formControlName="discapacidades_ids" multiple>
+            <mat-option *ngFor="let discapacidad of discapacidades" [value]="discapacidad.id">
+            {{ discapacidad.nombre_tipo_discapacidad }}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <!-- Fechas -->
       <input class="custom-input" type="text" formControlName="fecha_registro" readonly />
 
