@@ -18,6 +18,7 @@ export class EstadoPostulanteXEmpresaService {
     return this.http.get<EstadoPostulanteXEmpresa[]>(this.url);
   }
   insert(u: EstadoPostulanteXEmpresa) {
+    //console.log('evento: intento de insertar estado postulante: ' + JSON.stringify(u));
     return this.http.post(this.url, u);
   }
   setList(listaNueva: EstadoPostulanteXEmpresa[]) {

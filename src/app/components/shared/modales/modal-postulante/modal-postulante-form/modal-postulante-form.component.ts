@@ -15,6 +15,9 @@ import { LoginService } from '../../../../../services/login.service';
 import { EmpresasService } from '../../../../../services/empresas.service';
 import { PaisService } from '../../../../../services/pais.service';
 import { CiudadesService } from '../../../../../services/ciudades.service';
+import { EstadoPostulanteXEmpresaService } from '../../../../../services/estado-postulante-x-empresa.service';
+import { EstadoPostulanteXEmpresa } from '../../../../../models/estado_postulanteX_empresa';
+import { delay, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-modal-postulante-form',
@@ -55,6 +58,7 @@ export class ModalPostulanteFormComponent implements OnInit {
     private empresaService: EmpresasService, 
     private paisService: PaisService,
     private ciudadService: CiudadesService,  
+    private estadoPostulanteXEmpresaService: EstadoPostulanteXEmpresaService,
   ) {}
 
   ngOnInit(): void {
@@ -116,7 +120,6 @@ export class ModalPostulanteFormComponent implements OnInit {
       ...this.formPostulante.value,
       tipoDocumento: this.tipoDocumentos.find(s => s.id === this.formPostulante.value.tipo_documento_id)!,
       ciudades: this.ciudades.find(s => s.id === this.formPostulante.value.ciudad_id)!,
-      fecha_actualizacion: new Date(Date.now()),
       fecha_registro: this.data.empresa?.fecha_registro || new Date(Date.now()),
     };
     delete (nuevoPostulante as any).tipo_documento_id;
@@ -124,8 +127,25 @@ export class ModalPostulanteFormComponent implements OnInit {
     delete (nuevoPostulante as any).pais_id;
 
     const obs = this.esEdicion
-      ? this.postulanteService.update(nuevoPostulante)
-      : this.postulanteService.insert(nuevoPostulante);
+      ? this.postulanteService.update(nuevoPostulante).pipe(switchMap(() => of(null))) // en edición, no se asocia nada
+      : this.postulanteService.insert(nuevoPostulante).pipe(
+          switchMap(() =>
+            this.postulanteService.buscarPorDni(nuevoPostulante.numero_doc)
+          ),
+          switchMap((postulanteCreado) => {
+            //console.log('evento: postulante creado info: ' + JSON.stringify(postulanteCreado));
+            if (!postulanteCreado) return of(null); // fallback defensivo
+
+            const estadoNuevo: EstadoPostulanteXEmpresa = {
+              id: 0,
+              postulante: postulanteCreado,
+              empresas: this.data.empresa!,
+              estado: true
+            };
+
+            return this.estadoPostulanteXEmpresaService.insert(estadoNuevo);
+          })
+        );
 
     obs.subscribe(() => {
       this.postulanteService.list().subscribe(data => {

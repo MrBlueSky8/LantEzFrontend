@@ -88,6 +88,7 @@ export class PostulantesComponent implements OnInit {
     );
     this.pageIndex = 0;
     this.updatePostulantesPaginados();
+    this.cargarEstadosPostulantes();
   }
 
   updatePostulantesPaginados(): void {
