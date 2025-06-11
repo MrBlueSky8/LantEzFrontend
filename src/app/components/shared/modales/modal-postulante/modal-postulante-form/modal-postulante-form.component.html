@@ -1,6 +1,5 @@
 <div class="overlay">
   <div class="empresa-modal">
-
     <!-- Botón de cierre -->
     <button class="close-button" type="button" (click)="cerrar()">&times;</button>
 
@@ -23,36 +22,31 @@
     <!-- Formulario -->
     <form [formGroup]="formPostulante" (ngSubmit)="guardar()" class="empresa-form">
 
-      <!-- Email -->
-      <input class="custom-input" placeholder="Email*" formControlName="email" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Email*" formControlName="email" />
       <div class="error" *ngIf="formPostulante.get('email')?.touched && formPostulante.get('email')?.invalid">
         <div *ngIf="formPostulante.get('email')?.hasError('required')">El correo es obligatorio.</div>
         <div *ngIf="formPostulante.get('email')?.hasError('email')">Correo inválido.</div>
       </div>
 
-      <!-- Nombres y apellidos -->
-      <input class="custom-input" placeholder="Primer Nombre*" formControlName="primer_nombre" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Primer Nombre*" formControlName="primer_nombre" />
       <div class="error" *ngIf="formPostulante.get('primer_nombre')?.touched && formPostulante.get('primer_nombre')?.hasError('required')">
         Este campo es obligatorio.
       </div>
 
-      <input class="custom-input" placeholder="Segundo Nombre (opcional)" formControlName="segundo_nombre" [readonly]="data.verDetalle" />
-
-      <input class="custom-input" placeholder="Apellido Paterno*" formControlName="apellido_p" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Segundo Nombre (opcional)" formControlName="segundo_nombre" />
+      <input class="custom-input" placeholder="Apellido Paterno*" formControlName="apellido_p" />
       <div class="error" *ngIf="formPostulante.get('apellido_p')?.touched && formPostulante.get('apellido_p')?.hasError('required')">
         Este campo es obligatorio.
       </div>
 
-      <input class="custom-input" placeholder="Apellido Materno (opcional)" formControlName="apellido_m" [readonly]="data.verDetalle" />
-
-      <!-- Foto -->
-      <input class="custom-input" placeholder="Foto URL" formControlName="foto_url" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Apellido Materno (opcional)" formControlName="apellido_m" />
+      <input class="custom-input" placeholder="Foto URL" formControlName="foto_url" />
       <div class="error" *ngIf="formPostulante.get('foto_url')?.hasError('pattern')">
         URL no válida.
       </div>
 
       <!-- Género -->
-      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+      <mat-form-field appearance="fill" class="custom-select">
         <mat-label>Género</mat-label>
         <mat-select formControlName="genero">
           <mat-option *ngFor="let genero of listaGeneros" [value]="genero.value">
@@ -60,14 +54,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <input *ngIf="data.verDetalle" class="custom-input" formControlName="genero" readonly />
 
-      <!-- Teléfono -->
-      <input class="custom-input" placeholder="Prefijo" formControlName="prefijo_telefono" [readonly]="data.verDetalle" />
-      <input class="custom-input" placeholder="Teléfono" formControlName="telefono" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Prefijo" formControlName="prefijo_telefono" />
+      <input class="custom-input" placeholder="Teléfono" formControlName="telefono" />
 
       <!-- Tipo Documento -->
-      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+      <mat-form-field appearance="fill" class="custom-select">
         <mat-label>Tipo Documento</mat-label>
         <mat-select formControlName="tipo_documento_id">
           <mat-option *ngFor="let tipo of tipoDocumentos" [value]="tipo.id">
@@ -75,16 +67,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <input *ngIf="data.verDetalle" class="custom-input" formControlName="tipo_documento_id" readonly />
 
-      <!-- Número Documento -->
-      <input class="custom-input" placeholder="Número de Documento*" formControlName="numero_doc" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Número de Documento*" formControlName="numero_doc" />
       <div class="error" *ngIf="formPostulante.get('numero_doc')?.touched && formPostulante.get('numero_doc')?.hasError('required')">
         Este campo es obligatorio.
       </div>
 
-      <!-- Fecha Nacimiento -->
-      <input class="custom-input" type="date" placeholder="Fecha de Nacimiento*" formControlName="fechanacimiento" [readonly]="data.verDetalle" />
+      <input class="custom-input" type="date" placeholder="Fecha de Nacimiento*" formControlName="fechanacimiento" />
       <div class="error" *ngIf="formPostulante.get('fechanacimiento')?.touched && formPostulante.get('fechanacimiento')?.invalid">
         <div *ngIf="formPostulante.get('fechanacimiento')?.hasError('required')">La fecha de nacimiento es obligatoria.</div>
         <div *ngIf="formPostulante.get('fechanacimiento')?.hasError('fechaFutura')">La fecha no puede ser futura.</div>
@@ -92,7 +81,7 @@
       </div>
 
       <!-- País y Ciudad -->
-      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+      <mat-form-field appearance="fill" class="custom-select">
         <mat-label>País</mat-label>
         <mat-select formControlName="pais_id">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
@@ -100,9 +89,8 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <input *ngIf="data.verDetalle" class="custom-input" formControlName="pais_id" readonly />
 
-      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+      <mat-form-field appearance="fill" class="custom-select">
         <mat-label>Ciudad</mat-label>
         <mat-select formControlName="ciudad_id">
           <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
@@ -110,21 +98,19 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <input *ngIf="data.verDetalle" class="custom-input" formControlName="ciudad_id" readonly />
 
-      <!-- Dirección -->
-      <input class="custom-input" placeholder="Dirección" formControlName="direccion" [readonly]="data.verDetalle" />
+      <input class="custom-input" placeholder="Dirección" formControlName="direccion" />
 
-      <mat-form-field appearance="fill" class="custom-select" *ngIf="!data.verDetalle">
+      <!-- Discapacidades -->
+      <mat-form-field appearance="fill" class="custom-select">
         <mat-label>Discapacidad(es) (opcional)</mat-label>
         <mat-select formControlName="discapacidades_ids" multiple>
-            <mat-option *ngFor="let discapacidad of discapacidades" [value]="discapacidad.id">
+          <mat-option *ngFor="let discapacidad of discapacidades" [value]="discapacidad.id">
             {{ discapacidad.nombre_tipo_discapacidad }}
-            </mat-option>
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <!-- Fechas -->
       <input class="custom-input" type="text" formControlName="fecha_registro" readonly />
 
       <!-- Botones -->
@@ -132,7 +118,6 @@
       <button class="btn-clear" type="button" (click)="limpiarCamposEditables()" *ngIf="!data.verDetalle">
         Borrar Casillas
       </button>
-
     </form>
   </div>
 </div>

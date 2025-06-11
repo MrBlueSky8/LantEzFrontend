@@ -101,6 +101,22 @@ export class ModalPostulanteFormComponent implements OnInit {
 
       });
 
+      const debeCargarCiudades = this.esEdicion || this.data.verDetalle;
+      if (debeCargarCiudades) {
+        const paisId = this.formPostulante.get('pais_id')?.value;
+        if (paisId) {
+          this.ciudadService.listByPaisId(paisId).subscribe((data) => {
+            this.ciudades = data;
+            const ciudadSeleccionada = this.formPostulante.get('ciudad_id')?.value;
+            if (!this.ciudades.find(c => c.id === ciudadSeleccionada)) {
+              this.formPostulante.patchValue({ ciudad_id: '' });
+            }
+          });
+        }
+      }
+
+
+
       this.formPostulante.get('pais_id')?.valueChanges.subscribe(paisId => {
         if (paisId) {
           this.ciudadService.listByPaisId(paisId).subscribe((data) => {
@@ -116,6 +132,10 @@ export class ModalPostulanteFormComponent implements OnInit {
           this.formPostulante.patchValue({ ciudad_id: '' });
         }
       });
+
+      if(this.data.verDetalle){
+        this.formPostulante.disable();
+      }
 
 
   }

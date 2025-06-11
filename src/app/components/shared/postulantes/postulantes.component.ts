@@ -120,6 +120,49 @@ export class PostulantesComponent implements OnInit {
           `El DNI ${resultado.dni} ya existe en el sistema. Se debería asociar al postulante.`
         );
         // Aquí luego llamarás a lógica para asociarlo con la empresa
+        this.postulantesService
+          .buscarPorDni(resultado.dni)
+          .subscribe((postulanteExistente) => {
+            if (!postulanteExistente) return;
+
+            this.estadoPostulanteXEmpresaService
+              .obtenerEstado(this.miEmpresa.id!, postulanteExistente.id)
+              .subscribe({
+                next: (yaAsociado) => {
+                  if (yaAsociado) {
+                    console.log('Postulante ya está afiliado a esta empresa.');
+                    // Si quieres puedes abrir un modal informativo aquí
+                    return;
+                  }
+
+                  const nuevoEstado = {
+                    id: 0,
+                    postulante: postulanteExistente,
+                    empresas: this.miEmpresa,
+                    estado: true,
+                  };
+
+                  this.estadoPostulanteXEmpresaService
+                    .insert(nuevoEstado)
+                    .subscribe(() => {
+                      console.log(
+                        'Postulante ahora está afiliado a la empresa'
+                      );
+                      this.refrescarPostulante();
+
+                      this.dialog.open(ModalExitoComponent, {
+                        data: {
+                          titulo: 'Postulante Afiliado Correctamente',
+                          iconoUrl: '/assets/checkicon.svg',
+                        },
+                      });
+                    });
+                },
+                error: (err) => {
+                  console.error('Error al consultar afiliación:', err);
+                },
+              });
+          });
       } else {
         console.log(
           `El DNI ${resultado.dni} no existe. Se debería registrar un nuevo postulante.`
@@ -149,12 +192,45 @@ export class PostulantesComponent implements OnInit {
   editarPostulante(postulante: Postulantes): void {
     console.log('Click editar postulante:', postulante.primer_nombre);
     if (!postulante) return;
+
+    const dialogRef = this.dialog.open(ModalPostulanteFormComponent, {
+                width: 'auto',
+                data: { postulante, verDetalle: false, empresa: this.miEmpresa },
+              });
+          
+              dialogRef.afterClosed().subscribe((resultado) => {
+                if (resultado) {
+                  //console.log('Puesto editado');
+                  // recargar y filtrar
+                  this.postulantesService
+                    .listbyEmpresaId(this.miEmpresa.id)
+                    .subscribe((todas) => {
+                      this.postulantes = todas;
+                      this.postulantesFiltrados = [...this.postulantes];
+                      //this.updateEmpresasPaginadas();
+                      this.filtrarPostulantes();
+                    });
+          
+                  const dialogSucces = this.dialog.open(ModalExitoComponent, {
+                    data: {
+                      titulo: 'Información Actualizada',
+                      iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                      //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+                    },
+                  });
+                }
+              });
   }
 
   verDetallePostulante(postulante: Postulantes): void {
     console.log('Click detalle postulante:', postulante.primer_nombre);
 
     if (!postulante) return;
+
+    const dialogRef = this.dialog.open(ModalPostulanteFormComponent, {
+                  width: 'auto',
+                  data: { postulante, verDetalle: true, empresa: this.miEmpresa },
+                });
   }
 
   private refrescarPostulante(): void {
