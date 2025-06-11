@@ -169,7 +169,26 @@ export class ModalPostulanteFormComponent implements OnInit {
     delete (nuevoPostulante as any).pais_id;
 
     const obs = this.esEdicion
-      ? this.postulanteService.update(nuevoPostulante).pipe(switchMap(() => of(null))) // en edición, no se asocia nada
+      ? this.postulanteService.update(nuevoPostulante).pipe(
+          switchMap(() =>
+            this.postulantexDiscapacidadService.eliminarTodasPorPostulanteId(
+              nuevoPostulante.id!
+            )
+          ),
+          switchMap(() => {
+            const idsSeleccionados =
+              this.formPostulante.value.discapacidades_ids;
+            if (!idsSeleccionados?.length) return of(null);
+            const inserts$ = idsSeleccionados.map((id: number) =>
+              this.postulantexDiscapacidadService.insert({
+                id: 0,
+                postulantes: nuevoPostulante,
+                tipoDiscapacidad: this.discapacidades.find((s) => s.id === id)!,
+              })
+            );
+            return forkJoin(inserts$);
+          })
+        ) // en edición, no se asocia nada
       : this.postulanteService.insert(nuevoPostulante).pipe(
           switchMap(() =>
             this.postulanteService.buscarPorDni(nuevoPostulante.numero_doc)
@@ -182,24 +201,29 @@ export class ModalPostulanteFormComponent implements OnInit {
               id: 0,
               postulante: postulanteCreado,
               empresas: this.data.empresa!,
-              estado: true
+              estado: true,
             };
 
-            return this.estadoPostulanteXEmpresaService.insert(estadoNuevo).pipe(
-              switchMap(() => {
-                const idsSeleccionados = this.formPostulante.value.discapacidades_ids;
-                if (!idsSeleccionados?.length) return of(null);
+            return this.estadoPostulanteXEmpresaService
+              .insert(estadoNuevo)
+              .pipe(
+                switchMap(() => {
+                  const idsSeleccionados =
+                    this.formPostulante.value.discapacidades_ids;
+                  if (!idsSeleccionados?.length) return of(null);
 
-                const inserts$ = idsSeleccionados.map((id: number) =>
-                  this.postulantexDiscapacidadService.insert({
-                    id: 0,
-                    postulantes: postulanteCreado,
-                    tipoDiscapacidad: this.discapacidades.find(s => s.id === id)!,
-                  })
-                );
-                return forkJoin(inserts$);
-              })
-            );
+                  const inserts$ = idsSeleccionados.map((id: number) =>
+                    this.postulantexDiscapacidadService.insert({
+                      id: 0,
+                      postulantes: postulanteCreado,
+                      tipoDiscapacidad: this.discapacidades.find(
+                        (s) => s.id === id
+                      )!,
+                    })
+                  );
+                  return forkJoin(inserts$);
+                })
+              );
           })
         );
 
