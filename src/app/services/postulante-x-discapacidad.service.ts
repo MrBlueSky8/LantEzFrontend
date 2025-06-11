@@ -36,7 +36,7 @@ export class PostulanteXDiscapacidadService {
     return this.http.delete(`${this.url}/${id}`);
   }
 
-  eliminarCascade(id: number){
-    return this.http.delete(`${this.url}/cascade/${id}`);
+  eliminarTodasPorPostulanteId(postulanteId: number) {
+    return this.http.delete(`${this.url}/limpiar/${postulanteId}`);
   }
 }

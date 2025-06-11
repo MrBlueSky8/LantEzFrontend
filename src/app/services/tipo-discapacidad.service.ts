@@ -39,4 +39,8 @@ export class TipoDiscapacidadService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  listByPostulanteId(postulanteId: number) {
+    return this.http.get<TipoDiscapacidad[]>(`${this.url}/postulante/${postulanteId}`);
+  }
 }

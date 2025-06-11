@@ -101,6 +101,20 @@ export class ModalPostulanteFormComponent implements OnInit {
 
       });
 
+      if (this.esEdicion || this.data.verDetalle) {
+        const postulanteId = this.data.postulante?.id!;
+        this.tipoDiscapacidadService.listByPostulanteId(postulanteId).subscribe({
+          next: (discapAsignadas) => {
+            const ids = discapAsignadas.map(d => d.id);
+            this.formPostulante.patchValue({ discapacidades_ids: ids });
+          },
+          error: (err) => {
+            console.error('Error al cargar discapacidades del postulante:', err);
+          }
+        });
+      }
+
+
       const debeCargarCiudades = this.esEdicion || this.data.verDetalle;
       if (debeCargarCiudades) {
         const paisId = this.formPostulante.get('pais_id')?.value;
