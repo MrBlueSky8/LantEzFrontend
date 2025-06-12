@@ -247,6 +247,15 @@ export class PostulantesComponent implements OnInit {
   llenarFichaPostulante(postulante: Postulantes): void {
     console.log('Click llenar Ficha postulante:', postulante.primer_nombre);
     if (!postulante) return;
+
+    const segments = this.router.url.split('/');
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([
+      `/${currentSidenav}/postulantes/resultados/`, postulante.id, `empresa`, this.miEmpresa.id
+    ]);
+  
   }
 
   ToogleEstadoPostulante(postulante: Postulantes): void { //agregar un ngif para verificar que solo un admin o subadmin pueda exponer

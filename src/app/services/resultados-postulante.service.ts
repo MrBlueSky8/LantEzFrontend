@@ -39,4 +39,14 @@ export class ResultadosPostulanteService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  listByPostulanteAndEmpresa(postulanteId: number, empresaId: number) {
+    return this.http.get<Resultados_Postulante[]>(`${this.url}/postulante/${postulanteId}/empresa/${empresaId}`);
+  }
+
+  upsertMultiple(resultados: Resultados_Postulante[]) {
+    return this.http.post(`${this.url}/upsert`, resultados);
+  }
+
+
 }
