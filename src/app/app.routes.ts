@@ -26,6 +26,7 @@ import { UsuariosFundadesComponent } from './components/fundades/usuarios-fundad
 import { RequerimientosMinimosPuestoComponent } from './components/shared/requerimientos-minimos-puesto/requerimientos-minimos-puesto.component';
 import { PuestosTrabajoFundadesComponent } from './components/fundades/puestos-trabajo-fundades/puestos-trabajo-fundades.component';
 import { ResultadosPostulanteComponent } from './components/shared/resultados-postulante/resultados-postulante.component';
+import { PostulantesFundadesComponent } from './components/fundades/postulantes-fundades/postulantes-fundades.component';
 
 export const routes: Routes = [
   {
@@ -63,7 +64,7 @@ export const routes: Routes = [
       },
       {
         path: 'postulantes',
-        component: PostulantesComponent,
+        component: PostulantesFundadesComponent,
       },
       {
         path: 'evaluadores',
@@ -151,6 +152,10 @@ export const routes: Routes = [
       {
         path: 'mi-empresa/puestos-trabajo/ficha/:id',
         component: RequerimientosMinimosPuestoComponent,
+      },
+      {
+        path: 'postulantes/resultados/:id/empresa/:empresaId',
+        component: ResultadosPostulanteComponent,
       }
     ],
     canActivate: [segGuard],
@@ -183,6 +188,10 @@ export const routes: Routes = [
       {
         path: 'ajustes',
         component: AjustesGeneralesComponent,
+      },
+      {
+        path: 'postulantes/resultados/:id/empresa/:empresaId',
+        component: ResultadosPostulanteComponent,
       }
     ],
     canActivate: [segGuard],
