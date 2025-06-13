@@ -52,7 +52,7 @@ export class EvaluacionesComponent implements OnInit {
           this.empresaService.listId(idEmpresa).subscribe({
             next: (empresa) => {
               this.miEmpresa = empresa;
-              this.puestosService.listbyEmpresaId(empresa.id!).subscribe({
+              this.puestosService.listarPuestosPendientesByEmpresaId(empresa.id!).subscribe({
                 next: (data: PuestosTrabajo[]) => {
                   this.puestosTrabajos = data;
                   this.puestosFiltrados = [...this.puestosTrabajos];

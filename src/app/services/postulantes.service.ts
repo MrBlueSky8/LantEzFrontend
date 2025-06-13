@@ -44,6 +44,10 @@ export class PostulantesService {
     return this.http.get<Postulantes[]>(`${this.url}/empresa/${id}`);
   }
 
+  listarActivosConResultadosPorEmpresa(empresaId: number) {
+    return this.http.get<Postulantes[]>(`${this.url}/activos_resultados/empresa/${empresaId}`);
+  }
+
   validarDniExistente(dni: string) {
     return this.http.get<boolean>(`${this.url}/validar-dni/${dni}`);
   }
