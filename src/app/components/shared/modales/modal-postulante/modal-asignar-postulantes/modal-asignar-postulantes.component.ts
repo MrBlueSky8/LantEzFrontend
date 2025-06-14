@@ -79,73 +79,83 @@ export class ModalAsignarPostulantesComponent implements OnInit {
   guardar(): void {
     if (this.formAsignacion.invalid) return;
 
-    const postulanteIds: number[] = this.formAsignacion.value.postulantes_ids;
+    const postulanteIdsSeleccionados: number[] = this.formAsignacion.value.postulantes_ids;
 
-    const postulacionesObservables = postulanteIds.map(postulanteId => {
-      return forkJoin({
-        resultadosPostulante: this.resultadosPostulanteService.listByPostulanteAndEmpresa(
-          postulanteId, this.data.puesto.areas.empresas.id!
-        ),
-        requerimientosPuesto: this.requerimientosService.listbyPuestoId(
-          this.data.puesto.id!
-        ),
-        postulante: this.postulanteService.listId(postulanteId)
-      }).pipe(
-        map(({ resultadosPostulante, requerimientosPuesto, postulante }) => {
-          
-          const requerimientosActivos = requerimientosPuesto.filter(r => r.estado);
-          let totalCompatibilidad = 0;
-          let count = 0;
+    this.postulanteService.listarPorPuestoId(this.data.puesto.id!).pipe(
+      switchMap(postulantesAsignados => {
+        const idsAsignados = postulantesAsignados.map(p => p.id);
+        const idsNuevos = postulanteIdsSeleccionados.filter(id => !idsAsignados.includes(id));
 
-          requerimientosActivos.forEach(requerimiento => {
-            // Extraer número inicial de la pregunta del puesto
-            const numPreguntaReq = parseInt(requerimiento.pregunta_perfil.pregunta.split('.')[0].trim());
+        if (idsNuevos.length === 0) {
+          console.log('No hay nuevas postulaciones que insertar.');
+          this.dialogRef.close(false);
+          return [];
+        }
 
-            // Encontrar la respuesta equivalente en los resultados del postulante por número de pregunta
-            const resultado = resultadosPostulante.find(r => {
-              const numPreguntaRes = parseInt(r.pregunta_perfil.pregunta.split('.')[0].trim());
-              return numPreguntaReq === numPreguntaRes;
-            });
+        const postulacionesObservables = idsNuevos.map(postulanteId => {
+          return forkJoin({
+            resultadosPostulante: this.resultadosPostulanteService.listByPostulanteAndEmpresa(
+              postulanteId, this.data.puesto.areas.empresas.id!
+            ),
+            requerimientosPuesto: this.requerimientosService.listbyPuestoId(
+              this.data.puesto.id!
+            ),
+            postulante: this.postulanteService.listId(postulanteId)
+          }).pipe(
+            map(({ resultadosPostulante, requerimientosPuesto, postulante }) => {
+              const requerimientosActivos = requerimientosPuesto.filter(r => r.estado);
+              let totalCompatibilidad = 0;
+              let count = 0;
 
-            if (resultado) {
-              const compatibilidad = (resultado.resultado_pregunta_obtenido / requerimiento.resultado_minimo) * 100;
-              totalCompatibilidad += compatibilidad;//Math.min(compatibilidad, 100); // Limitar compatibilidad máxima a 100%
-              count++;
-            }
-          });
+              requerimientosActivos.forEach(requerimiento => {
+                const numPreguntaReq = parseInt(requerimiento.pregunta_perfil.pregunta.split('.')[0].trim());
+                const resultado = resultadosPostulante.find(r => {
+                  const numPreguntaRes = parseInt(r.pregunta_perfil.pregunta.split('.')[0].trim());
+                  return numPreguntaReq === numPreguntaRes;
+                });
 
-          const promedioCompatibilidad = count > 0 ? totalCompatibilidad / count : 0;
+                if (resultado) {
+                  const compatibilidad = (resultado.resultado_pregunta_obtenido / requerimiento.resultado_minimo) * 100;
+                  totalCompatibilidad += compatibilidad;
+                  count++;
+                }
+              });
 
-          return {
-            id: 0,
-            postulante: postulante,
-            puesto_trabajo: this.data.puesto,
-            fecha_postulacion: new Date(),
-            estado_postulacion: 'pendiente',
-            aprobado: false,
-            porcentaje_compatibilidad: promedioCompatibilidad,
-            ia_output: '',
-            evaluador_comentario: '',
-            ocultar: false,
-          } as Postulaciones;
-        })
-      );
-    });
+              const promedioCompatibilidad = count > 0 ? totalCompatibilidad / count : 0;
 
-    forkJoin(postulacionesObservables).pipe(
-      switchMap((postulacionesData: Postulaciones[]) =>
-        this.postulacionesService.upsertMultiple(postulacionesData)
-      )
+              return {
+                id: 0,
+                postulante: postulante,
+                puesto_trabajo: this.data.puesto,
+                fecha_postulacion: new Date(),
+                estado_postulacion: 'pendiente',
+                aprobado: false,
+                porcentaje_compatibilidad: promedioCompatibilidad,
+                ia_output: '',
+                evaluador_comentario: '',
+                ocultar: false,
+              } as Postulaciones;
+            })
+          );
+        });
+
+        return forkJoin(postulacionesObservables);
+      }),
+      switchMap((nuevasPostulaciones: Postulaciones[]) => {
+        if (nuevasPostulaciones.length === 0) return [];
+        return this.postulacionesService.insertMultiple(nuevasPostulaciones);
+      })
     ).subscribe({
       next: () => {
-        console.log('Postulaciones asignadas exitosamente.');
+        console.log('Nuevas postulaciones insertadas exitosamente.');
         this.dialogRef.close(true);
       },
       error: (err) => {
-        console.error('Error al asignar postulaciones:', err);
+        console.error('Error al insertar postulaciones:', err);
       }
     });
   }
+
 
 
 
