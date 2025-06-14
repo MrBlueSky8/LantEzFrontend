@@ -44,4 +44,9 @@ export class PostulacionesService {
     return this.http.post(`${this.url}/multiple`, postulaciones);
   }
 
+  upsertMultiple(postulaciones: Postulaciones[]) {
+    return this.http.post(`${this.url}/upsert`, postulaciones);
+  }
+
+
 }

@@ -83,7 +83,7 @@ export class ModalAsignarPostulantesComponent implements OnInit {
 
             if (resultado) {
               const compatibilidad = (resultado.resultado_pregunta_obtenido / requerimiento.resultado_minimo) * 100;
-              totalCompatibilidad += Math.min(compatibilidad, 100); // Limitar compatibilidad máxima a 100%
+              totalCompatibilidad += compatibilidad;//Math.min(compatibilidad, 100); // Limitar compatibilidad máxima a 100%
               count++;
             }
           });
@@ -108,7 +108,7 @@ export class ModalAsignarPostulantesComponent implements OnInit {
 
     forkJoin(postulacionesObservables).pipe(
       switchMap((postulacionesData: Postulaciones[]) =>
-        this.postulacionesService.insertMultiple(postulacionesData)
+        this.postulacionesService.upsertMultiple(postulacionesData)
       )
     ).subscribe({
       next: () => {
