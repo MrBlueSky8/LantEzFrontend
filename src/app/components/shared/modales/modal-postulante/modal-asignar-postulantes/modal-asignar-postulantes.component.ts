@@ -39,6 +39,7 @@ export class ModalAsignarPostulantesComponent implements OnInit {
     private postulacionesService: PostulacionesService,
   ) {}
 
+  /*
   ngOnInit(): void {
     this.formAsignacion = this.fb.group({
       postulantes_ids: [[], Validators.required],
@@ -47,6 +48,31 @@ export class ModalAsignarPostulantesComponent implements OnInit {
     this.postulanteService.listarActivosConResultadosPorEmpresa(this.data.puesto.usuarios.empresas.id!).subscribe({
       next: (postulantes) => this.postulantesDisponibles = postulantes,
       error: (err) => console.error('Error al obtener postulantes:', err)
+    });
+  }
+    */
+
+  ngOnInit(): void {
+    this.formAsignacion = this.fb.group({
+      postulantes_ids: [[], Validators.required],
+    });
+
+    const idEmpresa = this.data.puesto.usuarios.empresas.id!;
+    const idPuesto = this.data.puesto.id!;
+
+    forkJoin({
+      disponibles: this.postulanteService.listarActivosConResultadosPorEmpresa(idEmpresa),
+      asignados: this.postulanteService.listarPorPuestoId(idPuesto),
+    }).subscribe({
+      next: ({ disponibles, asignados }) => {
+        this.postulantesDisponibles = disponibles;
+
+        const idsAsignados = asignados.map(p => p.id);
+        this.formAsignacion.patchValue({ postulantes_ids: idsAsignados });
+      },
+      error: (err) => {
+        console.error('Error al cargar postulantes:', err);
+      }
     });
   }
 
