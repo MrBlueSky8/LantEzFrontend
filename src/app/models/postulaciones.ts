@@ -10,4 +10,6 @@ export class Postulaciones {
   aprobado: boolean = false;
   porcentaje_compatibilidad: number = 0;
   ia_output: string = '';
+  evaluador_comentario: string = '';
+  ocultar: boolean = false;
 }

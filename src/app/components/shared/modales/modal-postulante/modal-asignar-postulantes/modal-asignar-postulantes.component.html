@@ -1,0 +1,33 @@
+<div class="overlay">
+  <div class="empresa-modal">
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">
+      Asignar Postulantes
+      <ng-container *ngIf="data.puesto?.nombre_puesto; else sinPuesto">
+        para {{ data.puesto.nombre_puesto }}
+      </ng-container>
+    </h2>
+
+    <ng-template #sinPuesto>
+      <span>para puesto no identificado</span>
+    </ng-template>
+
+    <!-- Formulario -->
+    <form [formGroup]="formAsignacion" (ngSubmit)="guardar()" class="empresa-form">
+      <mat-form-field appearance="fill" class="custom-select">
+        <mat-label>Postulantes</mat-label>
+        <mat-select formControlName="postulantes_ids" multiple>
+          <mat-option *ngFor="let postulante of postulantesDisponibles" [value]="postulante.id">
+            {{ postulante.primer_nombre }} {{ postulante.apellido_p }} - {{ postulante.numero_doc }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Botones -->
+      <button class="btn-submit" type="submit">Guardar</button>
+      <button class="btn-clear" type="button" (click)="formAsignacion.reset()">Borrar Datos</button>
+    </form>
+  </div>
+</div>

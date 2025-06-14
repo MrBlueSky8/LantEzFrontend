@@ -39,4 +39,9 @@ export class PostulacionesService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  insertMultiple(postulaciones: Postulaciones[]) {
+    return this.http.post(`${this.url}/multiple`, postulaciones);
+  }
+
 }
