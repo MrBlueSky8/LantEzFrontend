@@ -58,26 +58,32 @@ export class ModalAsignarPostulantesComponent implements OnInit {
     });
 
     const idEmpresa = this.data.puesto.usuarios.empresas.id!;
-    const idPuesto = this.data.puesto.id!;
+    const idPuesto   = this.data.puesto.id!;
 
     forkJoin({
       disponibles: this.postulanteService.listarActivosConResultadosPorEmpresa(idEmpresa),
-      asignados: this.postulanteService.listarPorPuestoId(idPuesto),
+      postulaciones: this.postulacionesService.listByPuestoTrabajo(idPuesto)
     }).subscribe({
-      next: ({ disponibles, asignados }) => {
+      next: ({ disponibles, postulaciones }) => {
+        // llenar opciones del select
         this.postulantesDisponibles = disponibles;
 
-        const idsAsignados = asignados.map(p => p.id);
+        // quedarnos sólo con las postulaciones que NO están ocultas
+        const visibles = postulaciones
+          .filter(p => !p.ocultar)
+          .map(p => p.postulante);
+
+        // IDs de esos postulantes para que aparezcan marcados
+        const idsAsignados = visibles.map(p => p.id!);
         this.formAsignacion.patchValue({ postulantes_ids: idsAsignados });
       },
-      error: (err) => {
-        console.error('Error al cargar postulantes:', err);
-      }
+      error: (err) => console.error('Error al cargar postulantes:', err)
     });
   }
 
+
   guardar(): void {
-    if (this.formAsignacion.invalid) return;
+    //if (this.formAsignacion.invalid) return;
 
     const selectedIds: number[] = this.formAsignacion.value.postulantes_ids;
     const idEmpresa = this.data.puesto.usuarios.empresas.id!;
@@ -120,6 +126,8 @@ export class ModalAsignarPostulantesComponent implements OnInit {
                 const numReq = +rq.pregunta_perfil.pregunta.split('.')[0];
                 const res = resultados.find(rr => +rr.pregunta_perfil.pregunta.split('.')[0] === numReq);
                 if (res) {
+                  //console.log('evento: ' + numReq + ' ' + res.resultado_pregunta_obtenido + '/' + rq.resultado_minimo + '= ' + ((res.resultado_pregunta_obtenido / rq.resultado_minimo) * 100));
+                  //console.log('evento count: ' + count);
                   suma += (res.resultado_pregunta_obtenido / rq.resultado_minimo) * 100;
                   count++;
                 }
