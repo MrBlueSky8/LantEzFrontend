@@ -8,7 +8,7 @@ import { Postulantes } from '../../../../../models/postulantes';
 import { PostulantesService } from '../../../../../services/postulantes.service';
 import { PuestosTrabajo } from '../../../../../models/puestos-trabajo';
 import { Postulaciones } from '../../../../../models/postulaciones';
-import { forkJoin, map, switchMap } from 'rxjs';
+import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { ResultadosPostulanteService } from '../../../../../services/resultados-postulante.service';
 import { RequerimientosMinimosPuestoService } from '../../../../../services/requerimientos-minimos-puesto.service';
 import { PostulacionesService } from '../../../../../services/postulaciones.service';
@@ -79,79 +79,82 @@ export class ModalAsignarPostulantesComponent implements OnInit {
   guardar(): void {
     if (this.formAsignacion.invalid) return;
 
-    const postulanteIdsSeleccionados: number[] = this.formAsignacion.value.postulantes_ids;
+    const selectedIds: number[] = this.formAsignacion.value.postulantes_ids;
+    const idEmpresa = this.data.puesto.usuarios.empresas.id!;
+    const idPuesto   = this.data.puesto.id!;
 
-    this.postulanteService.listarPorPuestoId(this.data.puesto.id!).pipe(
-      switchMap(postulantesAsignados => {
-        const idsAsignados = postulantesAsignados.map(p => p.id);
-        const idsNuevos = postulanteIdsSeleccionados.filter(id => !idsAsignados.includes(id));
+    // 1) Traer postulaciones existentes para este puesto
+    this.postulacionesService.listByPuestoTrabajo(idPuesto).pipe(
+      switchMap((existentes: Postulaciones[]) => {
+        // Mapa de postulanteId -> Postulacion
+        const mapExistentes = new Map<number, Postulaciones>(
+          existentes.map(p => [p.postulante.id!, p])
+        );
 
-        if (idsNuevos.length === 0) {
-          console.log('No hay nuevas postulaciones que insertar.');
-          this.dialogRef.close(false);
-          return [];
-        }
+        // 2) Preparar actualizaciones de ocultar = true/false sobre existentes
+        const updates = existentes
+          .map(p => {
+            const debeOcultar = !selectedIds.includes(p.postulante.id!);
+            // sólo actualizamos si realmente cambia el flag
+            if (p.ocultar !== debeOcultar) {
+              const upd: Postulaciones = { ...p, ocultar: debeOcultar };
+              return this.postulacionesService.update(upd);
+            }
+            return null;
+          })
+          .filter(o => o !== null) as Observable<any>[];
 
-        const postulacionesObservables = idsNuevos.map(postulanteId => {
-          return forkJoin({
-            resultadosPostulante: this.resultadosPostulanteService.listByPostulanteAndEmpresa(
-              postulanteId, this.data.puesto.areas.empresas.id!
-            ),
-            requerimientosPuesto: this.requerimientosService.listbyPuestoId(
-              this.data.puesto.id!
-            ),
+        // 3) Detectar IDs nuevos (no estaban en existentes)
+        const nuevosIds = selectedIds.filter(id => !mapExistentes.has(id));
+        const inserts: Observable<any>[] = nuevosIds.map(postulanteId =>
+          // calculamos compatibilidad y construimos objeto Postulaciones
+          forkJoin({
+            resultados: this.resultadosPostulanteService.listByPostulanteAndEmpresa(postulanteId, idEmpresa),
+            requerimientos: this.requerimientosService.listbyPuestoId(idPuesto),
             postulante: this.postulanteService.listId(postulanteId)
           }).pipe(
-            map(({ resultadosPostulante, requerimientosPuesto, postulante }) => {
-              const requerimientosActivos = requerimientosPuesto.filter(r => r.estado);
-              let totalCompatibilidad = 0;
-              let count = 0;
-
-              requerimientosActivos.forEach(requerimiento => {
-                const numPreguntaReq = parseInt(requerimiento.pregunta_perfil.pregunta.split('.')[0].trim());
-                const resultado = resultadosPostulante.find(r => {
-                  const numPreguntaRes = parseInt(r.pregunta_perfil.pregunta.split('.')[0].trim());
-                  return numPreguntaReq === numPreguntaRes;
-                });
-
-                if (resultado) {
-                  const compatibilidad = (resultado.resultado_pregunta_obtenido / requerimiento.resultado_minimo) * 100;
-                  totalCompatibilidad += compatibilidad;
+            map(({ resultados, requerimientos, postulante }) => {
+              const activos = requerimientos.filter(r => r.estado);
+              let suma = 0, count = 0;
+              activos.forEach(rq => {
+                const numReq = +rq.pregunta_perfil.pregunta.split('.')[0];
+                const res = resultados.find(rr => +rr.pregunta_perfil.pregunta.split('.')[0] === numReq);
+                if (res) {
+                  suma += (res.resultado_pregunta_obtenido / rq.resultado_minimo) * 100;
                   count++;
                 }
               });
-
-              const promedioCompatibilidad = count > 0 ? totalCompatibilidad / count : 0;
-
-              return {
+              const prom = count ? suma / count : 0;
+              const nueva: Postulaciones = {
                 id: 0,
-                postulante: postulante,
+                postulante,
                 puesto_trabajo: this.data.puesto,
                 fecha_postulacion: new Date(),
                 estado_postulacion: 'pendiente',
                 aprobado: false,
-                porcentaje_compatibilidad: promedioCompatibilidad,
+                porcentaje_compatibilidad: prom,
                 ia_output: '',
                 evaluador_comentario: '',
-                ocultar: false,
-              } as Postulaciones;
-            })
-          );
-        });
+                ocultar: false
+              };
+              return nueva;
+            }),
+            switchMap(nuevaPost => this.postulacionesService.insert(nuevaPost))
+          )
+        );
 
-        return forkJoin(postulacionesObservables);
-      }),
-      switchMap((nuevasPostulaciones: Postulaciones[]) => {
-        if (nuevasPostulaciones.length === 0) return [];
-        return this.postulacionesService.insertMultiple(nuevasPostulaciones);
+        // 4) Ejecutar todas las operaciones en paralelo
+        return updates.concat(inserts).length
+          ? forkJoin([...updates, ...inserts])
+          : of(null);
       })
     ).subscribe({
       next: () => {
-        console.log('Nuevas postulaciones insertadas exitosamente.');
+        console.log('Asignaciones procesadas correctamente.');
         this.dialogRef.close(true);
       },
-      error: (err) => {
-        console.error('Error al insertar postulaciones:', err);
+      error: err => {
+        console.error('Error al procesar asignaciones:', err);
       }
     });
   }

@@ -48,5 +48,8 @@ export class PostulacionesService {
     return this.http.post(`${this.url}/upsert`, postulaciones);
   }
 
+  listByPuestoTrabajo(puestoId: number) {
+    return this.http.get<Postulaciones[]>(`${this.url}/puesto/${puestoId}`);
+  }
 
 }
