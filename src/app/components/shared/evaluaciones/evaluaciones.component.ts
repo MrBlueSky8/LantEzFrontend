@@ -133,6 +133,12 @@ export class EvaluacionesComponent implements OnInit {
     console.log('Click ingresar puesto:', puesto.nombre_puesto);
 
     if (!puesto) return;
+    const segments = this.router.url.split('/');
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+    const seccionEvaluacion = segments[2]; //.includes('evaluacion') ? 'evaluacion' : 'mis-evaluaciones';
+
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([`/${currentSidenav}/${seccionEvaluacion}/gestion/puesto`, puesto.id]);
   }
 
   asignarPuesto(puesto: PuestosTrabajo): void {

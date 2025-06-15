@@ -27,6 +27,7 @@ import { RequerimientosMinimosPuestoComponent } from './components/shared/requer
 import { PuestosTrabajoFundadesComponent } from './components/fundades/puestos-trabajo-fundades/puestos-trabajo-fundades.component';
 import { ResultadosPostulanteComponent } from './components/shared/resultados-postulante/resultados-postulante.component';
 import { PostulantesFundadesComponent } from './components/fundades/postulantes-fundades/postulantes-fundades.component';
+import { IngresarEvaluacionComponent } from './components/shared/ingresar-evaluacion/ingresar-evaluacion.component';
 
 export const routes: Routes = [
   {
@@ -94,7 +95,11 @@ export const routes: Routes = [
       {
         path: 'postulantes/resultados/:id/empresa/:empresaId',
         component: ResultadosPostulanteComponent,
-      }
+      },
+      {
+        path: 'evaluaciones/gestion/puesto/:id',
+        component: IngresarEvaluacionComponent,
+      },
       
     ],
     canActivate: [segGuard],
@@ -156,7 +161,11 @@ export const routes: Routes = [
       {
         path: 'postulantes/resultados/:id/empresa/:empresaId',
         component: ResultadosPostulanteComponent,
-      }
+      },
+      {
+        path: 'evaluaciones/gestion/puesto/:id',
+        component: IngresarEvaluacionComponent,
+      },
     ],
     canActivate: [segGuard],
     data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno

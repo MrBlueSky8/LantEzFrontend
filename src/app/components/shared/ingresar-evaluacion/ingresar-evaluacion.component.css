@@ -1,0 +1,104 @@
+.evaluacion-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.evaluacion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.icon-btn {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.evaluacion-header h2 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Contenedor principal */
+.contenido-principal {
+  display: flex;
+  gap: 16px;
+}
+
+/* Lista de postulantes */
+.lista-postulantes {
+  width: 200px; /* referencial */
+  max-height: 684px;
+  overflow-y: auto;
+  padding: 10px;
+  /*background-color: #f8f1d5; Color del figma */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.titulo-lista {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+}
+
+.postulante-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.postulante-card:hover {
+  background: #e0e0e0;
+}
+
+.postulante-card.seleccionado {
+  background: #3A3939;
+  color: #fff;
+}
+
+.foto-postulante {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info-postulante {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+}
+
+/* Placeholder detalle */
+.detalle-postulante {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 16px;
+}

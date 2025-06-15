@@ -1,0 +1,42 @@
+<div class="evaluacion-container">
+  <!-- Cabecera -->
+  <div class="evaluacion-header" *ngIf="puestoSeleccionado; else cargandoHeader">
+    <img src="/assets/backIcon.svg" alt="Atrás" (click)="volverAtras()" class="icon-btn">
+    <img src="/assets/editEvaluacionpuesto.svg" alt="Editar" (click)="editarEvaluacion()" class="icon-btn">
+    <h2>Puesto: {{ puestoSeleccionado.nombre_puesto }}</h2>
+  </div>
+
+  <ng-template #cargandoHeader>
+    <div class="evaluacion-header">
+      <h2>Cargando puesto...</h2>
+    </div>
+  </ng-template>
+
+  <!-- Contenedor principal -->
+  <div class="contenido-principal">
+    <!-- Lista de postulantes -->
+    <div class="lista-postulantes">
+      <div class="titulo-lista">
+        <img src="/assets/postuladosIcon.svg" alt="Postulados">
+        <span>{{ postulacionesVisibles.length }} evaluados</span>
+      </div>
+
+      <div 
+        class="postulante-card" 
+        *ngFor="let postulacion of postulacionesVisibles" 
+        [class.seleccionado]="postulacion === postulacionSeleccionada"
+        (click)="seleccionarPostulante(postulacion)">
+        <img [src]="postulacion.postulante.foto_url" alt="{{ postulacion.postulante.primer_nombre }}" class="foto-postulante" (error)="postulacion.postulante.foto_url='/assets/defaultUser.svg'">
+        <div class="info-postulante">
+          <span>{{ postulacion.postulante.apellido_p }}, {{ postulacion.postulante.primer_nombre }}</span>
+          <span>{{ postulacion.postulante.fechanacimiento | age }} años - {{ postulacion.porcentaje_compatibilidad | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Espacio para detalle futuro -->
+    <div class="detalle-postulante">
+      Selecciona un postulante para ver el detalle.
+    </div>
+  </div>
+</div>
