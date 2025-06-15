@@ -167,9 +167,6 @@ export class ModalAsignarPostulantesComponent implements OnInit {
     });
   }
 
-
-
-
   cerrar(): void {
     this.dialogRef.close();
   }
