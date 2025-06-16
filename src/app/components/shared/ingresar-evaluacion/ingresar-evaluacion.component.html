@@ -64,7 +64,7 @@
       </div>
 
       <div class="detalle-postulacion-estado">
-        <img src="/assets/refresh.svg" alt="Refresh" class="refresh-icon">
+        <img src="/assets/refresh.svg" alt="Refresh" class="refresh-icon" (click)="refrescarCruce()">
         <span [ngClass]="postulacionSeleccionada.estado_postulacion">{{ postulacionSeleccionada.estado_postulacion | uppercase }}</span>
         <span class="compatibilidad-general">{{ postulacionSeleccionada.porcentaje_compatibilidad | number:'1.0-0' }}%</span>
       </div>

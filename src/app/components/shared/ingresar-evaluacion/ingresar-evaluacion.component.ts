@@ -116,8 +116,9 @@ export class IngresarEvaluacionComponent implements OnInit {
     });
   }
 
-
-  
+  refrescarCruce(): void {
+    
+  }
 
   volverAtras(): void {
     this.router.navigate(['/ruta-anterior']); // Ajusta la ruta según corresponda
