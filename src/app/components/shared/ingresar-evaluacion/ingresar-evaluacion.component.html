@@ -69,6 +69,32 @@
         <span class="compatibilidad-general">{{ postulacionSeleccionada.porcentaje_compatibilidad | number:'1.0-0' }}%</span>
       </div>
     </div>
+    <div class="tabla-container" *ngIf="!cargandoCompetencias">
+      <table class="tabla-competencias">
+        <thead>
+          <tr>
+            <th class="th-competencia">Competencias</th>
+            <th class="th-nivel">NIVEL DEL PUESTO</th>
+            <th class="th-coincidencia">COINCIDENCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of competenciasDetalle">
+            <td>{{ c.competencia }}</td>
+            <td>{{ c.nivelPuesto }}</td>
+            <td>{{ c.coincidencia }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="loading-tabla" *ngIf="cargandoCompetencias">
+      Cargando competencias…
+    </div>
+    <div class="solicitar-análisis">
+      <button mat-raised-button color="primary" (click)="solicitarAnalisis()">
+        SOLICITAR ANÁLISIS
+      </button>
+    </div>
   </div>
 
   <ng-template #seleccionaPostulante>

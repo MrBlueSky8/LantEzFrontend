@@ -43,7 +43,8 @@ export class IngresarEvaluacionComponent implements OnInit {
 
   postulacionSeleccionada?: Postulaciones;
 
-  //competencias: CompetenciaDetalle[] = [];
+  competenciasDetalle: CompetenciaDetalle[] = [];
+  cargandoCompetencias = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -78,8 +79,43 @@ export class IngresarEvaluacionComponent implements OnInit {
 
   seleccionarPostulante(postulacion: Postulaciones): void {
     this.postulacionSeleccionada = postulacion;
-    console.log('Seleccionado:', postulacion.postulante.primer_nombre);
+    this.cargandoCompetencias = true;
+    const idEmpresa = this.puestoSeleccionado.usuarios.empresas.id!;
+    const idPuesto   = this.idPuesto;
+    // Traemos requerimientos y resultados en paralelo
+    forkJoin({
+      requerimientos: this.requerimientosService.listbyPuestoId(idPuesto),
+      resultados: this.resultadosPostulanteService.listByPostulanteAndEmpresa(
+        postulacion.postulante.id!, idEmpresa
+      )
+    }).subscribe({
+      next: ({ requerimientos, resultados }) => {
+        // Filtramos sólo los activos (estado=true)
+        const activos = requerimientos.filter(r => r.estado);
+        this.competenciasDetalle = activos.map(rq => {
+          // coincidencia individual
+          const match = resultados.find(rr =>
+            +rr.pregunta_perfil.pregunta.split('.')[0] ===
+            +rq.pregunta_perfil.pregunta.split('.')[0]
+          );
+          const porcentaje = match
+            ? (match.resultado_pregunta_obtenido / rq.resultado_minimo) * 100
+            : 0;
+          return {
+            competencia: rq.pregunta_perfil.pregunta,
+            nivelPuesto: rq.resultado_minimo,
+            coincidencia: Math.round(porcentaje)
+          };
+        });
+        this.cargandoCompetencias = false;
+      },
+      error: err => {
+        console.error('Error cargando competencias:', err);
+        this.cargandoCompetencias = false;
+      }
+    });
   }
+
 
   
 

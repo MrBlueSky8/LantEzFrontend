@@ -216,6 +216,64 @@
   margin-top: 4px;
 }
 
+/* Contenedor de la tabla */
+.tabla-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+/* Tabla */
+.tabla-competencias {
+  width: 100%;
+  border-collapse: collapse;
+  background: #F0F0F0;
+}
+
+/* Encabezados */
+.tabla-competencias th {
+  border: 1px solid #D8D8D8;
+  padding: 12px;
+  text-align: left;
+}
+
+.th-competencia {
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.th-nivel,
+.th-coincidencia {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Celdas de cuerpo */
+.tabla-competencias td {
+  border: 1px solid #D8D8D8;
+  padding: 10px;
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Botón solicitar análisis centrado */
+.solicitar-análisis {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+/* Mensaje de carga */
+.loading-tabla {
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: italic;
+  color: #666;
+  margin-top: 16px;
+}
+
 
 
 
