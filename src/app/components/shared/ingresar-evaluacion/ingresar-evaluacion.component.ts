@@ -19,7 +19,7 @@ import { GptService } from '../../../services/gpt.service';
 
 interface CompetenciaDetalle {
   competencia: string;
-  nivelPuesto: number | 'N/A';
+  nivelPuesto: number;
   coincidencia: number;
 }
 
@@ -190,23 +190,58 @@ export class IngresarEvaluacionComponent implements OnInit {
   solicitarAnalisis(): void {
     //console.log('Análisis solicitado para:', this.seleccionado?.postulante.primer_nombre);
     // Lógica para solicitud de análisis adicional
-    const prompt = `
-    Evaluación del postulante:
-
-    Pregunta: Visión. Valor esperado: 5. Resultado obtenido: 3. Porcentaje: 60%.  
-    Pregunta: Lenguaje. Valor esperado: 4. Resultado obtenido: 2. Porcentaje: 50%.  
-
-    Genera una retroalimentación respetuosa, clara y profesional que explique brevemente el desempeño del postulante, sus áreas de mejora y un mensaje motivador.`;
+    const prompt = this.generarPromptEvaluacion();
+    if (!prompt) {
+      console.warn('No se puede generar el análisis: falta información.');
+      return;
+    }
 
     this.gptService.retroalimentacionIndividual(prompt).subscribe({
-      next: (respuesta) => {
-        console.log("Respuesta de IA:", respuesta);
-        //alert("Retroalimentación generada:\n\n" + respuesta);
+      next: (respuesta: string) => {
+        console.log('IA Output:', respuesta);
+
+        // Actualizamos el campo ia_output en la postulación seleccionada
+        const actualizada: Postulaciones = {
+          ...this.postulacionSeleccionada!,
+          ia_output: respuesta,
+        };
+
+        this.postulacionesService.update(actualizada).subscribe({
+          next: () => {
+            console.log('Retroalimentación guardada correctamente.');
+            this.postulacionSeleccionada!.ia_output = respuesta; // opcional
+          },
+          error: (err) => {
+            console.error('Error al guardar la retroalimentación:', err);
+          },
+        });
       },
       error: (err) => {
-        console.error("Error al solicitar análisis:", err);
-        //alert("Ocurrió un error al procesar el análisis.");
-      }
+        console.error('Error al obtener retroalimentación de la IA:', err);
+      },
     });
   }
+
+  private generarPromptEvaluacion(): string {
+    if (!this.postulacionSeleccionada || !this.puestoSeleccionado || this.competenciasDetalle.length === 0) {
+      return '';
+    }
+
+    const nombrePuesto = this.puestoSeleccionado.nombre_puesto;
+    const compatGlobal = Math.round(this.postulacionSeleccionada.porcentaje_compatibilidad || 0);
+
+    let prompt = `Evaluación para el puesto: ${nombrePuesto}\n`;
+    prompt += `Porcentaje de compatibilidad global: ${compatGlobal}%\n\n`;
+
+    for (const c of this.competenciasDetalle) {
+      const resultadoObtenido = Math.round((c.coincidencia / 100) * c.nivelPuesto);
+      prompt += `Competencia: ${c.competencia}\n`;
+      prompt += `Nivel requerido: ${c.nivelPuesto}\n`;
+      prompt += `Resultado obtenido: ${resultadoObtenido}\n`;
+      prompt += `Porcentaje de compatibilidad: ${c.coincidencia}%\n\n`;
+    }
+
+    return prompt.trim(); // Elimina saltos finales
+  }
+
 }
