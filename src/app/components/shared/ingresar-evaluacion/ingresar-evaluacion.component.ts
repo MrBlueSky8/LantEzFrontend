@@ -155,16 +155,9 @@ export class IngresarEvaluacionComponent implements OnInit {
       })
     ).subscribe({
       next: () => {
-        // Usamos el mismo objeto ya que no hay respuesta del backend
-        this.postulacionSeleccionada = {
-          ...this.postulacionSeleccionada!,
-          porcentaje_compatibilidad: this.postulacionSeleccionada!.porcentaje_compatibilidad!
-          
-        };
-
-        this.cargarPostulacionesVisibles();
-        this.seleccionarPostulante(this.postulacionSeleccionada!);
-        console.log('Cruce actualizado, nueva compatibilidad enviada al backend.');
+         this.cargarPostulacionesVisibles();
+          this.seleccionarPostulante(this.postulacionSeleccionada!);
+          console.log('Cruce actualizado.');
       },
       error: err => {
         console.error('Error al refrescar el cruce:', err);
