@@ -38,23 +38,28 @@
     <div class="detalle-postulante" *ngIf="postulacionSeleccionada; else seleccionaPostulante">
     <div class="detalle-header">
       <div class="detalle-postulante-info">
-        <img [src]="postulacionSeleccionada.postulante.foto_url" alt="{{ postulacionSeleccionada.postulante.primer_nombre }}" class="foto-detalle" (error)="postulacionSeleccionada.postulante.foto_url='/assets/defaultUser.svg'">
-        <div>
+        <img [src]="postulacionSeleccionada.postulante.foto_url" 
+            alt="{{ postulacionSeleccionada.postulante.primer_nombre }}" 
+            class="foto-detalle" 
+            (error)="postulacionSeleccionada.postulante.foto_url='/assets/defaultUser.svg'">
+        
+        <div class="info-postulante-detalle">
           <h3>{{ postulacionSeleccionada.postulante.apellido_p }}, {{ postulacionSeleccionada.postulante.primer_nombre }}</h3>
-          <p class="linea-info">
-            <span class="etiqueta">Edad:</span>
-            <span class="contenido-label">{{ postulacionSeleccionada.postulante.fechanacimiento | age }} años</span>
-          </p>
-
-          <p class="linea-info">
-            <span class="etiqueta">Género:</span>
-            <span class="contenido-label">{{ postulacionSeleccionada.postulante.genero }}</span>
-          </p>
-
-          <p class="linea-info">
-            <span class="etiqueta">Ciudad:</span>
-            <span class="contenido-label">{{ postulacionSeleccionada.postulante.ciudades.ciudad }}</span>
-          </p>
+          <div class="info-detalle-grid">
+            <p class="linea-info">
+              <span class="etiqueta">Edad:</span>
+              <span class="contenido-label">{{ postulacionSeleccionada.postulante.fechanacimiento | age }} años</span>
+            </p>
+            <p class="linea-info">
+              <span class="etiqueta">Género:</span>
+              <span class="contenido-label">{{ postulacionSeleccionada.postulante.genero }}</span>
+            </p>
+            <p class="linea-info">
+              <span class="etiqueta">Ciudad:</span>
+              <span class="contenido-label">{{ postulacionSeleccionada.postulante.ciudades.ciudad }}</span>
+            </p>
+            <!-- Puedes agregar más campos si deseas mantener simetría -->
+          </div>
         </div>
       </div>
 

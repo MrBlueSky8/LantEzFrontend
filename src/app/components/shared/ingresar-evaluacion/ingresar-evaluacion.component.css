@@ -196,12 +196,26 @@
 
 .etiqueta {
   font-weight: 600;
-  color: #000; /* o el que estés usando como texto primario */
+  color: #000; 
 }
 
 .contenido-label {
   color: #5D5D5D;
 }
+
+.info-postulante-detalle {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 24px;
+  row-gap: 6px;
+  margin-top: 4px;
+}
+
 
 
 
