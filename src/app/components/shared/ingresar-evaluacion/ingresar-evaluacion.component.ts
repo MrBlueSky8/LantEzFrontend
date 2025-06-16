@@ -14,6 +14,7 @@ import { RequerimientosMinimosPuestoService } from '../../../services/requerimie
 import { forkJoin, switchMap } from 'rxjs';
 import { AgePipe } from '../../../pipes/age.pipe';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
+import { GptService } from '../../../services/gpt.service';
 
 
 interface CompetenciaDetalle {
@@ -52,7 +53,8 @@ export class IngresarEvaluacionComponent implements OnInit {
     private postulacionesService: PostulacionesService,
     private resultadosPostulanteService: ResultadosPostulanteService,
     private requerimientosService: RequerimientosMinimosPuestoService,
-    private puestosService: PuestoTrabajoService
+    private puestosService: PuestoTrabajoService,
+    private gptService: GptService
   ) {}
 
   ngOnInit(): void {
@@ -169,7 +171,7 @@ export class IngresarEvaluacionComponent implements OnInit {
       }
     });
   }
-  
+
   volverAtras(): void {
     this.router.navigate(['/ruta-anterior']); // Ajusta la ruta según corresponda
     const segments = this.router.url.split('/');
@@ -188,5 +190,23 @@ export class IngresarEvaluacionComponent implements OnInit {
   solicitarAnalisis(): void {
     //console.log('Análisis solicitado para:', this.seleccionado?.postulante.primer_nombre);
     // Lógica para solicitud de análisis adicional
+    const prompt = `
+    Evaluación del postulante:
+
+    Pregunta: Visión. Valor esperado: 5. Resultado obtenido: 3. Porcentaje: 60%.  
+    Pregunta: Lenguaje. Valor esperado: 4. Resultado obtenido: 2. Porcentaje: 50%.  
+
+    Genera una retroalimentación respetuosa, clara y profesional que explique brevemente el desempeño del postulante, sus áreas de mejora y un mensaje motivador.`;
+
+    this.gptService.retroalimentacionIndividual(prompt).subscribe({
+      next: (respuesta) => {
+        console.log("Respuesta de IA:", respuesta);
+        //alert("Retroalimentación generada:\n\n" + respuesta);
+      },
+      error: (err) => {
+        console.error("Error al solicitar análisis:", err);
+        //alert("Ocurrió un error al procesar el análisis.");
+      }
+    });
   }
 }
