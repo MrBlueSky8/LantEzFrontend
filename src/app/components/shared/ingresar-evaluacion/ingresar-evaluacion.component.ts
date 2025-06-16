@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostulacionesService } from '../../../services/postulaciones.service';
 import { ResultadosPostulanteService } from '../../../services/resultados-postulante.service';
 import { RequerimientosMinimosPuestoService } from '../../../services/requerimientos-minimos-puesto.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { AgePipe } from '../../../pipes/age.pipe';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 
@@ -117,7 +117,59 @@ export class IngresarEvaluacionComponent implements OnInit {
   }
 
   refrescarCruce(): void {
-    
+    if (!this.postulacionSeleccionada) return;
+
+    const postulacion = this.postulacionSeleccionada;
+    const postulanteId = postulacion.postulante.id!;
+    const idEmpresa    = this.puestoSeleccionado.usuarios.empresas.id!;
+    const idPuesto     = this.puestoSeleccionado.id!;
+
+    forkJoin({
+      requerimientos: this.requerimientosService.listbyPuestoId(idPuesto),
+      resultados:     this.resultadosPostulanteService.listByPostulanteAndEmpresa(postulanteId, idEmpresa)
+    }).pipe(
+      switchMap(({ requerimientos, resultados }) => {
+        const activos = requerimientos.filter(r => r.estado);
+        let suma = 0, count = 0;
+
+        activos.forEach(rq => {
+          const key = +rq.pregunta_perfil.pregunta.split('.')[0];
+          const match = resultados.find(rr =>
+            +rr.pregunta_perfil.pregunta.split('.')[0] === key
+          );
+          if (match) {
+            suma += (match.resultado_pregunta_obtenido / rq.resultado_minimo) * 100;
+            count++;
+          }
+        });
+
+        const nuevoPorcentaje = count ? suma / count : 0;
+        const actualizada: Postulaciones = {
+          ...postulacion,
+          porcentaje_compatibilidad: nuevoPorcentaje,
+          fecha_postulacion: new Date(),
+        };
+
+        // Enviamos al backend sin esperar respuesta
+        return this.postulacionesService.upsertMultiple([actualizada]);
+      })
+    ).subscribe({
+      next: () => {
+        // Usamos el mismo objeto ya que no hay respuesta del backend
+        this.postulacionSeleccionada = {
+          ...this.postulacionSeleccionada!,
+          porcentaje_compatibilidad: this.postulacionSeleccionada!.porcentaje_compatibilidad!
+          
+        };
+
+        this.cargarPostulacionesVisibles();
+        this.seleccionarPostulante(this.postulacionSeleccionada!);
+        console.log('Cruce actualizado, nueva compatibilidad enviada al backend.');
+      },
+      error: err => {
+        console.error('Error al refrescar el cruce:', err);
+      }
+    });
   }
 
   volverAtras(): void {
