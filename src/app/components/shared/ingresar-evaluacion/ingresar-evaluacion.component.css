@@ -89,7 +89,7 @@
   line-height: 100%;
 }
 
-/* Placeholder detalle */
+/* Placeholder detalle 
 .detalle-postulante {
   flex: 1;
   background-color: #ffffff;
@@ -102,3 +102,88 @@
   color: #888;
   font-size: 16px;
 }
+*/
+.detalle-postulante {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.detalle-postulante-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.foto-detalle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.detalle-postulante-info div h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+.detalle-postulante-info div span {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.detalle-postulacion-estado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.refresh-icon {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.detalle-postulacion-estado span {
+  border-radius: 10px;
+  padding: 12px 11px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.detalle-postulacion-estado span.compatibilidad-general {
+  background: #2BBF46;
+}
+
+.detalle-postulacion-estado span.pendiente {
+  background: #F3AF42;
+}
+
+.detalle-postulacion-estado span.aceptado {
+  background: #2BBF46;
+}
+
+.detalle-postulacion-estado span.rechazado {
+  background: #C06060;
+}
+
+
+
+

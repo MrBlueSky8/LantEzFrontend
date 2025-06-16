@@ -35,8 +35,28 @@
     </div>
 
     <!-- Espacio para detalle futuro -->
-    <div class="detalle-postulante">
-      Selecciona un postulante para ver el detalle.
+    <div class="detalle-postulante" *ngIf="postulacionSeleccionada; else seleccionaPostulante">
+    <div class="detalle-header">
+      <div class="detalle-postulante-info">
+        <img [src]="postulacionSeleccionada.postulante.foto_url" alt="{{ postulacionSeleccionada.postulante.primer_nombre }}" class="foto-detalle" (error)="postulacionSeleccionada.postulante.foto_url='/assets/defaultUser.svg'">
+        <div>
+          <h3>{{ postulacionSeleccionada.postulante.apellido_p }}, {{ postulacionSeleccionada.postulante.primer_nombre }}</h3>
+          <span>Edad: {{ postulacionSeleccionada.postulante.fechanacimiento | age }} años</span>
+          <span>Género: {{ postulacionSeleccionada.postulante.genero }}</span>
+          <span>Ciudad: {{ postulacionSeleccionada.postulante.ciudades.ciudad }}</span>
+        </div>
+      </div>
+
+      <div class="detalle-postulacion-estado">
+        <img src="/assets/refresh.svg" alt="Refresh" class="refresh-icon">
+        <span [ngClass]="postulacionSeleccionada.estado_postulacion">{{ postulacionSeleccionada.estado_postulacion | uppercase }}</span>
+        <span class="compatibilidad-general">{{ postulacionSeleccionada.porcentaje_compatibilidad | number:'1.0-0' }}%</span>
+      </div>
     </div>
+  </div>
+
+  <ng-template #seleccionaPostulante>
+    Selecciona un postulante para ver el detalle.
+  </ng-template>
   </div>
 </div>
