@@ -41,9 +41,20 @@
         <img [src]="postulacionSeleccionada.postulante.foto_url" alt="{{ postulacionSeleccionada.postulante.primer_nombre }}" class="foto-detalle" (error)="postulacionSeleccionada.postulante.foto_url='/assets/defaultUser.svg'">
         <div>
           <h3>{{ postulacionSeleccionada.postulante.apellido_p }}, {{ postulacionSeleccionada.postulante.primer_nombre }}</h3>
-          <span>Edad: {{ postulacionSeleccionada.postulante.fechanacimiento | age }} años</span>
-          <span>Género: {{ postulacionSeleccionada.postulante.genero }}</span>
-          <span>Ciudad: {{ postulacionSeleccionada.postulante.ciudades.ciudad }}</span>
+          <p class="linea-info">
+            <span class="etiqueta">Edad:</span>
+            <span class="contenido-label">{{ postulacionSeleccionada.postulante.fechanacimiento | age }} años</span>
+          </p>
+
+          <p class="linea-info">
+            <span class="etiqueta">Género:</span>
+            <span class="contenido-label">{{ postulacionSeleccionada.postulante.genero }}</span>
+          </p>
+
+          <p class="linea-info">
+            <span class="etiqueta">Ciudad:</span>
+            <span class="contenido-label">{{ postulacionSeleccionada.postulante.ciudades.ciudad }}</span>
+          </p>
         </div>
       </div>
 

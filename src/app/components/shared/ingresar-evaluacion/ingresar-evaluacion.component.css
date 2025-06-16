@@ -184,6 +184,27 @@
   background: #C06060;
 }
 
+.linea-info {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0;
+  line-height: 160%;
+  display: flex;
+  gap: 4px;
+}
+
+.etiqueta {
+  font-weight: 600;
+  color: #000; /* o el que estés usando como texto primario */
+}
+
+.contenido-label {
+  color: #5D5D5D;
+}
+
+
+
 
 
 
