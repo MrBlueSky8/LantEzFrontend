@@ -187,6 +187,11 @@ export class IngresarEvaluacionComponent implements OnInit {
     // Navegación o lógica de edición
   }
 
+  tieneAnalisisIA(): boolean {
+    const output = this.postulacionSeleccionada?.ia_output || '';
+    return output.trim().length > 0;
+  }
+  
   solicitarAnalisis(): void {
     //console.log('Análisis solicitado para:', this.seleccionado?.postulante.primer_nombre);
     // Lógica para solicitud de análisis adicional

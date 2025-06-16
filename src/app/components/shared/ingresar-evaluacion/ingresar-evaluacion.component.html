@@ -91,9 +91,9 @@
       Cargando competencias…
     </div>
     <div class="solicitar-análisis">
-      <button mat-raised-button color="primary" (click)="solicitarAnalisis()">
-        SOLICITAR ANÁLISIS
-      </button>
+     <button mat-raised-button color="primary" (click)="solicitarAnalisis()">
+      {{ tieneAnalisisIA() ? 'VER ANÁLISIS' : 'SOLICITAR ANÁLISIS' }}
+     </button>
     </div>
   </div>
 
