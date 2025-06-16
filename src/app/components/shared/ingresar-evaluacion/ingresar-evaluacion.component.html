@@ -24,7 +24,7 @@
       <div 
         class="postulante-card" 
         *ngFor="let postulacion of postulacionesVisibles" 
-        [class.seleccionado]="postulacion === postulacionSeleccionada"
+        [class.seleccionado]="postulacion.id === postulacionSeleccionada?.id"
         (click)="seleccionarPostulante(postulacion)">
         <img [src]="postulacion.postulante.foto_url" alt="{{ postulacion.postulante.primer_nombre }}" class="foto-postulante" (error)="postulacion.postulante.foto_url='/assets/defaultUser.svg'">
         <div class="info-postulante">

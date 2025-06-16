@@ -119,8 +119,8 @@ export class IngresarEvaluacionComponent implements OnInit {
   refrescarCruce(): void {
     if (!this.postulacionSeleccionada) return;
 
-    const postulacion = this.postulacionSeleccionada;
-    const postulanteId = postulacion.postulante.id!;
+    const original = this.postulacionSeleccionada;
+    const postulanteId = original.postulante.id!;
     const idEmpresa    = this.puestoSeleccionado.usuarios.empresas.id!;
     const idPuesto     = this.puestoSeleccionado.id!;
 
@@ -145,26 +145,31 @@ export class IngresarEvaluacionComponent implements OnInit {
 
         const nuevoPorcentaje = count ? suma / count : 0;
         const actualizada: Postulaciones = {
-          ...postulacion,
+          ...original,
           porcentaje_compatibilidad: nuevoPorcentaje,
           fecha_postulacion: new Date(),
         };
 
-        // Enviamos al backend sin esperar respuesta
         return this.postulacionesService.upsertMultiple([actualizada]);
-      })
+      }),
+      switchMap(() => this.postulacionesService.listByPuestoTrabajo(idPuesto))
     ).subscribe({
-      next: () => {
-         this.cargarPostulacionesVisibles();
-          this.seleccionarPostulante(this.postulacionSeleccionada!);
-          console.log('Cruce actualizado.');
+      next: (listaActualizada: Postulaciones[]) => {
+        this.postulacionesVisibles = listaActualizada.filter(p => !p.ocultar);
+
+        // Reemplazamos la instancia del seleccionado con la nueva versión actualizada
+        const nuevaSeleccion = this.postulacionesVisibles.find(p => p.id === original.id);
+        if (nuevaSeleccion) {
+          this.seleccionarPostulante(nuevaSeleccion); // Esto refresca el label y todo el binding
+        }
+        console.log('Cruce actualizado con instancia fresca.');
       },
       error: err => {
         console.error('Error al refrescar el cruce:', err);
       }
     });
   }
-
+  
   volverAtras(): void {
     this.router.navigate(['/ruta-anterior']); // Ajusta la ruta según corresponda
     const segments = this.router.url.split('/');
