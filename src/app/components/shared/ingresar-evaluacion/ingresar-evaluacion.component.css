@@ -301,10 +301,172 @@
   transform: scale(1.05);
 }
 
+/* Responsive para pantallas medianas y pequeñas */
+@media (max-width: 1024px) {
+  .contenido-principal {
+    flex-direction: column;
+  }
 
+  .lista-postulantes {
+    width: 100%;
+    max-height: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+  }
 
+  .postulante-card {
+    flex: 1 1 160px;
+    max-width: 200px;
+    background: #F5F5F5;
+  }
 
+  .detalle-postulante {
+    padding: 16px;
+  }
 
+  .detalle-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tabla-competencias th,
+  .tabla-competencias td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .th-competencia {
+    font-size: 18px;
+  }
+
+  .th-nivel,
+  .th-coincidencia {
+    font-size: 16px;
+  }
+
+  .solicitar-análisis {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .evaluacion-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .evaluacion-header h2 {
+    font-size: 20px;
+  }
+
+  .icon-btn {
+    width: 20px;
+    height: 20px;
+  }
+
+  .detalle-postulante-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-detalle-grid {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .solicitar-análisis button {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .tabla-competencias {
+    font-size: 14px;
+  }
+
+  .refresh-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 400px) {
+  .evaluacion-header h2 {
+    font-size: 16px;
+  }
+
+  .lista-postulantes {
+    gap: 8px;
+  }
+
+  .postulante-card {
+    flex: 1 1 140px;
+    max-width: 160px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .foto-postulante {
+    width: 32px;
+    height: 32px;
+  }
+
+  .detalle-postulante {
+    padding: 12px;
+  }
+
+  .detalle-postulante-info h3 {
+    font-size: 16px;
+  }
+
+  .linea-info {
+    font-size: 13px;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tabla-competencias th,
+  .tabla-competencias td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .th-competencia {
+    font-size: 16px;
+  }
+
+  .th-nivel,
+  .th-coincidencia {
+    font-size: 14px;
+  }
+
+  .refresh-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .detalle-postulacion-estado span {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .solicitar-análisis button {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .info-detalle-grid {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .contenido-principal {
+    padding-bottom: 16px;
+  }
+}
 
 
 
