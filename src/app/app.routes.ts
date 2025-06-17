@@ -29,6 +29,7 @@ import { ResultadosPostulanteComponent } from './components/shared/resultados-po
 import { PostulantesFundadesComponent } from './components/fundades/postulantes-fundades/postulantes-fundades.component';
 import { IngresarEvaluacionComponent } from './components/shared/ingresar-evaluacion/ingresar-evaluacion.component';
 import { EvaluacionesFundadesComponent } from './components/fundades/evaluaciones-fundades/evaluaciones-fundades.component';
+import { EvaluacionesEvaluadorComponent } from './components/evaluador/evaluaciones-evaluador/evaluaciones-evaluador.component';
 
 export const routes: Routes = [
   {
@@ -101,6 +102,10 @@ export const routes: Routes = [
         path: 'evaluaciones/gestion/puesto/:id',
         component: IngresarEvaluacionComponent,
       },
+      {
+        path: 'evaluaciones/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
+      },
       
     ],
     canActivate: [segGuard],
@@ -167,6 +172,10 @@ export const routes: Routes = [
         path: 'evaluaciones/gestion/puesto/:id',
         component: IngresarEvaluacionComponent,
       },
+      {
+        path: 'evaluaciones/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
+      },
     ],
     canActivate: [segGuard],
     data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR'] }, // solo construcciones, se debe agregar a cada uno
@@ -193,7 +202,7 @@ export const routes: Routes = [
       },
       {
         path: 'evaluaciones',
-        component: EvaluacionesComponent,
+        component: EvaluacionesEvaluadorComponent,
       },
       {
         path: 'ajustes',
@@ -202,7 +211,19 @@ export const routes: Routes = [
       {
         path: 'postulantes/resultados/:id/empresa/:empresaId',
         component: ResultadosPostulanteComponent,
-      }
+      },
+      {
+        path: 'mis-trabajos/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
+      },
+      {
+        path: 'evaluaciones/gestion/puesto/:id',
+        component: IngresarEvaluacionComponent,
+      },
+      {
+        path: 'evaluaciones/puestos-trabajo/ficha/:id',
+        component: RequerimientosMinimosPuestoComponent,
+      },
     ],
     canActivate: [segGuard],
     data: { roles: ['ADMINISTRADOR', 'SUBADMINISTRADOR', 'EVALUADOR'] }, // solo construcciones, se debe agregar a cada uno

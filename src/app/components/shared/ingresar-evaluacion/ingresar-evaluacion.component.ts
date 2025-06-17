@@ -188,6 +188,15 @@ export class IngresarEvaluacionComponent implements OnInit {
   editarEvaluacion(): void {
     console.log('Editando evaluación del puesto:', this.puestoSeleccionado.nombre_puesto);
     // Navegación o lógica de edición
+    const segments = this.router.url.split('/');
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+    const seccion = segments[2]; //.includes('empresas') ? 'empresas' : 'mi-empresa';
+
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([
+      `/${currentSidenav}/${seccion}/puestos-trabajo/ficha`,
+      this.puestoSeleccionado.id,
+    ]);
   }
 
   tieneAnalisisIA(): boolean {

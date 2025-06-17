@@ -1,0 +1,46 @@
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE EVALUACIONES</div>
+
+<!-- CONTENEDOR -->
+<div class="contenedor-areas">
+  <!-- Barra de acciones -->
+  <div class="clientes-header-bar">
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR EVALUACIÓN"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarPuestos()"
+      />
+    </div>
+  </div>
+
+  <!-- Grid de Evaluaciones -->
+  <div class="evaluaciones-grid">
+    <div class="evaluacion-card" *ngFor="let puesto of puestosPaginados">
+      <h3 class="titulo-puesto">{{ puesto.nombre_puesto }}</h3>
+      <button class="btn-editar" (click)="editarPuesto(puesto)">
+        Editar <img src="/assets/editEvaluacion.svg" alt="Editar" />
+      </button>
+      <button class="btn-ingresar" (click)="ingresarPuesto(puesto)">
+        Ingresar <img src="/assets/ingresarEvaluacion.svg" alt="Ingresar" />
+      </button>
+      <button class="btn-asignar" (click)="asignarPuesto(puesto)">
+        Asignar Postulantes <img src="/assets/linkEvaluacion.svg" alt="Asignar" />
+      </button>
+      <button class="btn-desactivar" (click)="administrarPuesto(puesto)">
+        Desactivar <img src="/assets/disableEvaluacion.svg" alt="Desactivar" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [length]="puestosFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>

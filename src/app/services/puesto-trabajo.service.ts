@@ -34,11 +34,18 @@ export class PuestoTrabajoService {
         return this.http.get<PuestosTrabajo[]>(`${this.url}/empresa/${id}`);
   }
 
+  listByUsuarioId(id: number) {
+    return this.http.get<PuestosTrabajo[]>(`${this.url}/usuario/${id}`);
+  }
+
   listarPuestosPendientesByEmpresaId(id: number) {
     return this.http.get<PuestosTrabajo[]>(`${this.url}/pendientes/empresa/${id}`);
   }
 
-
+  listarPendientesAprobadosByUsuarioId(usuarioId: number) {
+    return this.http.get<PuestosTrabajo[]>(`${this.url}/pendientes/aprobados/usuario/${usuarioId}`);
+  }
+  
   update(u: PuestosTrabajo){
     return this.http.put(this.url, u);
   }

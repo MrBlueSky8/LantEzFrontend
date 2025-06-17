@@ -138,8 +138,12 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
     const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
     const seccionEmpresa = segments[2]; //.includes('empresas') ? 'empresas' : 'mi-empresa';
 
-    //console.log('evento: current sidenav: ' + currentSidenav);
-    this.router.navigate([`/${currentSidenav}/${seccionEmpresa}/puestos-trabajo`]);
+    if(this.loginService.showRole() === 'EVALUADOR'){
+      this.router.navigate([`/${currentSidenav}/${seccionEmpresa}`]);
+    }else{
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/${seccionEmpresa}/puestos-trabajo`]);
+    }
   }
 
   // preparar datos para enviar
