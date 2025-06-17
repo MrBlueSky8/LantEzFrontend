@@ -1,0 +1,16 @@
+<div class="overlay">
+  <div class="empresa-modal modal-puestos-asignados">
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Título -->
+    <h2 class="modal-title">Puestos Asignados</h2>
+
+    <!-- Lista de Puestos -->
+    <div class="puestos-lista">
+      <div class="puesto-item" *ngFor="let puesto of puestosTrabajos">
+        {{ puesto.nombre_puesto }}
+      </div>
+    </div>
+  </div>
+</div>

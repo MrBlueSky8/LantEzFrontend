@@ -1,0 +1,110 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000061;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.empresa-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 940px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: fadeInModal 0.5s ease;
+}
+
+.modal-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Lista de puestos */
+.puestos-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.puesto-item {
+  background-color: #d9d9d9;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+}
+
+@keyframes fadeInModal {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .empresa-modal {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+
+  .puesto-item {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+}
+
+@media (max-height: 800px) {
+  .empresa-modal {
+    max-height: 85vh;
+    padding: 1.2rem;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-height: 600px) {
+  .empresa-modal {
+    max-height: 78vh;
+    padding: 1rem;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-title {
+    font-size: 16px;
+  }
+
+  .puesto-item {
+    font-size: 13px;
+  }
+}

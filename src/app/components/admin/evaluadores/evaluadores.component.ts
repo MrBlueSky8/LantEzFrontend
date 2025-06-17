@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 import { Empresas } from '../../../models/empresas';
 import { UsuariosLight } from '../../../models/usuariosLight';
@@ -12,6 +16,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { ModalUsuarioFormComponent } from '../modales/modal-usuario/modal-usuario-form/modal-usuario-form.component';
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
+import { ModalVerPuestosAsignadosComponent } from '../modales/modal-ver-puestos-asignados/modal-ver-puestos-asignados.component';
 
 @Component({
   selector: 'app-evaluadores',
@@ -52,16 +57,19 @@ export class EvaluadoresComponent implements OnInit {
           this.empresaService.listId(idEmpresa).subscribe({
             next: (empresa) => {
               this.miEmpresa = empresa;
-              this.usuarioService.listEvaluadoresPorEmpresaId(this.miEmpresa.id).subscribe({
-                next: (data: UsuariosLight[]) => {
-                  //const miCorreo = this.loginService.showUser();
-                  this.usuarios = data;
+              this.usuarioService
+                .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
+                .subscribe({
+                  next: (data: UsuariosLight[]) => {
+                    //const miCorreo = this.loginService.showUser();
+                    this.usuarios = data;
 
-                  this.usuariosFiltrados = [...this.usuarios];
-                  this.updateUsuariosPaginados();
-                },
-                error: (err) => console.error('Error al obtener usuarios:', err),
-              });
+                    this.usuariosFiltrados = [...this.usuarios];
+                    this.updateUsuariosPaginados();
+                  },
+                  error: (err) =>
+                    console.error('Error al obtener usuarios:', err),
+                });
             },
             error: (err) => console.error('Error al obtener empresa:', err),
           });
@@ -101,66 +109,65 @@ export class EvaluadoresComponent implements OnInit {
   agregarUsuario(): void {
     console.log('Click agregar usuario');
     const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
-          width: 'auto',
-          data: { empresa: this.miEmpresa },
-        });
-    
-        dialogRef.afterClosed().subscribe((resultado) => {
-          if (resultado) {
-            console.log('Usuario creado');
-            /*
+      width: 'auto',
+      data: { empresa: this.miEmpresa },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        console.log('Usuario creado');
+        /*
             const miCorreo = this.loginService.showUser();
             const miRol = this.loginService.showRole();
             */
 
-            this.usuarioService
-              .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
-              .subscribe((todas) => {
-                this.usuarios = todas;
+        this.usuarioService
+          .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.usuarios = todas;
 
-
-                this.pageIndex = 0;
-                //this.updateEmpresasPaginadas();
-                this.filtrarUsuarios();
-              });
-          }
-        });
+            this.pageIndex = 0;
+            //this.updateEmpresasPaginadas();
+            this.filtrarUsuarios();
+          });
+      }
+    });
   }
 
   editarUsuario(usuario: UsuariosLight): void {
     console.log('Click editar usuario:', usuario.primer_nombre);
     if (!usuario) return;
-    
-        //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
-    
-        const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
-          width: 'auto',
-          data: { usuario, verDetalle: false },
-        });
-    
-        dialogRef.afterClosed().subscribe((resultado) => {
-          if (resultado) {
-            console.log('Area editada');
-            // recargar y filtrar
-            this.usuarioService
-              .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
-              .subscribe((todas) => {
-                this.usuarios = todas;
 
-                this.usuariosFiltrados = [...this.usuarios];
-                //this.updateEmpresasPaginadas();
-                this.filtrarUsuarios();
-              });
-    
-            const dialogSucces = this.dialog.open(ModalExitoComponent, {
-              data: {
-                titulo: 'Información Actualizada',
-                iconoUrl: '/assets/checkicon.svg', // ../../../assets/
-                //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
-              },
-            });
-          }
+    //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+
+    const dialogRef = this.dialog.open(ModalUsuarioFormComponent, {
+      width: 'auto',
+      data: { usuario, verDetalle: false },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        console.log('Area editada');
+        // recargar y filtrar
+        this.usuarioService
+          .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.usuarios = todas;
+
+            this.usuariosFiltrados = [...this.usuarios];
+            //this.updateEmpresasPaginadas();
+            this.filtrarUsuarios();
+          });
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: 'Información Actualizada',
+            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+          },
         });
+      }
+    });
   }
 
   /*
@@ -176,56 +183,65 @@ export class EvaluadoresComponent implements OnInit {
         });
   }
         */
-  verPuestosUsuario(usuario: UsuariosLight): void{
-
+  verPuestosUsuario(usuario: UsuariosLight): void {
+    //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+    const dialogRef = this.dialog.open(ModalVerPuestosAsignadosComponent, {
+      width: 'auto',
+      data: { usuario },
+    });
   }
 
   private refrescarUsuarios(): void {
     const miCorreo = this.loginService.showUser();
     const miRol = this.loginService.showRole();
 
-    this.usuarioService.listEvaluadoresPorEmpresaId(this.miEmpresa.id).subscribe((todas) => {
-      this.usuarios = todas
+    this.usuarioService
+      .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
+      .subscribe((todas) => {
+        this.usuarios = todas;
 
-      this.pageIndex = 0;
-      this.filtrarUsuarios();
-    });
+        this.pageIndex = 0;
+        this.filtrarUsuarios();
+      });
   }
 
   toogleEstadoUsuario(usuario: UsuariosLight): void {
-  const accion = usuario.estado ? 'deshabilitar' : 'habilitar';
+    const accion = usuario.estado ? 'deshabilitar' : 'habilitar';
 
-  const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
-    width: 'auto',
-    data: {
-      titulo: `¿Estás seguro de ${accion} este usuario?`,
-    }
-  });
-
-  dialogConfirmation.afterClosed().subscribe(confirmado => {
-    if (!confirmado) return;
-
-    const operacion = usuario.estado
-      ? this.usuarioService.deshabilitar(usuario.id)
-      : this.usuarioService.habilitar(usuario.id);
-
-    operacion.subscribe({
-      next: () => {
-        console.log(`Usuario ${usuario.primer_nombre} fue ${accion} correctamente`);
-        this.refrescarUsuarios(); // actualiza la lista filtrada
-
-        this.dialog.open(ModalExitoComponent, {
-          data: {
-            titulo: `Usuario ${accion === 'deshabilitar' ? 'deshabilitado' : 'habilitado'}`,
-            iconoUrl: '/assets/checkicon.svg'
-          }
-        });
+    const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+      width: 'auto',
+      data: {
+        titulo: `¿Estás seguro de ${accion} este usuario?`,
       },
-      error: () => {
-        console.error(`Error al ${accion} usuario ${usuario.primer_nombre}`);
-      }
     });
-  });
-}
 
+    dialogConfirmation.afterClosed().subscribe((confirmado) => {
+      if (!confirmado) return;
+
+      const operacion = usuario.estado
+        ? this.usuarioService.deshabilitar(usuario.id)
+        : this.usuarioService.habilitar(usuario.id);
+
+      operacion.subscribe({
+        next: () => {
+          console.log(
+            `Usuario ${usuario.primer_nombre} fue ${accion} correctamente`
+          );
+          this.refrescarUsuarios(); // actualiza la lista filtrada
+
+          this.dialog.open(ModalExitoComponent, {
+            data: {
+              titulo: `Usuario ${
+                accion === 'deshabilitar' ? 'deshabilitado' : 'habilitado'
+              }`,
+              iconoUrl: '/assets/checkicon.svg',
+            },
+          });
+        },
+        error: () => {
+          console.error(`Error al ${accion} usuario ${usuario.primer_nombre}`);
+        },
+      });
+    });
+  }
 }
