@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
@@ -15,6 +15,7 @@ import { forkJoin, switchMap } from 'rxjs';
 import { AgePipe } from '../../../pipes/age.pipe';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { GptService } from '../../../services/gpt.service';
+import { ModalAnalisisPostulacionComponent } from '../modales/modal-analisis-postulacion/modal-analisis-postulacion.component';
 
 
 interface CompetenciaDetalle {
@@ -54,7 +55,8 @@ export class IngresarEvaluacionComponent implements OnInit {
     private resultadosPostulanteService: ResultadosPostulanteService,
     private requerimientosService: RequerimientosMinimosPuestoService,
     private puestosService: PuestoTrabajoService,
-    private gptService: GptService
+    private gptService: GptService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -195,35 +197,27 @@ export class IngresarEvaluacionComponent implements OnInit {
   solicitarAnalisis(): void {
     //console.log('Análisis solicitado para:', this.seleccionado?.postulante.primer_nombre);
     // Lógica para solicitud de análisis adicional
-    const prompt = this.generarPromptEvaluacion();
-    if (!prompt) {
-      console.warn('No se puede generar el análisis: falta información.');
-      return;
-    }
+    if (!this.postulacionSeleccionada || !this.puestoSeleccionado) return;
 
-    this.gptService.retroalimentacionIndividual(prompt).subscribe({
-      next: (respuesta: string) => {
-        console.log('IA Output:', respuesta);
+    const dialogRef = this.dialog.open(ModalAnalisisPostulacionComponent, {
+      width: 'auto',
+      data: {
+        postulacion: this.postulacionSeleccionada,
+        puesto: this.puestoSeleccionado
+      }
+    });
 
-        // Actualizamos el campo ia_output en la postulación seleccionada
-        const actualizada: Postulaciones = {
-          ...this.postulacionSeleccionada!,
-          ia_output: respuesta,
-        };
-
-        this.postulacionesService.update(actualizada).subscribe({
-          next: () => {
-            console.log('Retroalimentación guardada correctamente.');
-            this.postulacionSeleccionada!.ia_output = respuesta; // opcional
-          },
-          error: (err) => {
-            console.error('Error al guardar la retroalimentación:', err);
-          },
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        // Refrescamos datos luego del cierre
+        this.postulacionesService.listByPuestoTrabajo(this.puestoSeleccionado.id!).subscribe((postulaciones) => {
+          this.postulacionesVisibles = postulaciones.filter(p => !p.ocultar);
+          const actualizada = this.postulacionesVisibles.find(p => p.id === this.postulacionSeleccionada?.id);
+          if (actualizada) {
+            this.seleccionarPostulante(actualizada);
+          }
         });
-      },
-      error: (err) => {
-        console.error('Error al obtener retroalimentación de la IA:', err);
-      },
+      }
     });
   }
 

@@ -1,0 +1,27 @@
+<div class="overlay">
+  <div class="empresa-modal modal-ia">
+
+    <!-- Botón de cierre -->
+    <button class="close-button" type="button" (click)="cerrar()">&times;</button>
+
+    <!-- Cabecera -->
+    <div class="modal-ia-header">
+      <img src="/assets/refreshTranslucido.svg" alt="Refrescar análisis" class="refresh-ia" (click)="solicitarAnalisis()" />
+      <h2 class="modal-title">Respuesta IA:</h2>
+    </div>
+
+    <!-- Contenido de la IA -->
+    <div class="ia-output">
+      {{ postulacionSeleccionada?.ia_output?.trim() || 'No se ha generado un análisis aún.' }}
+    </div>
+
+    <!-- Formulario para comentario -->
+    <form [formGroup]="formPostulacion" (ngSubmit)="guardar()" class="empresa-form">
+      <label class="ia-label">Añadir comentario:</label>
+      <textarea class="custom-input" placeholder="Texto" formControlName="evaluador_comentario"></textarea>
+
+      <button class="btn-submit" type="submit">Guardar</button>
+    </form>
+
+  </div>
+</div>
