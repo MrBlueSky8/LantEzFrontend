@@ -28,6 +28,7 @@ import { PuestosTrabajoFundadesComponent } from './components/fundades/puestos-t
 import { ResultadosPostulanteComponent } from './components/shared/resultados-postulante/resultados-postulante.component';
 import { PostulantesFundadesComponent } from './components/fundades/postulantes-fundades/postulantes-fundades.component';
 import { IngresarEvaluacionComponent } from './components/shared/ingresar-evaluacion/ingresar-evaluacion.component';
+import { EvaluacionesFundadesComponent } from './components/fundades/evaluaciones-fundades/evaluaciones-fundades.component';
 
 export const routes: Routes = [
   {
@@ -73,7 +74,7 @@ export const routes: Routes = [
       },
       {
         path: 'evaluaciones',
-        component: EvaluacionesComponent,
+        component: EvaluacionesFundadesComponent,
       },
       {
         path: 'ajustes',
