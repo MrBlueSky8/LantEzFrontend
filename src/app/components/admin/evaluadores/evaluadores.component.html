@@ -1,1 +1,61 @@
-<p>evaluadores works!</p>
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE EVALUADORES</div>
+
+<!-- CONTENEDOR -->
+<div class="contenedor-areas">
+
+  <!-- Barra de búsqueda y acción -->
+  <div class="clientes-header-bar">
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR EVALUADOR"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarUsuarios()"
+      />
+    </div>
+  </div>
+
+  <!-- GRID DE EVALUADORES -->
+  <div class="evaluadores-grid">
+    <div class="evaluador-card" *ngFor="let usuario of usuariosPaginados">
+      <!-- Avatar -->
+      <div class="avatar-container">
+        <img
+          [src]="usuario.foto_url || '/assets/userDefault.svg'"
+          alt="{{ usuario.primer_nombre }} {{ usuario.apellido_p }}"
+          class="avatar"
+          (error)="usuario.foto_url = '/assets/userDefault.svg'"
+        />
+      </div>
+
+      <!-- Nombre -->
+      <h3 class="nombre-evaluador">
+        {{ usuario.primer_nombre }} {{ usuario.apellido_p }}
+      </h3>
+
+      <!-- Botones de acción -->
+      <button class="btn-editar" (click)="editarUsuario(usuario)">
+        Editar <img src="/assets/editEvaluacion.svg" alt="Editar" />
+      </button>
+      <button class="btn-verpuestos" (click)="verPuestosUsuario(usuario)">
+        Ver Puestos <img src="/assets/eye.svg" alt="Ver puestos" />
+      </button>
+      <button class="btn-desactivar" (click)="toogleEstadoUsuario(usuario)">
+        {{ usuario.estado ? 'Desactivar' : 'Activar' }}
+        <img src="/assets/trash.svg" alt="Desactivar" />
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGINADOR -->
+  <mat-paginator
+    [length]="usuariosFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
