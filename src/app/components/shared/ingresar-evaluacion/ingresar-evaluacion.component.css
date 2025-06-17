@@ -468,5 +468,61 @@
   }
 }
 
+/* Contenedor de nuestros nuevos botones */
+.botones-evaluacion {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botones */
+.botones-evaluacion button {
+  min-width: 160px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-aprobar {
+  background-color: #2BBF46;
+  color: #FFFFFF;
+}
+
+.btn-rechazar {
+  background-color: #C06060;
+  color: #FFFFFF;
+}
+
+.btn-modificar {
+  background-color: #F3AF42;
+  color: #000000;
+}
+
+.botones-evaluacion button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Responsive móvil: vertical y ancho completo */
+@media (max-width: 600px) {
+  .botones-evaluacion {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .botones-evaluacion button {
+    width: 100%;
+    font-size: 14px;
+    height: 36px;
+  }
+}
+
+
 
 

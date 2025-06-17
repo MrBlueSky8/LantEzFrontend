@@ -95,6 +95,25 @@
       {{ tieneAnalisisIA() ? 'VER ANÁLISIS' : 'SOLICITAR ANÁLISIS' }}
      </button>
     </div>
+
+    <!-- NUEVOS BOTONES DE ESTADO -->
+    <div class="botones-evaluacion"
+        *ngIf="postulacionSeleccionada?.estado_postulacion === 'pendiente'">
+      <button class="btn-aprobar" (click)="cambiarEstado('aceptado')">
+        Aprobar
+      </button>
+      <button class="btn-rechazar" (click)="cambiarEstado('rechazado')">
+        Denegar
+      </button>
+    </div>
+
+    <div class="botones-evaluacion"
+        *ngIf="postulacionSeleccionada?.estado_postulacion === 'aceptado'
+                || postulacionSeleccionada?.estado_postulacion === 'rechazado'">
+      <button class="btn-modificar" (click)="cambiarEstado('pendiente')">
+        Modificar Postulación
+      </button>
+    </div>
   </div>
 
   <ng-template #seleccionaPostulante>

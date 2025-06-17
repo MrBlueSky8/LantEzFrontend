@@ -252,4 +252,23 @@ export class IngresarEvaluacionComponent implements OnInit {
     return prompt.trim(); // Elimina saltos finales
   }
 
+  cambiarEstado(nuevoEstado: 'pendiente' | 'aceptado' | 'rechazado'): void {
+  if (!this.postulacionSeleccionada) return;
+
+  const actualizada: Postulaciones = {
+    ...this.postulacionSeleccionada,
+    estado_postulacion: nuevoEstado
+  };
+
+  this.postulacionesService.update(actualizada).subscribe(() => {
+    // Recargar postulaciones y refrescar seleccionado
+    this.postulacionesService.listByPuestoTrabajo(this.idPuesto).subscribe((lista) => {
+      this.postulacionesVisibles = lista.filter(p => !p.ocultar);
+      const actual = this.postulacionesVisibles.find(p => p.id === actualizada.id);
+      if (actual) this.seleccionarPostulante(actual);
+    });
+  });
+}
+
+
 }
