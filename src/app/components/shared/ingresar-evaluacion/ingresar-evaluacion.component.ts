@@ -16,6 +16,7 @@ import { AgePipe } from '../../../pipes/age.pipe';
 import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { GptService } from '../../../services/gpt.service';
 import { ModalAnalisisPostulacionComponent } from '../modales/modal-analisis-postulacion/modal-analisis-postulacion.component';
+import { ModalExitoComponent } from '../modales/modal-exito/modal-exito.component';
 
 
 interface CompetenciaDetalle {
@@ -217,6 +218,14 @@ export class IngresarEvaluacionComponent implements OnInit {
             this.seleccionarPostulante(actualizada);
           }
         });
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+                  data: {
+                    titulo: 'Información Actualizada',
+                    iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                    //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+                  },
+                });
       }
     });
   }
