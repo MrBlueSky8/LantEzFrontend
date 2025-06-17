@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .evaluacion-header {
@@ -70,7 +70,7 @@
 }
 
 .postulante-card.seleccionado {
-  background: #3A3939;
+  background: #3a3939;
   color: #fff;
 }
 
@@ -134,7 +134,7 @@
 }
 
 .detalle-postulante-info div h3 {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 18px;
   margin: 0;
@@ -142,7 +142,7 @@
 
 .detalle-postulante-info div span {
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
@@ -168,30 +168,30 @@
 .detalle-postulacion-estado span {
   border-radius: 10px;
   padding: 12px 11px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 800;
   font-size: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .detalle-postulacion-estado span.compatibilidad-general {
-  background: #2BBF46;
+  background: #2bbf46;
 }
 
 .detalle-postulacion-estado span.pendiente {
-  background: #F3AF42;
+  background: #f3af42;
 }
 
 .detalle-postulacion-estado span.aceptado {
-  background: #2BBF46;
+  background: #2bbf46;
 }
 
 .detalle-postulacion-estado span.rechazado {
-  background: #C06060;
+  background: #c06060;
 }
 
 .linea-info {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 14px;
   margin: 0;
@@ -202,11 +202,11 @@
 
 .etiqueta {
   font-weight: 600;
-  color: #000; 
+  color: #000;
 }
 
 .contenido-label {
-  color: #5D5D5D;
+  color: #5d5d5d;
 }
 
 .info-postulante-detalle {
@@ -232,12 +232,12 @@
 .tabla-competencias {
   width: 100%;
   border-collapse: collapse;
-  background: #F0F0F0;
+  background: #f0f0f0;
 }
 
 /* Encabezados */
 .tabla-competencias th {
-  border: 1px solid #D8D8D8;
+  border: 1px solid #d8d8d8;
   padding: 12px;
   text-align: left;
 }
@@ -257,7 +257,7 @@
 
 /* Celdas de cuerpo */
 .tabla-competencias td {
-  border: 1px solid #D8D8D8;
+  border: 1px solid #d8d8d8;
   padding: 10px;
   font-family: Poppins;
   font-weight: 600;
@@ -285,9 +285,9 @@
   border-radius: 10px;
   padding: 12px 11px;
   gap: 10px;
-  background: #004A75;
-  color: #FFFFFF;
-  font-family: 'Poppins', sans-serif;
+  background: #004a75;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
   font-weight: 800;
   font-size: 16px;
   line-height: 100%;
@@ -319,7 +319,7 @@
   .postulante-card {
     flex: 1 1 160px;
     max-width: 200px;
-    background: #F5F5F5;
+    background: #f5f5f5;
   }
 
   .detalle-postulante {
@@ -467,50 +467,58 @@
     padding-bottom: 16px;
   }
 }
-
-/* Contenedor de nuestros nuevos botones */
+/* Un único contenedor flex para **todos** los botones */
 .botones-evaluacion {
-  margin-top: 16px;
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap; /* para que en móvil puedan bajar de línea */
   justify-content: center;
-  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px; /* espacio con respecto a la tabla */
 }
 
-/* Botones */
+/* Botones genéricos */
 .botones-evaluacion button {
-  min-width: 160px;
+  min-width: 140px;
   height: 40px;
   border: none;
-  border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+/* Colores específicos */
 .btn-aprobar {
-  background-color: #2BBF46;
-  color: #FFFFFF;
+  background-color: #2bbf46;
+  color: #fff;
 }
 
 .btn-rechazar {
-  background-color: #C06060;
-  color: #FFFFFF;
+  background-color: #c06060;
+  color: #fff;
 }
 
 .btn-modificar {
-  background-color: #F3AF42;
-  color: #000000;
+  background-color: #f3af42;
+  color: #fff;
 }
 
+/* Hover todas */
 .botones-evaluacion button:hover {
   transform: scale(1.05);
   opacity: 0.9;
 }
 
-/* Responsive móvil: vertical y ancho completo */
+/* En escritorio, todos en una sola línea */
+@media (min-width: 600px) {
+  .botones-evaluacion {
+    flex-wrap: nowrap;
+  }
+}
+
+/* En móvil, bajan a columna si no caben */
 @media (max-width: 600px) {
   .botones-evaluacion {
     flex-direction: column;
@@ -518,11 +526,53 @@
   }
   .botones-evaluacion button {
     width: 100%;
-    font-size: 14px;
-    height: 36px;
   }
 }
 
+/* Botón de análisis: mismo estilo que .solicitar-análisis button anterior */
+.btn-analisis {
+  background: #004a75;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 160px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
 
+/* Hover */
+.btn-analisis:hover {
+  transform: scale(1.05);
+  background: #003a5a; /* opcionalmente un tono más oscuro */
+}
 
+/* Integramos con el contenedor flex existente */
+.botones-evaluacion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
 
+@media (min-width: 600px) {
+  .botones-evaluacion {
+    flex-wrap: nowrap;
+  }
+}
+@media (max-width: 600px) {
+  .botones-evaluacion {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .botones-evaluacion button {
+    width: 100%;
+  }
+}

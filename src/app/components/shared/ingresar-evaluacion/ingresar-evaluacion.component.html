@@ -90,27 +90,34 @@
     <div class="loading-tabla" *ngIf="cargandoCompetencias">
       Cargando competencias…
     </div>
-    <div class="solicitar-análisis">
-     <button mat-raised-button color="primary" (click)="solicitarAnalisis()">
-      {{ tieneAnalisisIA() ? 'VER ANÁLISIS' : 'SOLICITAR ANÁLISIS' }}
-     </button>
-    </div>
+    <div class="botones-evaluacion">
+      <!-- Solicitar o ver análisis -->
+      <button
+        mat-raised-button
+        class="btn-analisis"
+        (click)="solicitarAnalisis()">
+        {{ tieneAnalisisIA() ? 'VER ANÁLISIS' : 'SOLICITAR ANÁLISIS' }}
+      </button>
 
-    <!-- NUEVOS BOTONES DE ESTADO -->
-    <div class="botones-evaluacion"
-        *ngIf="postulacionSeleccionada?.estado_postulacion === 'pendiente'">
-      <button class="btn-aprobar" (click)="cambiarEstado('aceptado')">
+      <!-- Sólo si está PENDIENTE -->
+      <button
+        class="btn-aprobar"
+        *ngIf="postulacionSeleccionada?.estado_postulacion === 'pendiente'"
+        (click)="cambiarEstado('aceptado')">
         Aprobar
       </button>
-      <button class="btn-rechazar" (click)="cambiarEstado('rechazado')">
+      <button
+        class="btn-rechazar"
+        *ngIf="postulacionSeleccionada?.estado_postulacion === 'pendiente'"
+        (click)="cambiarEstado('rechazado')">
         Denegar
       </button>
-    </div>
 
-    <div class="botones-evaluacion"
-        *ngIf="postulacionSeleccionada?.estado_postulacion === 'aceptado'
-                || postulacionSeleccionada?.estado_postulacion === 'rechazado'">
-      <button class="btn-modificar" (click)="cambiarEstado('pendiente')">
+      <!-- Sólo si está ACEPTADO o RECHAZADO -->
+      <button
+        class="btn-modificar"
+        *ngIf="postulacionSeleccionada?.estado_postulacion !== 'pendiente'"
+        (click)="cambiarEstado('pendiente')">
         Modificar Postulación
       </button>
     </div>
