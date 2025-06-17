@@ -52,7 +52,7 @@ export class EvaluadoresComponent implements OnInit {
           this.empresaService.listId(idEmpresa).subscribe({
             next: (empresa) => {
               this.miEmpresa = empresa;
-              this.usuarioService.listEvaluadores().subscribe({
+              this.usuarioService.listEvaluadoresPorEmpresaId(this.miEmpresa.id).subscribe({
                 next: (data: UsuariosLight[]) => {
                   //const miCorreo = this.loginService.showUser();
                   this.usuarios = data;
@@ -114,7 +114,7 @@ export class EvaluadoresComponent implements OnInit {
             */
 
             this.usuarioService
-              .listEvaluadores()
+              .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
               .subscribe((todas) => {
                 this.usuarios = todas;
 
@@ -143,7 +143,7 @@ export class EvaluadoresComponent implements OnInit {
             console.log('Area editada');
             // recargar y filtrar
             this.usuarioService
-              .listEvaluadores()
+              .listEvaluadoresPorEmpresaId(this.miEmpresa.id)
               .subscribe((todas) => {
                 this.usuarios = todas;
 
@@ -177,14 +177,14 @@ export class EvaluadoresComponent implements OnInit {
   }
         */
   verPuestosUsuario(usuario: UsuariosLight): void{
-    
+
   }
 
   private refrescarUsuarios(): void {
     const miCorreo = this.loginService.showUser();
     const miRol = this.loginService.showRole();
 
-    this.usuarioService.listEvaluadores().subscribe((todas) => {
+    this.usuarioService.listEvaluadoresPorEmpresaId(this.miEmpresa.id).subscribe((todas) => {
       this.usuarios = todas
 
       this.pageIndex = 0;

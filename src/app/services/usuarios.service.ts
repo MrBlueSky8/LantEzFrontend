@@ -88,6 +88,10 @@ export class UsuariosService {
       return this.http.get<UsuariosLight[]>(`${this.url}/evaluadores`);
   }
 
+  listEvaluadoresPorEmpresaId(id: number) {
+    return this.http.get<UsuariosLight[]>(`${this.url}/empresa/${id}/evaluadores`);
+  }
+
   deshabilitar(id: number) {
     return this.http.put(`${this.url}/deshabilitar/${id}`, {});
   }
