@@ -8,6 +8,7 @@ import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router
 import { LoginService } from './services/login.service';
 import { filter } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UsuariosService } from './services/usuarios.service';
 
 @Component({
   selector: 'app-root',
@@ -33,8 +34,9 @@ export class AppComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
+    private usuariosService: UsuariosService,
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //this.currentPath = window.location.pathname;
@@ -42,6 +44,25 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.currentPath = event.urlAfterRedirects;
+
+      if(this.loginService.showUser()){
+        this.usuariosService
+        .findIdByEmail(this.loginService.showUser())
+        .subscribe({
+          next: (id) => {
+            this.usuariosService.isEmpresaDeshabilitada(id).subscribe((estaDeshabilitada) => {
+              if (estaDeshabilitada) {
+                console.warn('La empresa está deshabilitada.');
+                //sessionStorage.clear();
+                this.router.navigate(['/login']);
+              } else {
+                //console.log('La empresa está activa.');
+              }
+            });
+          },
+          error: (err) => console.error('Error al obtener ID:', err),
+        });
+      }
 
       //console.log('cambiando current path: ' + this.currentPath);
       if (this.currentPath === '/homes') {

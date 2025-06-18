@@ -103,5 +103,9 @@ export class UsuariosService {
   validarPrivilegiosEmpresa(empresaId: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.url}/validar-privilegios/${empresaId}`);
   }
+  
+  isEmpresaDeshabilitada(usuarioId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.url}/empresa-deshabilitada/${usuarioId}`);
+  }
 
 }

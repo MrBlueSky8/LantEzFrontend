@@ -503,6 +503,12 @@
 .btn-modificar {
   background-color: #f3af42;
   color: #fff;
+  white-space: normal;         /* permite saltos de línea */
+  word-break: break-word;      /* permite cortar palabras largas si no caben */
+  text-align: center;          /* opcional: centra el texto en el botón */
+  padding: 8px 12px;   
+  display: inline-block;
+  height: auto !important;
 }
 
 /* Hover todas */

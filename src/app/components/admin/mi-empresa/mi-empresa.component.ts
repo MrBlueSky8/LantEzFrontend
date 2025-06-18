@@ -38,7 +38,7 @@ export class MiEmpresaComponent implements OnInit {
         this.empresaService.listId(id).subscribe({
           next: (empresa) => {
             this.miEmpresa = empresa;
-            console.log('evento id de mi empresa: ' + id, 'mi empresa data: ' + JSON.stringify(this.miEmpresa));
+            //console.log('evento id de mi empresa: ' + id, 'mi empresa data: ' + JSON.stringify(this.miEmpresa));
           },
           error: (err) => console.error('Error al obtener la empresa:', err)
         });
@@ -48,12 +48,12 @@ export class MiEmpresaComponent implements OnInit {
   }
 
   gestionarAreas(): void{
-    console.log('evento: click gestionar areas');
+    //console.log('evento: click gestionar areas');
     this.router.navigate(['/sidenav-admin/mi-empresa/areas']);
   }
 
   gestionarPuestos(): void{
-    console.log('evento: click gestionar puestos');
+    //console.log('evento: click gestionar puestos');
     this.router.navigate(['/sidenav-admin/mi-empresa/puestos-trabajo']);
   }
 
@@ -81,7 +81,7 @@ export class MiEmpresaComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((resultado) => {
         if (resultado) {
-          console.log('Empresa editada');
+          //console.log('Empresa editada');
   
           if(empresa.id === this.miEmpresa.id){
             this.asignarMiempresa();
