@@ -17,6 +17,8 @@ import { PuestoTrabajoService } from '../../../services/puesto-trabajo.service';
 import { GptService } from '../../../services/gpt.service';
 import { ModalAnalisisPostulacionComponent } from '../modales/modal-analisis-postulacion/modal-analisis-postulacion.component';
 import { ModalExitoComponent } from '../modales/modal-exito/modal-exito.component';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 
 interface CompetenciaDetalle {
@@ -262,22 +264,65 @@ export class IngresarEvaluacionComponent implements OnInit {
   }
 
   cambiarEstado(nuevoEstado: 'pendiente' | 'aceptado' | 'rechazado'): void {
-  if (!this.postulacionSeleccionada) return;
+    if (!this.postulacionSeleccionada) return;
 
-  const actualizada: Postulaciones = {
-    ...this.postulacionSeleccionada,
-    estado_postulacion: nuevoEstado
-  };
+    const actualizada: Postulaciones = {
+      ...this.postulacionSeleccionada,
+      estado_postulacion: nuevoEstado
+    };
 
-  this.postulacionesService.update(actualizada).subscribe(() => {
-    // Recargar postulaciones y refrescar seleccionado
-    this.postulacionesService.listByPuestoTrabajo(this.idPuesto).subscribe((lista) => {
-      this.postulacionesVisibles = lista.filter(p => !p.ocultar);
-      const actual = this.postulacionesVisibles.find(p => p.id === actualizada.id);
-      if (actual) this.seleccionarPostulante(actual);
+    this.postulacionesService.update(actualizada).subscribe(() => {
+      // Recargar postulaciones y refrescar seleccionado
+      this.postulacionesService.listByPuestoTrabajo(this.idPuesto).subscribe((lista) => {
+        this.postulacionesVisibles = lista.filter(p => !p.ocultar);
+        const actual = this.postulacionesVisibles.find(p => p.id === actualizada.id);
+        if (actual) this.seleccionarPostulante(actual);
+      });
     });
-  });
-}
+  }
 
+  exportarDetallePDF(): void {
+  if (!this.postulacionSeleccionada || !this.puestoSeleccionado || !this.competenciasDetalle.length) {
+    return;
+  }
+
+  const doc = new jsPDF();
+
+  const postulante = this.postulacionSeleccionada.postulante;
+  const edad = new AgePipe().transform(postulante.fechanacimiento);
+
+  doc.setFontSize(16);
+  doc.text('Detalle de Evaluación', 14, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Puesto: ${this.puestoSeleccionado.nombre_puesto}`, 14, 30);
+  doc.text(`Postulante: ${postulante.apellido_p}, ${postulante.primer_nombre}`, 14, 38);
+  doc.text(`Edad: ${edad} años`, 14, 46);
+  doc.text(`Género: ${postulante.genero}`, 14, 54);
+  doc.text(`Ciudad: ${postulante.ciudades.ciudad}`, 14, 62);
+  doc.text(`Porcentaje Global: ${Math.round(this.postulacionSeleccionada.porcentaje_compatibilidad)}%`, 14, 70);
+
+  autoTable(doc, {
+    startY: 80,
+    head: [['Competencia', 'Nivel del Puesto', 'Coincidencia %']],
+    body: this.competenciasDetalle.map(c => [
+      c.competencia,
+      c.nivelPuesto.toString(),
+      `${c.coincidencia}%`
+    ]),
+    styles: {
+      font: 'helvetica',
+      fontSize: 10,
+      cellPadding: 3
+    },
+    headStyles: {
+      fillColor: [0, 74, 117],
+      textColor: 255,
+      fontStyle: 'bold'
+    }
+  });
+
+  doc.save(`Evaluacion_${postulante.primer_nombre}_${postulante.apellido_p}.pdf`);
+}
 
 }
