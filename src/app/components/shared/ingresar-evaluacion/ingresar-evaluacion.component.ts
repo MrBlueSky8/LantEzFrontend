@@ -282,47 +282,50 @@ export class IngresarEvaluacionComponent implements OnInit {
   }
 
   exportarDetallePDF(): void {
-  if (!this.postulacionSeleccionada || !this.puestoSeleccionado || !this.competenciasDetalle.length) {
-    return;
-  }
-
-  const doc = new jsPDF();
-
-  const postulante = this.postulacionSeleccionada.postulante;
-  const edad = new AgePipe().transform(postulante.fechanacimiento);
-
-  doc.setFontSize(16);
-  doc.text('Detalle de Evaluación', 14, 20);
-
-  doc.setFontSize(12);
-  doc.text(`Puesto: ${this.puestoSeleccionado.nombre_puesto}`, 14, 30);
-  doc.text(`Postulante: ${postulante.apellido_p}, ${postulante.primer_nombre}`, 14, 38);
-  doc.text(`Edad: ${edad} años`, 14, 46);
-  doc.text(`Género: ${postulante.genero}`, 14, 54);
-  doc.text(`Ciudad: ${postulante.ciudades.ciudad}`, 14, 62);
-  doc.text(`Porcentaje Global: ${Math.round(this.postulacionSeleccionada.porcentaje_compatibilidad)}%`, 14, 70);
-
-  autoTable(doc, {
-    startY: 80,
-    head: [['Competencia', 'Nivel del Puesto', 'Coincidencia %']],
-    body: this.competenciasDetalle.map(c => [
-      c.competencia,
-      c.nivelPuesto.toString(),
-      `${c.coincidencia}%`
-    ]),
-    styles: {
-      font: 'helvetica',
-      fontSize: 10,
-      cellPadding: 3
-    },
-    headStyles: {
-      fillColor: [0, 74, 117],
-      textColor: 255,
-      fontStyle: 'bold'
+    if (!this.postulacionSeleccionada || !this.puestoSeleccionado || !this.competenciasDetalle.length) {
+      return;
     }
-  });
 
-  doc.save(`Evaluacion_${postulante.primer_nombre}_${postulante.apellido_p}.pdf`);
-}
+    const doc = new jsPDF();
+    const postulante = this.postulacionSeleccionada.postulante;
+    const edad = new AgePipe().transform(postulante.fechanacimiento);
+
+    doc.setFontSize(16);
+    doc.text('Detalle de Evaluación', 14, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Puesto: ${this.puestoSeleccionado.nombre_puesto}`, 14, 30);
+    doc.text(`Postulante: ${postulante.apellido_p}, ${postulante.primer_nombre}`, 14, 38);
+    doc.text(`Edad: ${edad} años`, 14, 46);
+    doc.text(`Género: ${postulante.genero}`, 14, 54);
+    doc.text(`Ciudad: ${postulante.ciudades.ciudad}`, 14, 62);
+    doc.text(`Porcentaje Global: ${Math.round(this.postulacionSeleccionada.porcentaje_compatibilidad)}%`, 14, 70);
+
+    autoTable(doc, {
+      startY: 80,
+      head: [['Competencia', 'Nivel del Puesto', 'Nivel del Postulante', 'Coincidencia %']],
+      body: this.competenciasDetalle.map(c => {
+        const nivelPostulante = Math.round((c.coincidencia / 100) * c.nivelPuesto);
+        return [
+          c.competencia,
+          c.nivelPuesto.toString(),
+          nivelPostulante.toString(),
+          `${c.coincidencia}%`
+        ];
+      }),
+      styles: {
+        font: 'helvetica',
+        fontSize: 10,
+        cellPadding: 3
+      },
+      headStyles: {
+        fillColor: [0, 74, 117],
+        textColor: 255,
+        fontStyle: 'bold'
+      }
+    });
+
+    doc.save(`Evaluacion_${postulante.primer_nombre}_${postulante.apellido_p}.pdf`);
+  }
 
 }
