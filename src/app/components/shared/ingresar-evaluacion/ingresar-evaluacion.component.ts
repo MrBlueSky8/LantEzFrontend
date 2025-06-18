@@ -289,6 +289,7 @@ export class IngresarEvaluacionComponent implements OnInit {
     const doc = new jsPDF();
     const postulante = this.postulacionSeleccionada.postulante;
     const edad = new AgePipe().transform(postulante.fechanacimiento);
+    const estado = this.postulacionSeleccionada.estado_postulacion.toUpperCase();
 
     doc.setFontSize(16);
     doc.text('Detalle de Evaluación', 14, 20);
@@ -300,9 +301,10 @@ export class IngresarEvaluacionComponent implements OnInit {
     doc.text(`Género: ${postulante.genero}`, 14, 54);
     doc.text(`Ciudad: ${postulante.ciudades.ciudad}`, 14, 62);
     doc.text(`Porcentaje Global: ${Math.round(this.postulacionSeleccionada.porcentaje_compatibilidad)}%`, 14, 70);
+    doc.text(`Estado de la Postulación: ${estado}`, 14, 78);
 
     autoTable(doc, {
-      startY: 80,
+      startY: 88,
       head: [['Competencia', 'Nivel del Puesto', 'Nivel del Postulante', 'Coincidencia %']],
       body: this.competenciasDetalle.map(c => {
         const nivelPostulante = Math.round((c.coincidencia / 100) * c.nivelPuesto);
