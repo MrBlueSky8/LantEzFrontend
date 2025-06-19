@@ -35,8 +35,8 @@ export const appConfig: ApplicationConfig = {
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,
-          allowedDomains: ['localhost:8080'], // Cambia al dominio de tu backend actual
-          disallowedRoutes: ['localhost:8080/login/forget'], // Rutas públicas sin JWT
+          allowedDomains: ['3.144.93.127:8080', 'localhost:8080'], // Cambia al dominio de tu backend actual
+          disallowedRoutes: ['http://3.144.93.127:8080/login/forget', 'http://localhost:8080/login/forget'], // Rutas públicas sin JWT
         },
       })
     ),
