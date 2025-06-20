@@ -77,7 +77,10 @@ export class EmpresasComponent implements OnInit {
     this.empresasFiltradas = this.empresas.filter(e =>
       e.nombre?.toLowerCase().includes(filtro) ||
       e.razon_social?.toLowerCase().includes(filtro) ||
-      e.ruc?.toLowerCase().includes(filtro)
+      e.ruc?.toLowerCase().includes(filtro) ||
+      (typeof e.estado === 'boolean'
+      ? (e.estado ? 'activo' : 'inactivo').includes(filtro)
+      : (String(e.estado).toLowerCase().includes(filtro)))
     );
   
     this.pageIndex = 0;

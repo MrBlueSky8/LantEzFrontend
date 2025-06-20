@@ -49,7 +49,10 @@
 <!-- Grid de Empresas + Paginador juntos -->
 <div class="clientes-grid-container">
   <div class="clientes-grid">
-    <div class="cliente-card" *ngFor="let empresa of empresasPaginadas">
+    <div 
+      class="cliente-card" 
+      [ngClass]="{ 'cliente-card-inactivo': !empresa.estado }"
+      *ngFor="let empresa of empresasPaginadas">
       <img [src]="empresa.logo_url"
         alt="{{ empresa.razon_social }}"
         (error)="onImgError($event)" />
