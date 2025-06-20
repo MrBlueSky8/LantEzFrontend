@@ -1,0 +1,32 @@
+.ajustes-contenedor {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #ededed;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.ajustes-titulo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #004a75;
+}
+
+.btn-restablecer {
+  background-color: #004a75;
+  color: white;
+  padding: 14px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-restablecer:hover {
+  background-color: #003c5e;
+}
