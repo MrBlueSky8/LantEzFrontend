@@ -19,7 +19,10 @@
 
   <!-- GRID DE EVALUADORES -->
   <div class="evaluadores-grid">
-    <div class="evaluador-card" *ngFor="let usuario of usuariosPaginados">
+    <div 
+    class="evaluador-card" 
+    [ngClass]="{ 'evaluador-card-inactivo': !usuario.estado }"
+    *ngFor="let usuario of usuariosPaginados">
       <!-- Avatar -->
       <div class="avatar-container">
         <img
