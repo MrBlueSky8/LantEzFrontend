@@ -84,27 +84,27 @@ export class LoginComponent implements OnInit {
     switch (data) {
       case 'ADMINISTRADOR FUNDADES':
         // Redirige al dashboard de administrador
-        this.router.navigate(['/sidenav-fundades']);
+        this.router.navigate(['/sidenav-fundades/homes']);
         break;
 
       case 'SUBADMINISTRADOR FUNDADES':
         // Redirige al panel de subadministrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-fundades/homes']);
         break;
 
       case 'ADMINISTRADOR':
         // Redirige al dashboard de administrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-admin/homes']);
         break;
 
       case 'SUBADMINISTRADOR':
         // Redirige al panel de subadministrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-admin/homes']);
         break;
 
       case 'EVALUADOR':
         // Redirige a la vista del evaluador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-evaluador/homes']);
         break;
 
       default:

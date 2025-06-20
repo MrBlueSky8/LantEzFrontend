@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
 
       case 'SUBADMINISTRADOR':
         // Redirige al panel de subadministrador
-        this.router.navigate(['/homes']);
+        this.router.navigate(['/sidenav-admin']);
         break;
 
       case 'EVALUADOR':
