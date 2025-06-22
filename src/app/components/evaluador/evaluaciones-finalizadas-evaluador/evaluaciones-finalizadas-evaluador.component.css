@@ -260,5 +260,14 @@ mat-paginator {
   .evaluacion-card {
     width: 100%;
   }
+
+  .evaluacion-card button {
+    white-space: normal; /* Permite quiebre de línea */
+    word-wrap: break-word; /* Soporte adicional para cortar palabras largas */
+    line-height: 1.2; /* Mejora el espaciado entre líneas si se quiebra */
+    min-height: 29px; /* Asegura altura mínima (igual que el original) */
+    text-align: center; /* Centrado de texto multilinea */
+    padding: 6px 10px; /* Aumenta ligeramente el padding vertical para dos líneas */
+  }
 }
 
