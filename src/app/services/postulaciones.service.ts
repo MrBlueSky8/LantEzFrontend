@@ -52,4 +52,14 @@ export class PostulacionesService {
     return this.http.get<Postulaciones[]>(`${this.url}/puesto/${puestoId}`);
   }
 
+  contarPostulacionesFinalizadasPorEmpresa(empresaId: number) {
+    return this.http.get<number>(`${this.url}/reporte/finalizadas/empresa/${empresaId}`);
+  }
+
+  contarPostulacionesPendientesPorEmpresa(empresaId: number) {
+    return this.http.get<number>(`${this.url}/reporte/pendientes/empresa/${empresaId}`);
+  }
+
+  
+
 }

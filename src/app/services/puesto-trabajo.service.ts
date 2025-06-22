@@ -73,5 +73,7 @@ export class PuestoTrabajoService {
     return this.http.put(`${this.url}/reactivar/${id}`, {});
   }
 
-
+  contarPuestosConRequerimientosPorEmpresa(empresaId: number) {
+    return this.http.get<number>(`${this.url}/reporte/conrequerimientos/empresa/${empresaId}`);
+  }
 }

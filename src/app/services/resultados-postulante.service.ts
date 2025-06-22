@@ -48,5 +48,9 @@ export class ResultadosPostulanteService {
     return this.http.post(`${this.url}/upsert`, resultados);
   }
 
+  contarPostulantesFichadosPorEmpresa(empresaId: number) {
+    return this.http.get<number>(`${this.url}/reporte/fichados/empresa/${empresaId}`);
+  }
+
 
 }

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es'; // Ajusta la ruta
 import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 import { Router } from '@angular/router';
+import { ModalResumenEmpresaComponent } from '../../shared/modales/modal-resumen-empresa/modal-resumen-empresa.component';
 
 
 
@@ -137,6 +138,13 @@ export class EmpresasComponent implements OnInit {
 
   verDetalleEmpresa(empresa: Empresas): void{
     console.log('evento: click ver Detalle a la empresa: ' + empresa.nombre);
+    if (!empresa) return;
+        
+    //console.log('evento: enviando empresa a editar: ' + JSON.stringify(empresa));
+    const dialogRef = this.dialog.open(ModalResumenEmpresaComponent, {
+      width: 'auto',
+      data: { empresa },
+    });
   }
 
   toggleEstadoEmpresa(empresa: Empresas): void {
