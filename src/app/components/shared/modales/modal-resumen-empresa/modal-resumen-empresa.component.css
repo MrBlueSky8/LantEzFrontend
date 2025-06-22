@@ -9,31 +9,45 @@
 }
 
 .modal-resumen {
-  background: #FFFFFF;
-  width: 900px;
-  height: 789px;
-  padding: 34px 54px;
+  background: #ffffff;
+  width: 90vw;
+  max-width: 600px;
+  max-height: 600px;
+  padding: 20px;
   border-radius: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
 }
 
 .tarjetas-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 26px;
+  gap: 20px;
   justify-items: center;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 1rem;
 }
 
 .tarjeta {
-  width: 368px;
-  height: 360px;
-  border-radius: 25px;
-  padding: 15px;
+  width: 240px;
+  height: 240px;
+  border-radius: 18px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,49 +56,111 @@
   text-align: center;
 }
 
+/* Colores */
 .resumen-verde {
-  background: #DBF2C9;
+  background: #dbf2c9;
 }
-
 .resumen-rosado {
-  background: #FCC5C0;
+  background: #fcc5c0;
 }
-
 .resumen-amarillo {
-  background: #FFE5BB;
+  background: #ffe5bb;
 }
-
 .resumen-celeste {
-  background: #BBE5FF;
+  background: #bbe5ff;
 }
 
+/* Tipografía título */
 .titulo-tarjeta {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 100%;
+  font-size: 20px;
+  line-height: 1.1;
   margin: 0;
 }
 
+/* Contenedor número + icono */
 .numero-icono-horizontal {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
   margin-top: 10px;
 }
 
-.numero-icono-horizontal .numero {
-  font-family: 'Inter', sans-serif;
+/* Número */
+.numero {
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 96px;
-  line-height: 100%;
+  line-height: 1;
 }
 
+/* Imagen */
 .numero-icono-horizontal img {
-  width: 120px;
+  width: 147px;
   height: auto;
   flex-shrink: 0;
 }
 
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .modal-resumen {
+    width: 95vw;
+    max-height: 95vh;
+    padding: 16px;
+  }
+
+  .tarjetas-grid {
+    grid-template-columns: 1fr; /* una sola columna */
+  }
+
+  /* Dado que tenemos más altura disponible, podemos mantener o incluso subir un poco */
+  .tarjeta {
+    width: 100%;
+    max-width: 260px;  /* límite horizontal */
+    height: 260px;     /* igual que el base o ligeramente mayor */
+    padding: 12px;
+  }
+
+  .titulo-tarjeta {
+    font-size: 18px;
+  }
+
+  .numero {
+    font-size: 90px;
+  }
+
+  .numero-icono-horizontal img {
+    width: 130px;
+  }
+
+  .modal-resumen {
+    width: fit-content;
+    max-width: 95vw;
+    padding: 16px;
+  }
+}
+
+
+/* PEQUEÑO: 400px (60% del tamaño base) */
+@media (max-width: 400px) {
+  .tarjeta {
+    width: 144px;
+    height: 144px;
+    padding: 8px;
+  }
+
+  .titulo-tarjeta {
+    font-size: 12px;
+  }
+
+  .numero {
+    font-size: 58px;
+  }
+
+  .numero-icono-horizontal img {
+    width: 90px;
+  }
+}
