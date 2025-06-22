@@ -1,12 +1,12 @@
 .mi-empresa-header {
   max-width: 95%;
   height: 58px;
-  background: #004A75;
+  background: #004a75;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 30px;
   color: white;
@@ -15,18 +15,18 @@
 
 .contenedor-areas {
   max-width: 95%;
-  background: #EDEDED;
+  background: #ededed;
   border-radius: 20px;
   padding: 20px;
   margin: auto;
 }
 
 .bloque-pregunta {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pregunta-header summary {
@@ -43,11 +43,10 @@
   margin-bottom: 4px;
 }
 
-
 .pregunta-numero {
-  background: #004A75;
+  background: #004a75;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 14px;
   border-radius: 50%;
@@ -59,17 +58,17 @@
 }
 
 .pregunta-titulo {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 12px;
   /*margin-top: 8px;*/
 }
 
 .pregunta-definicion {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 10px;
-  color: #5E5E5E;
+  color: #5e5e5e;
   margin-top: 4px;
 }
 
@@ -111,9 +110,9 @@
   */
 
 .nivel-numero {
-  background: #004A75;
+  background: #004a75;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 12px;
   border-radius: 50%;
@@ -130,33 +129,32 @@
   box-sizing: border-box;
 }
 
-
 .nivel-titulo {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 12px;
   color: #333;
 }
 
 .nivel-descripcion {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 10px;
-  color: #5E5E5E;
+  color: #5e5e5e;
 }
 
 .nivel-item.nivel-seleccionado {
-  background-color: #004A75;
+  background-color: #004a75;
 }
 
 .nivel-item.nivel-seleccionado .nivel-titulo,
 .nivel-item.nivel-seleccionado .nivel-descripcion {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .nivel-item.nivel-seleccionado .nivel-numero {
-  background: #FFFFFF;
-  color: #004A75;
+  background: #ffffff;
+  color: #004a75;
 }
 
 .guardar-wrapper {
@@ -167,9 +165,9 @@
 .btn-submit {
   width: 360px;
   height: 60px;
-  background-color: #004A75;
+  background-color: #004a75;
   color: white;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 24px;
   border-radius: 15px;
@@ -183,17 +181,17 @@
 }
 
 .nivel-item:hover {
-  background-color: #004A75;
+  background-color: #004a75;
 }
 
 .nivel-item:hover .nivel-titulo,
 .nivel-item:hover .nivel-descripcion {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .nivel-item:hover .nivel-numero {
-  background: #FFFFFF;
-  color: #004A75;
+  background: #ffffff;
+  color: #004a75;
 }
 
 .nivel-item {
@@ -218,11 +216,21 @@
 
 .divider-after {
   width: 100%;
-  border-top: 1px solid #D8D8D8;
+  border-top: 1px solid #d8d8d8;
   margin: 8px 0 0px 0;
 }
 
+.refresh-icon {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
 
+.refresh-icon:hover {
+  transform: rotate(15deg) scale(1.1);
+  filter: brightness(1.1);
+}
 
 /* Responsive adjustments */
 @media (max-width: 950px) {
@@ -231,7 +239,7 @@
     font-size: 20px;
     height: 50px;
   }
-  
+
   .mi-empresa-header {
     font-size: 22px;
     height: auto;
@@ -243,106 +251,116 @@
   .contenedor-areas {
     padding: 10px;
   }
-  
+
   .mi-empresa-header {
     font-size: 18px;
     padding: 8px;
   }
 
-  .nivel-titulo, .nivel-descripcion {
+  .nivel-titulo,
+  .nivel-descripcion {
     font-size: 10px;
   }
 
   /* Ajustes a partir de 1024px: tablets y laptops pequeñas */
-@media (max-width: 1024px) {
-  .nivel-descripcion {
-    font-size: 10px;
+  @media (max-width: 1024px) {
+    .nivel-descripcion {
+      font-size: 10px;
+    }
+
+    .btn-submit {
+      width: 80%;
+      font-size: 22px;
+      height: 52px;
+    }
   }
 
-  .btn-submit {
-    width: 80%;
-    font-size: 22px;
-    height: 52px;
-  }
-}
+  /* Ajustes a partir de 768px: tablets en vertical y phablets */
+  @media (max-width: 768px) {
+    .pregunta-cabecera {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
 
-/* Ajustes a partir de 768px: tablets en vertical y phablets */
-@media (max-width: 768px) {
-  .pregunta-cabecera {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
+    .nivel-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-  .nivel-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .nivel-contenido {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
-  .nivel-contenido {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+    .pregunta-top-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
 
-  .pregunta-top-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
+    .flecha-icono {
+      align-self: flex-end;
+    }
 
-  .flecha-icono {
-    align-self: flex-end;
-  }
+    .btn-submit {
+      width: 100%;
+      height: 48px;
+      font-size: 18px;
+    }
 
-  .btn-submit {
-    width: 100%;
-    height: 48px;
-    font-size: 18px;
-  }
+    .mi-empresa-header {
+      font-size: 20px;
+      padding: 12px;
+      text-align: center;
+    }
 
-  .mi-empresa-header {
-    font-size: 20px;
-    padding: 12px;
-    text-align: center;
-  }
-}
-
-/* Ajustes para móviles pequeños */
-@media (max-width: 480px) {
-  .nivel-numero {
-    width: 22px;
-    height: 22px;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 10px;
+    .refresh-icon {
+      width: 36px;
+      height: 36px;
+    }
   }
 
-  .nivel-titulo {
-    font-size: 11px;
-  }
+  /* Ajustes para móviles pequeños */
+  @media (max-width: 480px) {
+    .nivel-numero {
+      width: 22px;
+      height: 22px;
+      min-width: 20px;
+      min-height: 20px;
+      font-size: 10px;
+    }
 
-  .nivel-descripcion {
-    font-size: 9px;
-  }
+    .nivel-titulo {
+      font-size: 11px;
+    }
 
-  .pregunta-numero {
-    width: 22px;
-    height: 22px;
-    font-size: 10px;
-  }
+    .nivel-descripcion {
+      font-size: 9px;
+    }
 
-  .pregunta-titulo {
-    font-size: 11px;
-  }
+    .pregunta-numero {
+      width: 22px;
+      height: 22px;
+      font-size: 10px;
+    }
 
-  .pregunta-definicion {
-    font-size: 9px;
-  }
+    .pregunta-titulo {
+      font-size: 11px;
+    }
 
-  .bloque-pregunta {
-    padding: 10px;
-  }
-}
+    .pregunta-definicion {
+      font-size: 9px;
+    }
 
+    .bloque-pregunta {
+      padding: 10px;
+    }
+
+    .refresh-icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
 }

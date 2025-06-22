@@ -1,5 +1,6 @@
 <!-- HEADER -->
 <div class="mi-empresa-header" *ngIf="postulante">
+  <img  *ngIf="resultadosParalelos === true" src="/assets/refresh.svg" alt="Refresh" class="refresh-icon" (click)="sincronizarResultadosParalelos()">
   FICHA DE POSTULANTE: {{ postulante.apellido_p }}, {{ postulante.primer_nombre }} 
 </div>
 

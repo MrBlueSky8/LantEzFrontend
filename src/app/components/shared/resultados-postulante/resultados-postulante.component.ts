@@ -45,6 +45,8 @@ export class ResultadosPostulanteComponent implements OnInit {
 
   empresaSeleccionada!: Empresas;
 
+  resultadosParalelos: boolean = false;
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -88,6 +90,13 @@ export class ResultadosPostulanteComponent implements OnInit {
           this.redireccionarListaPostulantes();
         },
       });
+
+      this.resultadosPostulanteService.validarFichaEnOtraEmpresa(+id, +empresaId).subscribe({
+        next: (resultado) => {
+          this.resultadosParalelos = resultado;
+        },
+        error: (err) => console.error('Error al obtener validacion:', err),
+      })
     }
   }
 
@@ -193,5 +202,28 @@ export class ResultadosPostulanteComponent implements OnInit {
             },
           });
       });
+    }
+
+    sincronizarResultadosParalelos(): void{
+
+      const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+        width: 'auto',
+        data: {
+          titulo: `¿Sincronizar ficha postulante?`,
+          mensajeSecundario: `Este postulante tiene una ficha en otra empresa asociada. ¿Deseas sincronizar los resultados?`
+        },
+      });
+
+
+      dialogConfirmation.afterClosed().subscribe((confirmado) => {
+        if (!confirmado) return;
+        this.resultadosPostulanteService.obtenerEmpresaIdDeFicha(this.postulante.id).subscribe({
+          next: (empresaParalelaId) => {
+            this.cargarResultadosExistentes(this.postulante.id, empresaParalelaId);
+          },
+          error: (err) => console.error('Error al obtener validacion:', err),
+        })
+      });
+
     }
 }
