@@ -1,12 +1,12 @@
 .mi-empresa-header {
   max-width: 95%;
   height: 58px;
-  background: #004A75;
+  background: #004a75;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 30px;
   color: white;
@@ -17,7 +17,7 @@
 .contenedor-areas {
   width: 100%;
   max-width: 95%;
-  background: #EDEDED;
+  background: #ededed;
   border-radius: 20px;
   padding: 72px 30px;
   display: flex;
@@ -52,14 +52,13 @@
 .barra-busqueda input {
   border: none;
   outline: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 16px;
   color: #3c3c3c;
   background: transparent;
   width: 100%;
 }
-
 
 /* Grid evaluaciones */
 .evaluaciones-grid {
@@ -76,7 +75,7 @@
   height: 206px;
   border-radius: 20px;
   border: 2px solid #000000;
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -86,7 +85,7 @@
 }
 
 .titulo-puesto {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 20px;
   text-align: center;
@@ -104,7 +103,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
@@ -118,32 +117,32 @@
 
 /* Colores de botones según Figma */
 .btn-editar {
-  background-color: #98C060;
+  background-color: #98c060;
 }
 
 .btn-ingresar {
-  background-color: #F3AF42;
+  background-color: #f3af42;
 }
 
 .btn-asignar {
-  background-color: #DEC717;
+  background-color: #dec717;
 }
 
 .btn-desactivar {
-  background-color: #C06060;
+  background-color: #c06060;
 }
 
 /* Efecto Hover Botones */
 .evaluacion-card button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .combo-empresa {
   height: 56px;
   border-radius: 20px;
   padding: 0 40px 0 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 500;
   border: none;
@@ -153,7 +152,7 @@
   max-width: 100%;
   flex: 1; /* Permite adaptabilidad */
   appearance: none;
-  background-image: url('/assets/arrow-down.svg');
+  background-image: url("/assets/arrow-down.svg");
   background-repeat: no-repeat;
   background-position: right 16px center;
   background-size: 10px;
@@ -167,7 +166,6 @@
 .combo-empresa option {
   color: #000000;
 }
-
 
 mat-paginator {
   display: flex;
@@ -215,7 +213,6 @@ mat-paginator {
   border-radius: 8px;
 }
 
-
 @media (max-width: 1024px) {
   .mi-empresa-header {
     font-size: 26px;
@@ -241,7 +238,7 @@ mat-paginator {
   .evaluaciones-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
-  
+
   .evaluacion-card {
     width: 220px;
     height: auto;
@@ -299,5 +296,13 @@ mat-paginator {
   .evaluacion-card {
     width: 100%;
   }
-}
 
+  .evaluacion-card button {
+    white-space: normal; /* Permite quiebre de línea */
+    word-wrap: break-word; /* Soporte adicional para cortar palabras largas */
+    line-height: 1.2; /* Mejora el espaciado entre líneas si se quiebra */
+    min-height: 29px; /* Asegura altura mínima (igual que el original) */
+    text-align: center; /* Centrado de texto multilinea */
+    padding: 6px 10px; /* Aumenta ligeramente el padding vertical para dos líneas */
+  }
+}
