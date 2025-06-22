@@ -205,11 +205,25 @@ export class ResultadosPostulanteComponent implements OnInit {
     }
 
     sincronizarResultadosParalelos(): void{
-      this.resultadosPostulanteService.obtenerEmpresaIdDeFicha(this.postulante.id).subscribe({
-        next: (empresaParalelaId) => {
-           this.cargarResultadosExistentes(this.postulante.id, empresaParalelaId);
+
+      const dialogConfirmation = this.dialog.open(ModalConfirmacionComponent, {
+        width: 'auto',
+        data: {
+          titulo: `¿Sincronizar ficha postulante?`,
+          mensajeSecundario: `Este postulante tiene una ficha en otra empresa asociada. ¿Deseas sincronizar los resultados?`
         },
-        error: (err) => console.error('Error al obtener validacion:', err),
-      })
+      });
+
+
+      dialogConfirmation.afterClosed().subscribe((confirmado) => {
+        if (!confirmado) return;
+        this.resultadosPostulanteService.obtenerEmpresaIdDeFicha(this.postulante.id).subscribe({
+          next: (empresaParalelaId) => {
+            this.cargarResultadosExistentes(this.postulante.id, empresaParalelaId);
+          },
+          error: (err) => console.error('Error al obtener validacion:', err),
+        })
+      });
+
     }
 }
