@@ -26,7 +26,7 @@ import { UsuariosService } from './services/usuarios.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'lant-ez-frontend';
+  title = 'lant-ez';
 
   role: string = '';
   user: string = '';

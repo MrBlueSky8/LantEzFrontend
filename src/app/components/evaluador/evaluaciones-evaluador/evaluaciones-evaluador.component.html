@@ -29,8 +29,9 @@
       <button class="btn-asignar" (click)="asignarPuesto(puesto)">
         Asignar Postulantes <img src="/assets/linkEvaluacion.svg" alt="Asignar" />
       </button>
-      <button class="btn-desactivar" (click)="administrarPuesto(puesto)">
-        Desactivar <img src="/assets/disableEvaluacion.svg" alt="Desactivar" />
+      <button class="btn-desactivar" (click)="toggleEstadoPuesto(puesto)">
+        {{ puesto.estado ? 'Reactivar Evaluación' : 'Finalizar Evaluación' }}
+        <img src="/assets/disableEvaluacion.svg" alt="Finalizar" />
       </button>
     </div>
   </div>

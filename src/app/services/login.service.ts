@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtRequest } from '../models/jwtRequest';
 import { environment } from '../../environments/environment';
+import { UsuariosService } from './usuarios.service';
+import { Observable, switchMap, throwError } from 'rxjs';
+import { UsuariosLight } from '../models/usuariosLight';
 const base_url = environment.base;
 
 @Injectable({
@@ -10,7 +13,7 @@ const base_url = environment.base;
 })
 export class LoginService {
   private url = `${base_url}/login`;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private usuarioService: UsuariosService) {}
 
   login(request: JwtRequest) {
     return this.http.post(this.url, request);
@@ -55,5 +58,15 @@ export class LoginService {
       console.log('evento: error atrapado, terrible situación');
       return true; // por seguridad, si no puede parsear
     }
+  }
+
+  getCurrentUsuarioLight(): Observable<UsuariosLight> {
+    const email = this.showUser();
+    if (!email) {
+      return throwError(() => new Error('No hay usuario logueado'));
+    }
+    return this.usuarioService.findIdByEmail(email).pipe(
+      switchMap(id => this.usuarioService.listIdPublico(id))
+    );
   }
 }

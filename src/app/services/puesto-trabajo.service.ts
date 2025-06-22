@@ -56,4 +56,14 @@ export class PuestoTrabajoService {
   eliminarCascade(id: number){
     return this.http.delete(`${this.url}/cascade/${id}`);
   }
+
+  finalizar(id: number) {
+    return this.http.put(`${this.url}/finalizar/${id}`, {});
+  }
+
+  reactivar(id: number) {
+    return this.http.put(`${this.url}/reactivar/${id}`, {});
+  }
+
+
 }

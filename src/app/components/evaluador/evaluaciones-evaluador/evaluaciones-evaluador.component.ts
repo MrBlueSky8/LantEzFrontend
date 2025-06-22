@@ -15,6 +15,7 @@ import { ModalPuestoTrabajoFormComponent } from '../../shared/modales/modal-pues
 import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
 import { ModalAsignarPostulantesComponent } from '../../shared/modales/modal-postulante/modal-asignar-postulantes/modal-asignar-postulantes.component';
 import { ModalAdministrarPuestoComponent } from '../../admin/modales/modal-administrar-puesto/modal-administrar-puesto.component';
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
 
 @Component({
   selector: 'app-evaluaciones-evaluador',
@@ -231,6 +232,46 @@ export class EvaluacionesEvaluadorComponent implements OnInit {
       }
     });
   }
+
+  toggleEstadoPuesto(puesto: PuestosTrabajo): void {
+    const accion = puesto.estado ? 'reactivar' : 'finalizar';
+
+    const dialogRef = this.dialog.open(ModalConfirmacionComponent, {
+      width: 'auto',
+      data: {
+        titulo: `¿Estás seguro de ${accion} la evaluación de este puesto?`,
+        mensajeSecundario: puesto.estado
+          ? 'El puesto volverá al estado PENDIENTE para continuar con la evaluación una vez sea aprobada tu cambio por un administrador.'
+          : 'Una vez finalizado, ya no podrás editar este puesto.',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado: boolean) => {
+      if (!confirmado) return;
+
+      const operacion = puesto.estado
+        ? this.puestosService.reactivar(puesto.id!)
+        : this.puestosService.finalizar(puesto.id!);
+
+      operacion.subscribe({
+        next: () => {
+          console.log(`Puesto ${puesto.nombre_puesto} fue ${accion} correctamente`);
+          this.refrescarPuesto(); // ya existe en tu componente
+
+          this.dialog.open(ModalExitoComponent, {
+            data: {
+              titulo: `Puesto ${accion === 'finalizar' ? 'finalizado' : 'reactivado'}`,
+              iconoUrl: '/assets/checkicon.svg'
+            }
+          });
+        },
+        error: () => {
+          console.error(`Error al ${accion} el puesto ${puesto.nombre_puesto}`);
+        }
+      });
+    });
+  }
+
 
   private refrescarPuesto(): void {
     this.puestosService
