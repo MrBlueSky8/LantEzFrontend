@@ -1,0 +1,41 @@
+<div class="overlay">
+  <div class="modal-resumen">
+    <button class="close-button" type="button" (click)="cerrar()">
+      &times;
+    </button>
+
+    <div class="tarjetas-grid">
+      <div class="tarjeta resumen-verde">
+        <h3 class="titulo-tarjeta">Procesos Realizados</h3>
+        <div class="numero-icono-horizontal">
+          <span class="numero">{{ procesosRealizados }}</span>
+          <img src="/assets/procesosRealizados.svg" alt="Procesos Realizados" />
+        </div>
+      </div>
+
+      <div class="tarjeta resumen-rosado">
+        <h3 class="titulo-tarjeta">Procesos Pendientes</h3>
+        <div class="numero-icono-horizontal">
+          <span class="numero">{{ procesosPendiente }}</span>
+          <img src="/assets/procesosPendientes.svg" alt="Procesos Pendientes" />
+        </div>
+      </div>
+
+      <div class="tarjeta resumen-amarillo">
+        <h3 class="titulo-tarjeta">Personas Evaluadas</h3>
+        <div class="numero-icono-horizontal">
+          <span class="numero">{{ personasEvaluadas }}</span>
+          <img src="/assets/personasEvaluadas.svg" alt="Personas Evaluadas" />
+        </div>
+      </div>
+
+      <div class="tarjeta resumen-celeste">
+        <h3 class="titulo-tarjeta">Perfiles de<br>Trabajo</h3>
+        <div class="numero-icono-horizontal">
+          <span class="numero">{{ perfilesTrabajo }}</span>
+          <img src="/assets/perfilesTrabajo.svg" alt="Perfiles de Trabajo" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

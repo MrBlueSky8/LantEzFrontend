@@ -1,0 +1,90 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000061;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-resumen {
+  background: #FFFFFF;
+  width: 900px;
+  height: 789px;
+  padding: 34px 54px;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.tarjetas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.tarjeta {
+  width: 368px;
+  height: 360px;
+  border-radius: 25px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.resumen-verde {
+  background: #DBF2C9;
+}
+
+.resumen-rosado {
+  background: #FCC5C0;
+}
+
+.resumen-amarillo {
+  background: #FFE5BB;
+}
+
+.resumen-celeste {
+  background: #BBE5FF;
+}
+
+.titulo-tarjeta {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+  margin: 0;
+}
+
+.numero-icono-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.numero-icono-horizontal .numero {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 100%;
+}
+
+.numero-icono-horizontal img {
+  width: 120px;
+  height: auto;
+  flex-shrink: 0;
+}
+
