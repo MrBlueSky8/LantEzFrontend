@@ -52,6 +52,29 @@ export const navbarData: INavbarData[] = [
         svgIcon: '../../../assets/evaluaciones.svg',
         svgIconActive: '../../../assets/evaluaciones-hoverBlue.svg',
         label: 'Evaluaciones',
+
+         items: [
+            {
+                routeLink: 'evaluaciones/pendientes',
+                icon: 'fal fa-plus-square', // Agregar ofertas
+                label: 'Pendientes',
+            },
+            {
+                routeLink: 'evaluaciones/finalizadas',
+                icon: 'fal fa-list-ul', // Todas mis ofertas
+                label: 'Finalizadas',
+            },
+        ],
+            
+        action: () => {
+            //console.log('evento: action de ajustes clickeado');
+            const sidenavexpanded = document.querySelector('body > app-root > app-sidenav-admin > div.sidenav.sidenav-collapsed');
+            const buttonlogo = document.querySelector('div.logo-container > button');
+
+            if (!sidenavexpanded && buttonlogo instanceof HTMLButtonElement) {
+                buttonlogo.click();
+            }
+        }
     },
     {
         routeLink: 'ajustes',
