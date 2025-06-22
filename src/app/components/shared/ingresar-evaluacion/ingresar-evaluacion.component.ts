@@ -178,13 +178,14 @@ export class IngresarEvaluacionComponent implements OnInit {
   }
 
   volverAtras(): void {
-    this.router.navigate(['/ruta-anterior']); // Ajusta la ruta según corresponda
+    if (!this.puestoSeleccionado) return;
+
     const segments = this.router.url.split('/');
     const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
-    const seccionEvaluacion = segments[2]; //.includes('evaluacion') ? 'evaluacion' : 'mis-evaluaciones';
+    const seccionEvaluacion = segments[2]; // evaluaciones-evaluador, etc.
+    const estadoRuta = this.puestoSeleccionado.estado ? 'finalizadas' : 'pendientes';
 
-    //console.log('evento: current sidenav: ' + currentSidenav);
-    this.router.navigate([`/${currentSidenav}/${seccionEvaluacion}`]);
+    this.router.navigate([`/${currentSidenav}/${seccionEvaluacion}/${estadoRuta}`]);
   }
 
   editarEvaluacion(): void {

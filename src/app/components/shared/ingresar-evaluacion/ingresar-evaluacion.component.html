@@ -64,7 +64,7 @@
       </div>
 
       <div class="detalle-postulacion-estado">
-        <img src="/assets/refresh.svg" alt="Refresh" class="refresh-icon" (click)="refrescarCruce()">
+        <img *ngIf="puestoSeleccionado?.estado === false" src="/assets/refresh.svg" alt="Refresh" class="refresh-icon" (click)="refrescarCruce()">
         <span [ngClass]="postulacionSeleccionada.estado_postulacion">{{ postulacionSeleccionada.estado_postulacion | uppercase }}</span>
         <span class="compatibilidad-general">{{ postulacionSeleccionada.porcentaje_compatibilidad | number:'1.0-0' }}%</span>
       </div>
@@ -99,6 +99,7 @@
         {{ tieneAnalisisIA() ? 'VER ANÁLISIS' : 'SOLICITAR ANÁLISIS' }}
       </button>
 
+      <ng-container *ngIf="puestoSeleccionado?.estado === false">
       <!-- Sólo si está PENDIENTE -->
       <button
         class="btn-aprobar"
@@ -120,6 +121,7 @@
         (click)="cambiarEstado('pendiente')">
         Modificar Postulación
       </button>
+      </ng-container>
 
       <button class="btn-exportar" (click)="exportarDetallePDF()">
         Exportar Evaluación
