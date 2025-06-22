@@ -32,6 +32,7 @@ import { EvaluacionesFundadesComponent } from './components/fundades/evaluacione
 import { EvaluacionesEvaluadorComponent } from './components/evaluador/evaluaciones-evaluador/evaluaciones-evaluador.component';
 import { EvaluacionesFinalizadasFundadesComponent } from './components/fundades/evaluaciones-finalizadas-fundades/evaluaciones-finalizadas-fundades.component';
 import { EvaluacionesFinalizadasComponent } from './components/shared/evaluaciones-finalizadas/evaluaciones-finalizadas.component';
+import { EvaluacionesFinalizadasEvaluadorComponent } from './components/evaluador/evaluaciones-finalizadas-evaluador/evaluaciones-finalizadas-evaluador.component';
 
 export const routes: Routes = [
   {
@@ -241,6 +242,14 @@ export const routes: Routes = [
       {
         path: 'evaluaciones/puestos-trabajo/ficha/:id',
         component: RequerimientosMinimosPuestoComponent,
+      },
+      {
+        path: 'evaluaciones/pendientes',
+        component: EvaluacionesEvaluadorComponent,
+      },
+      {
+        path: 'evaluaciones/finalizadas',
+        component: EvaluacionesFinalizadasEvaluadorComponent,
       },
     ],
     canActivate: [segGuard],

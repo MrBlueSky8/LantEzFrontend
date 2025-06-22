@@ -1,0 +1,264 @@
+.mi-empresa-header {
+  max-width: 95%;
+  height: 58px;
+  background: #004A75;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: white;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+.contenedor-areas {
+  width: 100%;
+  max-width: 95%;
+  background: #EDEDED;
+  border-radius: 20px;
+  padding: 72px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.clientes-header-bar {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  /*margin: 0 20px 20px 20px;*/
+  margin: auto;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.barra-busqueda {
+  flex: 4;
+  height: 56px;
+  background: white;
+  border-radius: 20px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.barra-busqueda input {
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #3c3c3c;
+  background: transparent;
+  width: 100%;
+}
+
+
+/* Grid evaluaciones */
+.evaluaciones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(266px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-bottom: 20px;
+}
+
+/* Card evaluaciones personalizado según Figma */
+.evaluacion-card {
+  width: 266px;
+  height: 206px;
+  border-radius: 20px;
+  border: 2px solid #000000;
+  background: #FFFFFF;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.titulo-puesto {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Botones específicos de evaluación */
+.evaluacion-card button {
+  width: 200px;
+  height: 29px;
+  border-radius: 20px;
+  border: none;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.evaluacion-card button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Colores de botones según Figma */
+.btn-editar {
+  background-color: #98C060;
+}
+
+.btn-ingresar {
+  background-color: #F3AF42;
+}
+
+.btn-asignar {
+  background-color: #DEC717;
+}
+
+.btn-desactivar {
+  background-color: #C06060;
+}
+
+/* Efecto Hover Botones */
+.evaluacion-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  background: none;
+  margin: 30px auto 10px auto;
+  width: fit-content;
+}
+
+.mat-mdc-paginator-container {
+  justify-content: center !important;
+  gap: 12px;
+}
+
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-paginator-page-size-select,
+.mat-mdc-paginator-range-label {
+  display: none;
+}
+
+.mat-mdc-icon-button {
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  font-weight: 600;
+  color: #000;
+}
+
+.mat-mdc-paginator-navigation-next,
+.mat-mdc-paginator-navigation-previous {
+  background: #ffffff;
+  padding: 6px 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.mat-mdc-paginator-range-actions button.mat-mdc-icon-button {
+  font-weight: bold;
+}
+
+.mat-mdc-button-base.mat-mdc-button.mat-primary {
+  color: white;
+  background: #000000;
+  border-radius: 8px;
+}
+
+
+@media (max-width: 1024px) {
+  .mi-empresa-header {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mi-empresa-header {
+    font-size: 22px;
+  }
+
+  .contenedor-areas {
+    padding: 50px 20px;
+    gap: 16px;
+  }
+
+  .clientes-header-bar {
+    flex-direction: column;
+    align-items: stretch;
+    width: 90%;
+  }
+
+  .evaluaciones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .evaluacion-card {
+    width: 220px;
+    height: auto;
+    padding: 15px;
+  }
+
+  .evaluacion-card button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .mi-empresa-header {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .contenedor-areas {
+    padding: 40px 12px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mi-empresa-header {
+    font-size: 20px;
+    height: auto;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .clientes-header-bar {
+    margin-right: auto;
+  }
+
+  .barra-busqueda input {
+    font-size: 14px;
+  }
+
+  .mi-empresa-header {
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .evaluacion-card {
+    width: 100%;
+  }
+}
+

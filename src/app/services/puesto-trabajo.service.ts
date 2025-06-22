@@ -49,7 +49,11 @@ export class PuestoTrabajoService {
   listarPendientesAprobadosByUsuarioId(usuarioId: number) {
     return this.http.get<PuestosTrabajo[]>(`${this.url}/pendientes/aprobados/usuario/${usuarioId}`);
   }
-  
+
+  listarFinalizadosByUsuarioId(usuarioId: number) {
+    return this.http.get<PuestosTrabajo[]>(`${this.url}/finalizados/usuario/${usuarioId}`);
+  }
+
   update(u: PuestosTrabajo){
     return this.http.put(this.url, u);
   }
