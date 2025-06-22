@@ -45,6 +45,8 @@ export class ResultadosPostulanteComponent implements OnInit {
 
   empresaSeleccionada!: Empresas;
 
+  resultadosParalelos: boolean = false;
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -88,6 +90,13 @@ export class ResultadosPostulanteComponent implements OnInit {
           this.redireccionarListaPostulantes();
         },
       });
+
+      this.resultadosPostulanteService.validarFichaEnOtraEmpresa(+id, +empresaId).subscribe({
+        next: (resultado) => {
+          this.resultadosParalelos = resultado;
+        },
+        error: (err) => console.error('Error al obtener validacion:', err),
+      })
     }
   }
 
@@ -193,5 +202,14 @@ export class ResultadosPostulanteComponent implements OnInit {
             },
           });
       });
+    }
+
+    sincronizarResultadosParalelos(): void{
+      this.resultadosPostulanteService.obtenerEmpresaIdDeFicha(this.postulante.id).subscribe({
+        next: (empresaParalelaId) => {
+           this.cargarResultadosExistentes(this.postulante.id, empresaParalelaId);
+        },
+        error: (err) => console.error('Error al obtener validacion:', err),
+      })
     }
 }

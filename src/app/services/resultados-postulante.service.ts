@@ -52,5 +52,13 @@ export class ResultadosPostulanteService {
     return this.http.get<number>(`${this.url}/reporte/fichados/empresa/${empresaId}`);
   }
 
+  validarFichaEnOtraEmpresa(postulanteId: number, empresaId: number) {
+    return this.http.get<boolean>(`${this.url}/validar/fichaenotraempresa/${postulanteId}/empresa/${empresaId}`);
+  }
+
+  obtenerEmpresaIdDeFicha(postulanteId: number) {
+    return this.http.get<number>(`${this.url}/empresa-de-ficha/postulante/${postulanteId}`);
+  }
+
 
 }
