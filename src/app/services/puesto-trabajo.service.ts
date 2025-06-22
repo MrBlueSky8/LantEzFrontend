@@ -42,6 +42,10 @@ export class PuestoTrabajoService {
     return this.http.get<PuestosTrabajo[]>(`${this.url}/pendientes/empresa/${id}`);
   }
 
+  listarPuestosFinalizadosByEmpresaId(id: number) {
+    return this.http.get<PuestosTrabajo[]>(`${this.url}/finalizados/empresa/${id}`);
+  }
+
   listarPendientesAprobadosByUsuarioId(usuarioId: number) {
     return this.http.get<PuestosTrabajo[]>(`${this.url}/pendientes/aprobados/usuario/${usuarioId}`);
   }

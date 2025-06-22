@@ -30,6 +30,7 @@ import { PostulantesFundadesComponent } from './components/fundades/postulantes-
 import { IngresarEvaluacionComponent } from './components/shared/ingresar-evaluacion/ingresar-evaluacion.component';
 import { EvaluacionesFundadesComponent } from './components/fundades/evaluaciones-fundades/evaluaciones-fundades.component';
 import { EvaluacionesEvaluadorComponent } from './components/evaluador/evaluaciones-evaluador/evaluaciones-evaluador.component';
+import { EvaluacionesFinalizadasFundadesComponent } from './components/fundades/evaluaciones-finalizadas-fundades/evaluaciones-finalizadas-fundades.component';
 
 export const routes: Routes = [
   {
@@ -106,6 +107,14 @@ export const routes: Routes = [
         path: 'evaluaciones/puestos-trabajo/ficha/:id',
         component: RequerimientosMinimosPuestoComponent,
       },
+      {
+        path: 'evaluaciones/pendientes',
+        component: EvaluacionesFundadesComponent,
+      },
+      {
+        path: 'evaluaciones/finalizadas',
+        component: EvaluacionesFinalizadasFundadesComponent,
+      }
       
     ],
     canActivate: [segGuard],
