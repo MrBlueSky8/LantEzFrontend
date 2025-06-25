@@ -33,6 +33,7 @@ import { EvaluacionesEvaluadorComponent } from './components/evaluador/evaluacio
 import { EvaluacionesFinalizadasFundadesComponent } from './components/fundades/evaluaciones-finalizadas-fundades/evaluaciones-finalizadas-fundades.component';
 import { EvaluacionesFinalizadasComponent } from './components/shared/evaluaciones-finalizadas/evaluaciones-finalizadas.component';
 import { EvaluacionesFinalizadasEvaluadorComponent } from './components/evaluador/evaluaciones-finalizadas-evaluador/evaluaciones-finalizadas-evaluador.component';
+import { LogsFundadesComponent } from './components/fundades/logs-fundades/logs-fundades.component';
 
 export const routes: Routes = [
   {
@@ -54,7 +55,7 @@ export const routes: Routes = [
       },
       {
         path: 'logs',
-        component: LogsComponent,
+        component: LogsFundadesComponent,
       },
       {
         path: 'dashboard',

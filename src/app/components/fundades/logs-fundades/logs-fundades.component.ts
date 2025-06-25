@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AppModuloEnDesarrolloComponent } from '../../shared/app-modulo-en-desarrollo/app-modulo-en-desarrollo.component';
 import { CommonModule } from '@angular/common';
-import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 import { Empresas } from '../../../models/empresas';
 import { LogsAuditoria } from '../../../models/logs_auditoria';
@@ -12,15 +11,15 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { LogsAuditoriaService } from '../../../services/logs-auditoria.service';
 
 @Component({
-  selector: 'app-logs',
+  selector: 'app-logs-fundades',
   imports: [CommonModule, MatPaginatorModule, FormsModule],
-  templateUrl: './logs.component.html',
-  styleUrl: './logs.component.css',
+  templateUrl: './logs-fundades.component.html',
+  styleUrl: './logs-fundades.component.css',
   providers: [
     { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
   ],
 })
-export class LogsComponent implements OnInit {
+export class LogsFundadesComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
   logs: LogsAuditoria[] = [];
   logsFiltrados: LogsAuditoria[] = [];
@@ -91,6 +90,5 @@ export class LogsComponent implements OnInit {
   }
 
 }
-
 
 
