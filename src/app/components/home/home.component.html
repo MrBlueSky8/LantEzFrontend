@@ -5,7 +5,7 @@
 
 <!-- SECCIÓN DE ACCESOS DIRECTOS -->
 <div class="seccion-accesos">
-  <div class="card-acceso" (click)="irEmpresas()">
+  <div class="card-acceso" *ngIf="!esEvaluador" (click)="irEmpresas()">
     <span>Ir a Empresas</span>
     <img src="/assets/empresasAD.svg" alt="Ir a Empresas" />
   </div>
@@ -13,7 +13,7 @@
     <span>Ir a Evaluaciones</span>
     <img src="/assets/evaluacionesAD.svg" alt="Ir a Evaluaciones" />
   </div>
-  <div class="card-acceso" (click)="irUsuarios()">
+  <div class="card-acceso" *ngIf="!esEvaluador" (click)="irUsuarios()">
     <span>Ir a Usuarios</span>
     <img src="/assets/usuariosAD.svg" alt="Ir a Usuarios" />
   </div>
@@ -21,7 +21,7 @@
     <span>Ir a Postulantes</span>
     <img src="/assets/PostulantesAD.svg" alt="Ir a Postulantes" />
   </div>
-  <div class="card-acceso" (click)="irEvaluadores()">
+  <div class="card-acceso" *ngIf="!esEvaluador" (click)="irEvaluadores()">
     <span>Ir a Evaluadores</span>
     <img src="/assets/evaluadoresAD.svg" alt="Ir a Evaluadores" />
   </div>

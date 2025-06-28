@@ -4,6 +4,7 @@ import { UsuariosLight } from '../../models/usuariosLight';
 import { LoginService } from '../../services/login.service';
 import { PostulacionesService } from '../../services/postulaciones.service';
 import { PuestoTrabajoService } from '../../services/puesto-trabajo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private postulacionesService: PostulacionesService,
-    private puestoTrabajoService: PuestoTrabajoService
+    private puestoTrabajoService: PuestoTrabajoService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -62,21 +64,57 @@ export class HomeComponent implements OnInit {
   // Accesos directos (solo logs por ahora)
   irEmpresas(): void {
     console.log('Click: Ir a Empresas');
+    const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+      if(this.loginService.showRole() === 'ADMINISTRADOR'){
+        this.router.navigate([`/${currentSidenav}/mi-empresa`]);
+      }else{ 
+        this.router.navigate([`/${currentSidenav}/empresas`]);
+      }
   }
 
   irEvaluaciones(): void {
     console.log('Click: Ir a Evaluaciones');
+    const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/evaluaciones/pendientes`]);
   }
 
   irUsuarios(): void {
     console.log('Click: Ir a Usuarios');
+    const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/usuarios`]);
   }
 
   irPostulantes(): void {
     console.log('Click: Ir a Postulantes');
+    
+    const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/postulantes`]);
   }
 
   irEvaluadores(): void {
     console.log('Click: Ir a Evaluadores');
+
+    
+    const segments = this.router.url.split('/');
+      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+      //console.log('evento: current sidenav: ' + currentSidenav);
+      this.router.navigate([`/${currentSidenav}/evaluadores`]);
   }
+
+  get esEvaluador(): boolean {
+    return this.loginService.showRole() === 'EVALUADOR';
+  }
+
 }
