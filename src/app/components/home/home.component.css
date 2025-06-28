@@ -51,10 +51,14 @@
 }
 
 .card-acceso span {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: #000000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  color: #004A75;
 }
 
 /* INDICADORES DE ACTIVIDAD */
@@ -81,24 +85,27 @@
   box-sizing: border-box;
 }
 
-.indicador-label {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+/* INDICADORES DE ACTIVIDAD */
+.indicador-label,
+.indicador-detalle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  color: #004A75;
 }
 
 .indicador-numero {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  color: #004a75;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  color: #004A75;
 }
 
-.indicador-detalle {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-}
 
 /* RESPONSIVE */
 

@@ -6,24 +6,24 @@
 <!-- SECCIÓN DE ACCESOS DIRECTOS -->
 <div class="seccion-accesos">
   <div class="card-acceso" (click)="irEmpresas()">
-    <img src="/assets/empresasAD.svg" alt="Ir a Empresas" />
     <span>Ir a Empresas</span>
+    <img src="/assets/empresasAD.svg" alt="Ir a Empresas" />
   </div>
   <div class="card-acceso" (click)="irEvaluaciones()">
-    <img src="/assets/evaluacionesAD.svg" alt="Ir a Evaluaciones" />
     <span>Ir a Evaluaciones</span>
+    <img src="/assets/evaluacionesAD.svg" alt="Ir a Evaluaciones" />
   </div>
   <div class="card-acceso" (click)="irUsuarios()">
-    <img src="/assets/usuariosAD.svg" alt="Ir a Usuarios" />
     <span>Ir a Usuarios</span>
+    <img src="/assets/usuariosAD.svg" alt="Ir a Usuarios" />
   </div>
   <div class="card-acceso" (click)="irPostulantes()">
-    <img src="/assets/PostulantesAD.svg" alt="Ir a Postulantes" />
     <span>Ir a Postulantes</span>
+    <img src="/assets/PostulantesAD.svg" alt="Ir a Postulantes" />
   </div>
   <div class="card-acceso" (click)="irEvaluadores()">
-    <img src="/assets/evaluadoresAD.svg" alt="Ir a Evaluadores" />
     <span>Ir a Evaluadores</span>
+    <img src="/assets/evaluadoresAD.svg" alt="Ir a Evaluadores" />
   </div>
 </div>
 
@@ -39,19 +39,16 @@
     <span class="indicador-numero">{{ totalEvaluacionesRealizadas }}</span>
     <span class="indicador-detalle">Evaluaciones</span>
   </div>
-
   <div class="card-indicador">
     <span class="indicador-label">Tienes</span>
     <span class="indicador-numero">{{ totalEvaluacionesPendientes }}</span>
     <span class="indicador-detalle">Pendientes</span>
   </div>
-
   <div class="card-indicador">
     <span class="indicador-label">Evaluaste</span>
     <span class="indicador-numero">{{ totalPostulantesEvaluados }}</span>
     <span class="indicador-detalle">Postulantes</span>
   </div>
-
   <div class="card-indicador">
     <span class="indicador-label">Rechazaste</span>
     <span class="indicador-numero">{{ totalPostulantesRechazados }}</span>
