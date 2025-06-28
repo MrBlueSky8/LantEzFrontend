@@ -1,0 +1,136 @@
+.mi-empresa-header {
+  max-width: 95%;
+  height: 58px;
+  background: #004a75;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: white;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+
+/* ACCESOS DIRECTOS */
+.seccion-accesos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding: 0 10px;
+}
+
+.card-acceso {
+  width: 180px;
+  height: 121px;
+  background: #fed23d;
+  border-radius: 10px;
+  padding: 14px 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.card-acceso:hover {
+  transform: scale(1.05);
+}
+
+.card-acceso img {
+  width: 36px;
+  height: auto;
+}
+
+.card-acceso span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  color: #004A75;
+}
+
+/* INDICADORES DE ACTIVIDAD */
+.seccion-indicadores {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 0 10px;
+}
+
+.card-indicador {
+  width: 180px;
+  height: 121px;
+  background: #fed23d;
+  border-radius: 10px;
+  padding: 14px 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+/* INDICADORES DE ACTIVIDAD */
+.indicador-label,
+.indicador-detalle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  color: #004A75;
+}
+
+.indicador-numero {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  color: #004A75;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .mi-empresa-header {
+    font-size: 26px;
+  }
+
+}
+@media (max-width: 768px) {
+  .seccion-accesos,
+  .seccion-indicadores {
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .mi-empresa-header {
+    font-size: 22px;
+  }
+}
+
+
+@media (max-width: 650px) {
+  .mi-empresa-header {
+    font-size: 20px;
+    padding: 8px;
+  }
+}

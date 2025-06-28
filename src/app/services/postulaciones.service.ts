@@ -60,6 +60,21 @@ export class PostulacionesService {
     return this.http.get<number>(`${this.url}/reporte/pendientes/empresa/${empresaId}`);
   }
 
-  
+  contarPorUsuarioId(usuarioId: number) {
+    return this.http.get<number>(`${this.url}/cantidad/usuario/${usuarioId}`);
+  }
+
+  contarNoPendientesPorUsuario(usuarioId: number) {
+    return this.http.get<number>(`${this.url}/nopendientes/cantidad/usuario/${usuarioId}`);
+  }
+
+  contarPostulacionesAceptadas(usuarioId: number) {
+    return this.http.get<number>(`${this.url}/aceptadas/usuario/${usuarioId}`);
+  }
+
+  contarPostulacionesRechazadas(usuarioId: number) {
+    return this.http.get<number>(`${this.url}/rechazadas/usuario/${usuarioId}`);
+  }
+
 
 }
