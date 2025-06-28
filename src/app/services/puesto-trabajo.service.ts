@@ -76,4 +76,9 @@ export class PuestoTrabajoService {
   contarPuestosConRequerimientosPorEmpresa(empresaId: number) {
     return this.http.get<number>(`${this.url}/reporte/conrequerimientos/empresa/${empresaId}`);
   }
+
+  contarPendientesPorUsuario(usuarioId: number) {
+    return this.http.get<number>(`${this.url}/pendientes/cantidad/usuario/${usuarioId}`);
+  }
+
 }
