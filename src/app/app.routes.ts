@@ -34,6 +34,7 @@ import { EvaluacionesFinalizadasFundadesComponent } from './components/fundades/
 import { EvaluacionesFinalizadasComponent } from './components/shared/evaluaciones-finalizadas/evaluaciones-finalizadas.component';
 import { EvaluacionesFinalizadasEvaluadorComponent } from './components/evaluador/evaluaciones-finalizadas-evaluador/evaluaciones-finalizadas-evaluador.component';
 import { LogsFundadesComponent } from './components/fundades/logs-fundades/logs-fundades.component';
+import { CrucePostulantePuestoComponent } from './components/shared/cruce-postulante-puesto/cruce-postulante-puesto.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +73,14 @@ export const routes: Routes = [
       {
         path: 'postulantes',
         component: PostulantesFundadesComponent,
+      },
+      {
+        path: 'postulantes/cruce',
+        component: CrucePostulantePuestoComponent,
+      },
+      {
+        path: 'postulantes/lista',
+        component: PostulantesComponent,
       },
       {
         path: 'evaluadores',
@@ -149,6 +158,14 @@ export const routes: Routes = [
       },
       {
         path: 'postulantes',
+        component: PostulantesComponent,
+      },
+      {
+        path: 'postulantes/cruce',
+        component: CrucePostulantePuestoComponent,
+      },
+      {
+        path: 'postulantes/lista',
         component: PostulantesComponent,
       },
       {

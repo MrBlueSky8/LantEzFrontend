@@ -40,6 +40,29 @@ export const navbarData: INavbarData[] = [
         svgIcon: '../../../assets/postulante.svg',
         svgIconActive: '../../../assets/postulante-hoverBlue.svg',
         label: 'Postulantes',
+
+        items: [
+            {
+                routeLink: 'postulantes/lista',
+                icon: 'fal fa-plus-square', // Agregar ofertas
+                label: 'Lista',
+            },
+            {
+                routeLink: 'postulantes/cruce',
+                icon: 'fal fa-list-ul', // Todas mis ofertas
+                label: 'Evaluar',
+            },
+        ],
+
+        action: () => {
+            //console.log('evento: action de ajustes clickeado');
+            const sidenavexpanded = document.querySelector('body > app-root > app-sidenav-fundades > div.sidenav.sidenav-collapsed');
+            const buttonlogo = document.querySelector('div.logo-container > button');
+
+            if (!sidenavexpanded && buttonlogo instanceof HTMLButtonElement) {
+                buttonlogo.click();
+            }
+        }
     },
     {
         routeLink: 'evaluadores',
