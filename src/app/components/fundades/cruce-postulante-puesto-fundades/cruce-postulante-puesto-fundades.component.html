@@ -1,0 +1,77 @@
+<!-- HEADER -->
+<div class="mi-empresa-header">LISTA DE POSTULANTES ACTIVOS</div>
+
+<!-- CONTENEDOR -->
+<div class="contenedor-areas">
+
+  <!-- Barra de búsqueda -->
+  <div class="clientes-header-bar">
+    <select
+      class="combo-empresa"
+      [(ngModel)]="empresaSeleccionadaId"
+      (change)="onEmpresaSeleccionadaChange()"
+      [ngClass]="{ 'placeholder': !empresaSeleccionadaId }"
+    >
+      <option [ngValue]="null" disabled>Selecciona Empresa</option>
+      <option *ngFor="let empresa of empresas" [ngValue]="empresa.id">{{ empresa.nombre }}</option>
+    </select>
+    
+    <div class="barra-busqueda">
+      <img src="/assets/search.svg" alt="Buscar" />
+      <input
+        type="text"
+        placeholder="BUSCAR POSTULANTE"
+        [(ngModel)]="filtroBusqueda"
+        (input)="filtrarPostulantes()"
+      />
+    </div>
+  </div>
+
+  <!-- GRID DE POSTULANTES -->
+  <div class="evaluadores-grid">
+    <div
+      class="evaluador-card"
+      *ngFor="let postulante of postulantesPaginados"
+      [ngClass]="{ 'evaluador-card-inactivo': !estadoPostulanteMap[postulante.id] }"
+    >
+      <!-- Avatar -->
+      <div class="avatar-container">
+        <img
+          [src]="postulante.foto_url || '/assets/userDefault.svg'"
+          alt="{{ postulante.primer_nombre }} {{ postulante.apellido_p }}"
+          class="avatar"
+          (error)="postulante.foto_url = '/assets/userDefault.svg'"
+        />
+      </div>
+
+      <!-- Nombre -->
+      <h3 class="nombre-evaluador">
+        {{ postulante.primer_nombre }} {{ postulante.apellido_p }}
+      </h3>
+
+      <!-- Botones de acción -->
+      <button class="btn-editar" (click)="llenarFichaPostulante(postulante)">
+        Editar Ficha <img src="/assets/editEvaluacion.svg" alt="Editar ficha" />
+      </button>
+
+      <button class="btn-verpuestos" (click)="cruzarPerfil(postulante)">
+        Cruzar Perfil <img src="/assets/eye.svg" alt="Cruzar perfil" />
+      </button>
+
+      <button class="btn-desactivar" (click)="ToogleEstadoPostulante(postulante)">
+        {{ estadoPostulanteMap[postulante.id] ? 'Deshabilitar' : 'Habilitar' }}
+        <img src="/assets/trash.svg" alt="Deshabilitar/Habilitar" />
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGINADOR -->
+  <mat-paginator
+    [length]="postulantesFiltrados.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
