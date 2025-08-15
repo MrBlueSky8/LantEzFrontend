@@ -76,5 +76,8 @@ export class PostulacionesService {
     return this.http.get<number>(`${this.url}/rechazadas/usuario/${usuarioId}`);
   }
 
+  listByPostulanteId(puestoId: number) {
+    return this.http.get<Postulaciones[]>(`${this.url}/postulante/${puestoId}`);
+  }
 
 }
