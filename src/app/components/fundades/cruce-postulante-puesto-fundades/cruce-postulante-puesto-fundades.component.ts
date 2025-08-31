@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { getCustomPaginatorIntl } from '../paginator-config/paginator-intl-es';
+import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 import { Empresas } from '../../../models/empresas';
 import { Postulantes } from '../../../models/postulantes';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,20 +12,20 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { PostulantesService } from '../../../services/postulantes.service';
 import { EstadoPostulanteXEmpresaService } from '../../../services/estado-postulante-x-empresa.service';
 import { Router } from '@angular/router';
-import { ModalConfirmacionComponent } from '../modales/modal-confirmacion/modal-confirmacion.component';
-import { ModalExitoComponent } from '../modales/modal-exito/modal-exito.component';
-import { ModalAsignarPuestosComponent } from '../modales/modal-asignar-puestos/modal-asignar-puestos.component';
+import { ModalConfirmacionComponent } from '../../shared/modales/modal-confirmacion/modal-confirmacion.component';
+import { ModalExitoComponent } from '../../shared/modales/modal-exito/modal-exito.component';
+import { ModalAsignarPuestosComponent } from '../../shared/modales/modal-asignar-puestos/modal-asignar-puestos.component';
 
 @Component({
-  selector: 'app-cruce-postulante-puesto',
+  selector: 'app-cruce-postulante-puesto-fundades',
   imports: [CommonModule, MatPaginatorModule, FormsModule],
-  templateUrl: './cruce-postulante-puesto.component.html',
-  styleUrl: './cruce-postulante-puesto.component.css',
+  templateUrl: './cruce-postulante-puesto-fundades.component.html',
+  styleUrl: './cruce-postulante-puesto-fundades.component.css',
   providers: [
     { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
   ],
 })
-export class CrucePostulantePuestoComponent implements OnInit {
+export class CrucePostulantePuestoFundadesComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
   postulantes: Postulantes[] = [];
   postulantesFiltrados: Postulantes[] = [];
@@ -36,6 +36,9 @@ export class CrucePostulantePuestoComponent implements OnInit {
   pageIndex: number = 0;
 
   estadoPostulanteMap: { [postulanteId: number]: boolean } = {};
+
+  empresas: Empresas[] = [];
+  empresaSeleccionadaId: number | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -72,6 +75,14 @@ export class CrucePostulantePuestoComponent implements OnInit {
         },
         error: (err) => console.error('Error al obtener ID:', err),
       });
+
+    this.empresaService.list().subscribe({
+      next: (empresasTodas) => {
+        this.empresas = empresasTodas;
+      },
+      error: (err) =>
+        console.error('Error al listar empresas para el combo:', err),
+    });
   }
 
   filtrarPostulantes(): void {
@@ -113,37 +124,56 @@ export class CrucePostulantePuestoComponent implements OnInit {
       });
   }
 
-  cruzarPerfil(postulante: Postulantes): void{
+  onEmpresaSeleccionadaChange(): void {
+    const id = this.empresaSeleccionadaId;
+    if (!id || id === this.miEmpresa.id) {
+      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
+      this.refrescarPostulante();
+      return;
+    }
+
+    this.empresaService.listId(id).subscribe({
+      next: (empresa) => {
+        this.miEmpresa = empresa;
+        this.refrescarPostulante();
+      },
+      error: (err) => console.error('Error al cambiar de empresa:', err),
+    });
+  }
+
+  cruzarPerfil(postulante: Postulantes): void {
     console.log('evento: click cruzar perfil');
+
     if (!postulante) return;
-
-    const dialogRef = this.dialog.open(ModalAsignarPuestosComponent, {
-      width: 'auto',
-      data: { postulante, empresa: this.miEmpresa },
-    });
-
-    dialogRef.afterClosed().subscribe((resultado) => {
-      if (resultado) {
-        //console.log('Puesto editado');
-        // recargar y filtrar
-        this.postulantesService
-          .listarActivosConResultadosPorEmpresa(this.miEmpresa.id)
-          .subscribe((todas) => {
-            this.postulantes = todas;
-            this.postulantesFiltrados = [...this.postulantes];
-            //this.updateEmpresasPaginadas();
-            this.filtrarPostulantes();
-          });
-
-        const dialogSucces = this.dialog.open(ModalExitoComponent, {
-          data: {
-            titulo: 'Información Actualizada',
-            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
-            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
-          },
+    
+        const dialogRef = this.dialog.open(ModalAsignarPuestosComponent, {
+          width: 'auto',
+          data: { postulante, empresa: this.miEmpresa },
         });
-      }
-    });
+    
+        dialogRef.afterClosed().subscribe((resultado) => {
+          if (resultado) {
+            //console.log('Puesto editado');
+            // recargar y filtrar
+            this.postulantesService
+              .listarActivosConResultadosPorEmpresa(this.miEmpresa.id)
+              .subscribe((todas) => {
+                this.postulantes = todas;
+                this.postulantesFiltrados = [...this.postulantes];
+                //this.updateEmpresasPaginadas();
+                this.filtrarPostulantes();
+              });
+    
+            const dialogSucces = this.dialog.open(ModalExitoComponent, {
+              data: {
+                titulo: 'Información Actualizada',
+                iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+              },
+            });
+          }
+        });
+    
   }
 
   llenarFichaPostulante(postulante: Postulantes): void {
