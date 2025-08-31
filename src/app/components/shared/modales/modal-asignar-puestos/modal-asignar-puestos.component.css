@@ -1,0 +1,182 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #00000061;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  } 
+  
+  .empresa-modal {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 940px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: fadeInModal 0.5s ease;
+  }
+
+  .modal-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .empresa-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
+
+  .custom-select {
+    width: 100%;
+    background-color: #D9D9D9;
+  }
+
+    .btn-submit {
+    width: 360px;
+    height: 70px;
+    background-color: #004A75;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 100%;
+    border-radius: 15px;
+    box-shadow: 8px 8px 8px #00000066;
+    border: none;
+    cursor: pointer;
+    /*margin-top: 1.5rem;*/
+    transition: transform 0.2s;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-clear {
+    background: none;
+    border: none;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .btn-clear:hover {
+    text-decoration: underline;
+  }
+
+
+  @keyframes fadeInModal {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+   @media (max-width: 768px) {
+    .modal-title {
+      font-size: 18px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-size: 18px;
+      height: 60px;
+    }
+
+    .btn-clear {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .empresa-modal {
+      padding: 1rem;
+      border-radius: 12px;
+    }
+
+   }
+
+   @media (max-width: 480px) {
+    .modal-title {
+      font-size: 16px;
+    }
+
+    .empresa-form {
+      gap: 0.8rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-size: 16px;
+      height: 52px;
+    }
+
+    .btn-clear {
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+   }
+
+   @media (max-height: 800px) {
+    .modal-title {
+      font-size: 20px;
+    }
+
+    .empresa-form {
+      gap: 1rem;
+    }
+
+    .btn-submit {
+      height: 60px;
+      font-size: 20px;
+    }
+
+    .empresa-modal {
+      max-height: 85vh;
+      padding: 1.2rem;
+    }
+
+   }
+
+   @media (max-height: 600px) {
+    .modal-title {
+      font-size: 18px;
+    }
+
+     .empresa-form {
+      gap: 0.8rem;
+    }
+
+    .btn-submit {
+      height: 52px;
+      font-size: 18px;
+    }
+
+    .empresa-modal {
+      max-height: 78vh;
+      padding: 1rem;
+    }
+
+   }

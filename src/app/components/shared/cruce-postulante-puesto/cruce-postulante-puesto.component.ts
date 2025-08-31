@@ -14,6 +14,7 @@ import { EstadoPostulanteXEmpresaService } from '../../../services/estado-postul
 import { Router } from '@angular/router';
 import { ModalConfirmacionComponent } from '../modales/modal-confirmacion/modal-confirmacion.component';
 import { ModalExitoComponent } from '../modales/modal-exito/modal-exito.component';
+import { ModalAsignarPuestosComponent } from '../modales/modal-asignar-puestos/modal-asignar-puestos.component';
 
 @Component({
   selector: 'app-cruce-postulante-puesto',
@@ -114,6 +115,35 @@ export class CrucePostulantePuestoComponent implements OnInit {
 
   cruzarPerfil(postulante: Postulantes): void{
     console.log('evento: click cruzar perfil');
+    if (!postulante) return;
+
+    const dialogRef = this.dialog.open(ModalAsignarPuestosComponent, {
+      width: 'auto',
+      data: { postulante, empresa: this.miEmpresa },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        //console.log('Puesto editado');
+        // recargar y filtrar
+        this.postulantesService
+          .listarActivosConResultadosPorEmpresa(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.postulantes = todas;
+            this.postulantesFiltrados = [...this.postulantes];
+            //this.updateEmpresasPaginadas();
+            this.filtrarPostulantes();
+          });
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: 'Información Actualizada',
+            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+          },
+        });
+      }
+    });
   }
 
   llenarFichaPostulante(postulante: Postulantes): void {
