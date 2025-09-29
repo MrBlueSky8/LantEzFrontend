@@ -226,11 +226,11 @@ export const routes: Routes = [
       {
         path: 'homes',
         component: HomeComponent,
-      },
+      },/*
       {
         path: 'dashboard',
-        component: DashboardFundadesComponent,
-      },
+        component: DashboardComponent,
+      },*/
       {
         path: 'mis-trabajos',
         component: MisTrabajosComponent,
