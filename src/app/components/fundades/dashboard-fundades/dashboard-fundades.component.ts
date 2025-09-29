@@ -27,6 +27,9 @@ export class DashboardFundadesComponent implements OnInit {
   miCorreo: string = '';
   miRol: string = '';
 
+  empresas: Empresas[] = [];
+  empresaSeleccionadaId: number | null = null;
+
   // Filtros
   fInicio!: string;
   fFin!: string;
@@ -104,7 +107,7 @@ export class DashboardFundadesComponent implements OnInit {
     ini.setDate(ini.getDate() - 30);
 
     this.fInicio = formatDate(ini, 'yyyy-MM-dd', 'en-US');
-    this.fFin    = formatDate(hoy, 'yyyy-MM-dd', 'en-US');
+    this.fFin = formatDate(hoy, 'yyyy-MM-dd', 'en-US');
   }
 
   ngOnInit(): void {
@@ -125,7 +128,56 @@ export class DashboardFundadesComponent implements OnInit {
         },
         error: (err) => console.error('Error al obtener ID:', err),
       });
+
+    this.empresaService.list().subscribe({
+      next: (empresasTodas) => {
+        this.empresas = empresasTodas;
+      },
+      error: (err) =>
+        console.error('Error al listar empresas para el combo:', err),
+    });
   }
+
+  onEmpresaSeleccionadaChange(): void {
+    const id = this.empresaSeleccionadaId;
+    if (!id || id === this.miEmpresa.id) {
+      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
+      this.refrescarDashboards();
+      return;
+    }
+
+    this.empresaService.listId(id).subscribe({
+      next: (empresa) => {
+        this.miEmpresa = empresa;
+        this.refrescarDashboards();
+      },
+      error: (err) => console.error('Error al cambiar de empresa:', err),
+    });
+  }
+
+  private refrescarDashboards(): void {
+    // Limpia UI para que no queden restos de la empresa anterior
+    this.errorMsg = '';
+    this.kpiActivas = 0;
+    this.kpiFinalizadas = 0;
+    this.kpiPostulantesProceso = 0;
+    this.kpiEvaluadoresActivos = 0;
+
+    this.chartEstadosRaw = [];
+    this.chartCompatibilidadRaw = [];
+    this.chartCargaEvaluadoresRaw = [];
+    this.tablaResumen = [];
+
+    // Vacía datasets visibles (evita parpadeos con datos viejos)
+    this.doughnutEstadosData = { labels: [], datasets: [{ data: [] }] };
+    this.barCompatData = { labels: [], datasets: [{ data: [], label: 'Postulantes' }] };
+    this.barCargaEvalData = { labels: [], datasets: [{ data: [], label: 'Evaluaciones' }] };
+
+    // Vuelve a cargar todo para la empresa seleccionada
+    this.loadDashboard();
+  }
+
+
   // =========================
   // Carga total (KPIs + Charts)
   // =========================
@@ -137,7 +189,7 @@ export class DashboardFundadesComponent implements OnInit {
 
     const empresaId = this.miEmpresa.id;
     const fInicio = this.toDateStart(this.fInicio);
-    const fFin    = this.toDateEnd(this.fFin);
+    const fFin = this.toDateEnd(this.fFin);
 
     forkJoin({
       activas: this.postulacionesService.dashKpiEvaluacionesActivas(empresaId, fInicio, fFin),
@@ -188,7 +240,7 @@ export class DashboardFundadesComponent implements OnInit {
     this.loadingTabla = true;
 
     const fInicio = this.toDateStart(this.fInicio);
-    const fFin    = this.toDateEnd(this.fFin);
+    const fFin = this.toDateEnd(this.fFin);
 
     this.postulacionesService
       .dashTablePostulacionesResumen(this.miEmpresa.id, fInicio, fFin, this.estado)
