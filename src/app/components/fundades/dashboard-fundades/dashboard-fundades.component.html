@@ -166,12 +166,12 @@
       <div>Postulante</div>
       <div>Estado</div>
       <div>Compat.</div>
-      <!--<div>Aprobado</div>-->
-      <!--<div>Ocultar</div>-->
+      <!-- <div>Aprobado</div> -->
+      <!-- <div>Ocultar</div> -->
     </div>
 
     <div class="tabla-row"
-         *ngFor="let r of tablaResumen; trackBy: trackByIdx">
+         *ngFor="let r of tablaPaginada; trackBy: trackByIdx">
       <div>{{ r.postulacionId }}</div>
       <div>{{ r.fechaPostulacion | date:'short' }}</div>
       <div>{{ r.empresaNombre }}</div>
@@ -186,13 +186,22 @@
            }">
         {{ r.estadoPostulacion | titlecase }}
       </div>
-      <div>{{ r.porcentajeCompatibilidad ?? '—' }}%</div>
-      <!--<div>{{ r.aprobado ? 'Sí' : 'No' }}</div>-->
-      <!--<div>{{ r.ocultar ? 'Sí' : 'No' }}</div>-->
+      <div>{{ r.porcentajeCompatibilidad != null ? r.porcentajeCompatibilidad : '—' }}%</div>
+      <!-- <div>{{ r.aprobado ? 'Sí' : 'No' }}</div> -->
+      <!-- <div>{{ r.ocultar ? 'Sí' : 'No' }}</div> -->
     </div>
 
     <div class="tabla-empty" *ngIf="!loadingTabla && tablaResumen.length === 0">
       No hay registros para el rango seleccionado.
     </div>
   </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [length]="tablaResumen.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageIndex]="pageIndex"
+    (page)="onPageTablaChange($event)">
+  </mat-paginator>
 </details>

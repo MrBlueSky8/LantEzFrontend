@@ -14,12 +14,17 @@ import { PostulacionesResumenDTO } from '../../../models/postulaciones_resumenDT
 import { catchError, finalize, forkJoin, Subject, takeUntil } from 'rxjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 
 @Component({
   selector: 'app-dashboard-fundades',
-  imports: [CommonModule, FormsModule, BaseChartDirective],
+  imports: [CommonModule, FormsModule, BaseChartDirective, MatPaginatorModule],
   templateUrl: './dashboard-fundades.component.html',
-  styleUrl: './dashboard-fundades.component.css'
+  styleUrl: './dashboard-fundades.component.css',
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
+  ],
 })
 export class DashboardFundadesComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
@@ -47,6 +52,11 @@ export class DashboardFundadesComponent implements OnInit {
   chartCompatibilidadRaw: CompatibilidadRangoDTO[] = [];
   chartCargaEvaluadoresRaw: EvaluadorCargaDTO[] = [];
   tablaResumen: PostulacionesResumenDTO[] = [];
+
+  // Tabla paginada
+  tablaPaginada: PostulacionesResumenDTO[] = [];
+  pageSize: number = 10;
+  pageIndex: number = 0;
 
   // Estados UI
   loading: boolean = false;
@@ -255,7 +265,21 @@ export class DashboardFundadesComponent implements OnInit {
       )
       .subscribe(res => {
         this.tablaResumen = res ?? [];
+        this.pageIndex = 0;            // reset al cambiar datos
+        this.updateTablaPaginada();    // construir página actual
       });
+  }
+
+  updateTablaPaginada(): void {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.tablaPaginada = this.tablaResumen.slice(start, end);
+  }
+
+  onPageTablaChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updateTablaPaginada();
   }
 
   // =========================
