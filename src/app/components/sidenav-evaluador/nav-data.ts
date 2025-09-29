@@ -9,13 +9,14 @@ export const navbarData: INavbarData[] = [
         label: 'Home',
         dividerAfter: true,
     },
+    /*
     {
         routeLink: 'dashboard',
         svgIcon: '../../../assets/dashboard.svg',
         svgIconActive: '../../../assets/dashboard-hoverBlue.svg',
         //icon: 'fal fa-briefcase', 
         label: 'Dashboard',
-    },
+    },*/
     {
         routeLink: 'mis-trabajos',
         svgIcon: '../../../assets/empresas.svg', 

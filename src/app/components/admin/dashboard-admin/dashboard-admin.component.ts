@@ -17,23 +17,22 @@ import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { getCustomPaginatorIntl } from '../../shared/paginator-config/paginator-intl-es';
 
+Chart.register(...registerables);
+
 @Component({
-  selector: 'app-dashboard-fundades',
+  selector: 'app-dashboard-admin',
   imports: [CommonModule, FormsModule, BaseChartDirective, MatPaginatorModule],
-  templateUrl: './dashboard-fundades.component.html',
-  styleUrl: './dashboard-fundades.component.css',
+  templateUrl: './dashboard-admin.component.html',
+  styleUrl: './dashboard-admin.component.css',
   providers: [
     { provide: MatPaginatorIntl, useValue: getCustomPaginatorIntl() },
   ],
 })
-export class DashboardFundadesComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
 
   miCorreo: string = '';
   miRol: string = '';
-
-  empresas: Empresas[] = [];
-  empresaSeleccionadaId: number | null = null;
 
   // Filtros
   fInicio!: string;
@@ -138,56 +137,7 @@ export class DashboardFundadesComponent implements OnInit {
         },
         error: (err) => console.error('Error al obtener ID:', err),
       });
-
-    this.empresaService.list().subscribe({
-      next: (empresasTodas) => {
-        this.empresas = empresasTodas;
-      },
-      error: (err) =>
-        console.error('Error al listar empresas para el combo:', err),
-    });
   }
-
-  onEmpresaSeleccionadaChange(): void {
-    const id = this.empresaSeleccionadaId;
-    if (!id || id === this.miEmpresa.id) {
-      // Si selecciona su propia empresa (o null), simplemente usar miEmpresa
-      this.refrescarDashboards();
-      return;
-    }
-
-    this.empresaService.listId(id).subscribe({
-      next: (empresa) => {
-        this.miEmpresa = empresa;
-        this.refrescarDashboards();
-      },
-      error: (err) => console.error('Error al cambiar de empresa:', err),
-    });
-  }
-
-  private refrescarDashboards(): void {
-    // Limpia UI para que no queden restos de la empresa anterior
-    this.errorMsg = '';
-    this.kpiActivas = 0;
-    this.kpiFinalizadas = 0;
-    this.kpiPostulantesProceso = 0;
-    this.kpiEvaluadoresActivos = 0;
-
-    this.chartEstadosRaw = [];
-    this.chartCompatibilidadRaw = [];
-    this.chartCargaEvaluadoresRaw = [];
-    this.tablaResumen = [];
-
-    // Vacía datasets visibles (evita parpadeos con datos viejos)
-    this.doughnutEstadosData = { labels: [], datasets: [{ data: [] }] };
-    this.barCompatData = { labels: [], datasets: [{ data: [], label: 'Postulantes' }] };
-    this.barCargaEvalData = { labels: [], datasets: [{ data: [], label: 'Evaluaciones' }] };
-
-    // Vuelve a cargar todo para la empresa seleccionada
-    this.loadDashboard();
-  }
-
-
   // =========================
   // Carga total (KPIs + Charts)
   // =========================
@@ -281,6 +231,7 @@ export class DashboardFundadesComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.updateTablaPaginada();
   }
+
 
   // =========================
   // Builders de charts
