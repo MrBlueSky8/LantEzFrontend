@@ -232,6 +232,7 @@ export const routes: Routes = [
         component: DashboardComponent,
       },*/
       {
+        
         path: 'mis-trabajos',
         component: MisTrabajosComponent,
       },
