@@ -36,6 +36,7 @@ import { EvaluacionesFinalizadasEvaluadorComponent } from './components/evaluado
 import { LogsFundadesComponent } from './components/fundades/logs-fundades/logs-fundades.component';
 import { CrucePostulantePuestoComponent } from './components/shared/cruce-postulante-puesto/cruce-postulante-puesto.component';
 import { CrucePostulantePuestoFundadesComponent } from './components/fundades/cruce-postulante-puesto-fundades/cruce-postulante-puesto-fundades.component';
+import { DashboardAdminComponent } from './components/admin/dashboard-admin/dashboard-admin.component';
 
 export const routes: Routes = [
   {
@@ -147,7 +148,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
-        component: DashboardFundadesComponent,
+        component: DashboardAdminComponent,
       },
       {
         path: 'mi-empresa',

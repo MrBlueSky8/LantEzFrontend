@@ -15,13 +15,15 @@ import { catchError, finalize, forkJoin, Subject, takeUntil } from 'rxjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 
+Chart.register(...registerables);
+
 @Component({
-  selector: 'app-dashboard-fundades',
+  selector: 'app-dashboard-admin',
   imports: [CommonModule, FormsModule, BaseChartDirective],
-  templateUrl: './dashboard-fundades.component.html',
-  styleUrl: './dashboard-fundades.component.css'
+  templateUrl: './dashboard-admin.component.html',
+  styleUrl: './dashboard-admin.component.css'
 })
-export class DashboardFundadesComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit {
   miEmpresa: Empresas = new Empresas();
 
   miCorreo: string = '';
