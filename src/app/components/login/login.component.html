@@ -1,42 +1,79 @@
-<div class="login-container">
-    <div class="login-card">
-      <div class="image-section">
-        <img src="../../../assets/crushIcon.svg" alt="Crush Icon" />
+<div class="auth-wrap">
+  <div class="auth-card">
+    <header class="auth-header">
+      <h2>Iniciar Sesión</h2>
+      <p class="auth-subtitle">Accede a tu cuenta para continuar</p>
+    </header>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="login()"
+      novalidate
+      class="auth-form"
+      [attr.aria-busy]="loading ? 'true' : 'false'">
+
+      <!-- Campo: E-mail -->
+      <div class="field" [ngClass]="{'has-error': username?.invalid && username?.touched}">
+        <label for="username" class="field-label">E-mail</label>
+        <input
+          id="username"
+          type="email"
+          placeholder="nombre@dominio.com"
+          class="input"
+          formControlName="username"
+          autocomplete="username"
+          required
+          [attr.aria-invalid]="username?.invalid && username?.touched ? 'true' : 'false'"
+        />
+        <small class="field-hint" *ngIf="username?.hasError('required') && username?.touched">
+          El e-mail es obligatorio.
+        </small>
+        <small class="field-hint" *ngIf="username?.hasError('email') && username?.touched">
+          Ingresa un e-mail válido.
+        </small>
       </div>
-  
-      <div class="form-section">
-        <h2 class="login-title">Iniciar Sesión</h2>
-  
-        <form [formGroup]="form" (ngSubmit)="login()">
-          <mat-form-field appearance="fill" class="custom-field">
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="username" placeholder=" " />
-            <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="form.get('username')?.hasError('required')">
-              El e-mail es obligatorio.
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill" class="custom-field">
-            <mat-label>Contraseña</mat-label>
-            <input type="password" matInput formControlName="password" placeholder=" " />
-            <mat-icon matSuffix>lock</mat-icon>
-            <mat-error *ngIf="form.get('password')?.hasError('required')">
-              La contraseña es obligatoria.
-            </mat-error>
-          </mat-form-field>
-  
-          <button mat-raised-button type="submit" class="login-button">
-            Iniciar Sesión
+
+      <!-- Campo: Contraseña -->
+      <div class="field" [ngClass]="{'has-error': password?.invalid && password?.touched}">
+        <label for="password" class="field-label">Contraseña</label>
+        <div class="input-with-toggle">
+          <input
+            id="password"
+            [type]="showPass ? 'text' : 'password'"
+            placeholder="••••••••"
+            class="input"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+            [attr.aria-invalid]="password?.invalid && password?.touched ? 'true' : 'false'"
+          />
+          <button
+            type="button"
+            class="toggle-btn"
+            (click)="showPass = !showPass"
+            [attr.aria-pressed]="showPass ? 'true' : 'false'"
+            aria-label="Mostrar u ocultar contraseña">
+            {{ showPass ? 'Ocultar' : 'Mostrar' }}
           </button>
-  
-          <div class="forgot-password">
-            <a routerLink="/recuperar">¿Olvidaste la contraseña?</a>
-          </div>
-  
-          <div *ngIf="mensaje" class="error-message">{{ mensaje }}</div>
-        </form>
+        </div>
+        <small class="field-hint" *ngIf="password?.hasError('required') && password?.touched">
+          La contraseña es obligatoria.
+        </small>
       </div>
-    </div>
+
+      <!-- Error del servidor -->
+      <div class="error-banner" *ngIf="mensaje">{{ mensaje }}</div>
+
+      <!-- Acciones -->
+      <div class="actions">
+        <button
+          class="btn-primary"
+          type="submit"
+          [disabled]="form.invalid || loading">
+          {{ loading ? 'Entrando…' : 'Iniciar Sesión' }}
+        </button>
+        <a class="link" routerLink="/recuperar">¿Olvidaste la contraseña?</a>
+      </div>
+    </form>
   </div>
-  
+</div>

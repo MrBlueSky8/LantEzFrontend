@@ -35,6 +35,8 @@ import { JwtRequest } from '../../models/jwtRequest';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   mensaje: string = '';
+  showPass = false;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,14 +50,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  // Getters opcionales (útiles en el template si los quieres usar)
+  get f() { return this.form.controls; }
+  get username() { return this.form.get('username'); }
+  get password() { return this.form.get('password'); }
 
   login() {
     if (this.form.invalid) {
-      this.mensaje = 'Username y password son obligatorios';
-      this.snackBar.open(this.mensaje, 'Aviso', {
-        duration: 2000,
-      });
+      this.form.markAllAsTouched();
+      this.mensaje = 'El e-mail y la contraseña son obligatorios.';
+      this.autoClearMensaje();
       return;
     }
 
@@ -63,24 +69,24 @@ export class LoginComponent implements OnInit {
     request.username = this.form.value.username;
     request.password = this.form.value.password;
 
-    this.loginService.login(request).subscribe(
-      (data: any) => {
+    this.loading = true;
+
+    this.loginService.login(request).subscribe({
+      next: (data: any) => {
         localStorage.setItem('token', data.jwttoken);
-        //this.router.navigate(['homes']);
         const role = this.loginService.showRole();
-        this.RedirectByRole(role);
+        this.redirectByRole(role);
       },
-      (error) => {
-        this.mensaje =
-          'La dirección de correo electrónico o la contraseña no son correctos.';
-        this.snackBar.open(this.mensaje, 'Aviso', {
-          duration: 2000,
-        });
+      error: () => {
+        this.mensaje = 'La dirección de correo electrónico o la contraseña no son correctos.';
+        this.autoClearMensaje();
+        this.loading = false;
       }
-    );
+    });
   }
 
-  RedirectByRole(data: string) {
+
+  redirectByRole(data: string) {
     switch (data) {
       case 'ADMINISTRADOR FUNDADES':
         // Redirige al dashboard de administrador
@@ -112,5 +118,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/login']);
         break;
     }
+  }
+
+  private autoClearMensaje(ms: number = 3500) {
+    if (!this.mensaje) return;
+    setTimeout(() => (this.mensaje = ''), ms);
   }
 }
