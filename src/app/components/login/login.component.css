@@ -1,121 +1,201 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-
+/* ====== ESTRUCTURA GENERAL ====== */
 .login-container {
-  height: 100vh;
-  background: linear-gradient(to right, #FFCB72 0%, #FFF8E4 50%, #FF9D00 100%);
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.login-card {
-  display: flex;
-  width: 90%;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 2%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-}
-
-.image-section {
-  background: #F3AF42;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-section img {
-  width: 100%;
-  height: auto;
-}
-
-.form-section {
-  flex: 1;
-  padding: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.login-title {
+  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
+  background: #FFEEB4;
+}
+
+/* Lado izquierdo (branding) */
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, #004A75 0%, #00689C 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  text-align: left;
+  padding: 3rem;
+}
+
+.brand-content {
+  max-width: 420px;
+}
+.brand-title {
+  font-size: 40px;
   font-weight: 700;
-  font-size: 250%;
-  text-align: center;
-  background: linear-gradient(to bottom, #FF9D00, #965D02);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 5%;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.brand-title span {
+  color: #FFEEB4;
+}
+.brand-desc {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+.brand-footer {
+  font-size: 13px;
+  opacity: 0.7;
 }
 
-.custom-field {
+/* ====== PANEL DERECHO ====== */
+.login-right {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+/* ====== CARD ====== */
+.auth-card {
   width: 100%;
-  margin-bottom: 4%;
-  font-family: 'Poppins', sans-serif;
-  font-size: 100%;
+  max-width: 400px;
 }
 
-/* Quitar background al texto*/
-.mat-mdc-form-field {
-  --mat-sys-surface-variant: transparent !important;
+.auth-header {
+  text-align: left;
+  margin-bottom: 1.5rem;
 }
-/* Quitar background al input*/
-.mdc-text-field__input {
-  background: transparent !important;
+.auth-header h2 {
+  font-weight: 700;
+  font-size: 28px;
+  color: #004A75;
+  margin-bottom: 4px;
 }
-
-.mat-mdc-raised-button:not(:disabled) {
-  color: white !important;
-  font-size: 20px !important;
+.auth-subtitle {
+  font-size: 14px;
+  color: #5E5E5E;
 }
-
-.login-button {
-  background: linear-gradient(180deg, #F3AF42 0%, #674103 166.39%);
-  border-radius: 25px;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  height: 45px;
-  width: 100%;
-  margin-top: 2%;
-  box-shadow: none;
-  transition: transform 0.2s;
-  font-size: 120%;
-}
-
-.login-button:hover {
-  transform: scale(1.03);
-  box-shadow: none;
-}
-
-.forgot-password {
-  text-align: center;
-  margin-top: 3%;
-}
-
-.forgot-password a {
-  text-decoration: none;
-  color: #674103;
-  font-family: 'Poppins', sans-serif;
-  font-size: 110%
-}
-
-.forgot-password a:hover {
+.link-inline {
+  color: #004A75;
+  font-weight: 600;
   text-decoration: underline;
 }
 
-.mat-mdc-form-field .mat-mdc-floating-label {
-  color: black !important;
-  font-family: 'Poppins', sans-serif !important;
+/* ====== FORM ====== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+.input {
+  height: 50px;
+  width: 100%;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s;
+}
+.input:focus {
+  border-color: #004A75;
+  box-shadow: 0 0 0 3px rgba(0,74,117,0.1);
+}
+.has-error .input {
+  border-color: #B00020;
+}
+.field-hint {
+  font-size: 12px;
+  color: #B00020;
 }
 
-.mat-mdc-form-field .mat-mdc-floating-label.mdc-floating-label {
-  color: #674103 !important;
+/* Mostrar/ocultar contraseña */
+.input-with-toggle {
+  position: relative;
 }
-.mat-mdc-form-field-subscript-wrapper {
-  color: #674103 !important;
-  font-family: 'Poppins', sans-serif !important;
+.toggle-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: #EDEDED;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #004A75;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Error banner */
+.error-banner {
+  background: #FFE5E5;
+  color: #B00020;
+  border: 1px solid #FFC9C9;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+/* ====== BOTÓN PRINCIPAL ====== */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background: #004A75;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  width: 100%;            /* Mismo ancho que los inputs */
+  height: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,74,117,0.2);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ====== LINK DE RECUPERAR CONTRASEÑA ====== */
+.link {
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: underline;
+  color: #004A75;
+  margin-top: 6px;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #002F4F;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+  }
+  .login-left {
+    display: none; /* Oculta el lado de branding en móviles */
+  }
+  .login-right {
+    width: 100%;
+    padding: 2rem;
+  }
 }

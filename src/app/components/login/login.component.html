@@ -1,42 +1,90 @@
 <div class="login-container">
-    <div class="login-card">
-      <div class="image-section">
-        <img src="../../../assets/crushIcon.svg" alt="Crush Icon" />
-      </div>
-  
-      <div class="form-section">
-        <h2 class="login-title">Iniciar Sesión</h2>
-  
-        <form [formGroup]="form" (ngSubmit)="login()">
-          <mat-form-field appearance="fill" class="custom-field">
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="username" placeholder=" " />
-            <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="form.get('username')?.hasError('required')">
-              El e-mail es obligatorio.
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill" class="custom-field">
-            <mat-label>Contraseña</mat-label>
-            <input type="password" matInput formControlName="password" placeholder=" " />
-            <mat-icon matSuffix>lock</mat-icon>
-            <mat-error *ngIf="form.get('password')?.hasError('required')">
-              La contraseña es obligatoria.
-            </mat-error>
-          </mat-form-field>
-  
-          <button mat-raised-button type="submit" class="login-button">
-            Iniciar Sesión
-          </button>
-  
-          <div class="forgot-password">
-            <a routerLink="/recuperar">¿Olvidaste la contraseña?</a>
-          </div>
-  
-          <div *ngIf="mensaje" class="error-message">{{ mensaje }}</div>
-        </form>
-      </div>
+  <!-- SECCIÓN IZQUIERDA (BRANDING) -->
+  <div class="login-left">
+    <div class="brand-content">
+      <h1 class="brand-title">¡Hola <span>LantEZ!</span> 👋</h1>
+      <p class="brand-desc">
+        Digitaliza tus evaluaciones funcionales con precisión y facilidad.<br />
+        Automatiza procesos, gestiona resultados y ahorra tiempo.
+      </p>
+      <footer class="brand-footer">
+        © 2025 LantEZ. Todos los derechos reservados.
+      </footer>
     </div>
   </div>
-  
+
+  <!-- SECCIÓN DERECHA (LOGIN FORM) -->
+  <div class="login-right">
+    <div class="auth-card">
+      <header class="auth-header">
+        <h2>Bienvenido de nuevo 👋</h2>
+      </header>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="login()"
+        novalidate
+        class="auth-form"
+        [attr.aria-busy]="loading ? 'true' : 'false'">
+
+        <!-- Email -->
+        <div class="field" [ngClass]="{'has-error': username?.invalid && username?.touched}">
+          <label for="username" class="field-label">Correo electrónico</label>
+          <input
+            id="username"
+            type="email"
+            placeholder="nombre@dominio.com"
+            class="input"
+            formControlName="username"
+            autocomplete="username"
+            required
+          />
+          <small class="field-hint" *ngIf="username?.hasError('required') && username?.touched">
+            El correo es obligatorio.
+          </small>
+          <small class="field-hint" *ngIf="username?.hasError('email') && username?.touched">
+            Ingresa un correo válido.
+          </small>
+        </div>
+
+        <!-- Password -->
+        <div class="field" [ngClass]="{'has-error': password?.invalid && password?.touched}">
+          <label for="password" class="field-label">Contraseña</label>
+          <div class="input-with-toggle">
+            <input
+              id="password"
+              [type]="showPass ? 'text' : 'password'"
+              placeholder="••••••••"
+              class="input"
+              formControlName="password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-btn"
+              (click)="showPass = !showPass"
+              [attr.aria-pressed]="showPass ? 'true' : 'false'">
+              {{ showPass ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          <small class="field-hint" *ngIf="password?.hasError('required') && password?.touched">
+            La contraseña es obligatoria.
+          </small>
+        </div>
+
+        <!-- Error message -->
+        <div class="error-banner" *ngIf="mensaje">{{ mensaje }}</div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn-primary" type="submit" [disabled]="form.invalid || loading">
+            {{ loading ? 'Entrando…' : 'Iniciar Sesión' }}
+          </button>
+
+          <a class="link" routerLink="/recuperar">¿Olvidaste tu contraseña?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
