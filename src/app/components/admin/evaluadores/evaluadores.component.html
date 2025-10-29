@@ -34,9 +34,14 @@
       </div>
 
       <!-- Nombre -->
-      <h3 class="nombre-evaluador">
+      <h3 class="nombre-evaluador"
+      [title]="usuario.email">
         {{ usuario.primer_nombre }} {{ usuario.apellido_p }}
       </h3>
+
+      <h3 class="nombre-evaluador">
+        {{ usuario.email }}
+      </h3>  <!--borrar más adelante-->
 
       <!-- Botones de acción -->
       <button class="btn-editar" (click)="editarUsuario(usuario)">
