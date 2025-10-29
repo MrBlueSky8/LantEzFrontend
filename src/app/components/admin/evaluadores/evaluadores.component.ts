@@ -162,7 +162,7 @@ export class EvaluadoresComponent implements OnInit {
 
         const dialogSucces = this.dialog.open(ModalExitoComponent, {
           data: {
-            titulo: 'Información Actualizada',
+            titulo: 'Información Actualizada Correctamente',
             iconoUrl: '/assets/checkicon.svg', // ../../../assets/
             //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
           },
