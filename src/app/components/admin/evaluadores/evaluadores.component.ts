@@ -88,7 +88,8 @@ export class EvaluadoresComponent implements OnInit {
         e.apellido_m?.toLowerCase().includes(filtro) ||
         e.numero_doc?.toLowerCase().includes(filtro) ||
         e.telefono?.toLowerCase().includes(filtro) ||
-        e.roles.nombre_rol?.toLowerCase().includes(filtro)
+        e.roles.nombre_rol?.toLowerCase().includes(filtro) ||
+        e.email?.toLowerCase().includes(filtro)
     );
     this.pageIndex = 0;
     this.updateUsuariosPaginados();
