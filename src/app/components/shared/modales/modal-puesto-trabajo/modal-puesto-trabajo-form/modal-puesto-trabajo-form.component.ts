@@ -142,7 +142,10 @@ export class ModalPuestoTrabajoFormComponent implements OnInit {
   }
 
   guardar(): void {
-    if (this.formPuesto.invalid) return;
+    if (this.formPuesto.invalid) {
+      this.formPuesto.markAllAsTouched();
+      return;
+    }
 
     const nuevoPuesto: PuestosTrabajo = {
       ...this.data.puesto,
