@@ -47,7 +47,7 @@ export class PostulantesComponent implements OnInit {
     private estadoPostulanteXEmpresaService: EstadoPostulanteXEmpresaService,
     private router: Router
   ) //private route: ActivatedRoute,
-  {}
+  { }
 
   ngOnInit(): void {
     this.usuarioService
@@ -76,16 +76,36 @@ export class PostulantesComponent implements OnInit {
   }
 
   filtrarPostulantes(): void {
-    const filtro = this.filtroBusqueda.toLowerCase();
-    this.postulantesFiltrados = this.postulantes.filter(
-      (e) =>
-        e.primer_nombre?.toLowerCase().includes(filtro) ||
-        e.segundo_nombre?.toLowerCase().includes(filtro) ||
-        e.apellido_p?.toLowerCase().includes(filtro) ||
-        e.apellido_m?.toLowerCase().includes(filtro) ||
-        e.numero_doc?.toLowerCase().includes(filtro) ||
-        e.telefono?.toLowerCase().includes(filtro)
-    );
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+
+    this.postulantesFiltrados = this.postulantes.filter((e) => {
+      const primerNombre = e.primer_nombre?.toLowerCase() || '';
+      const segundoNombre = e.segundo_nombre?.toLowerCase() || '';
+      const apellidoP = e.apellido_p?.toLowerCase() || '';
+      const apellidoM = e.apellido_m?.toLowerCase() || '';
+      const numeroDoc = e.numero_doc?.toLowerCase() || '';
+      const telefono = e.telefono?.toLowerCase() || '';
+
+      // concatenaciones útiles
+      const nombreCompleto1 = `${primerNombre} ${apellidoP}`.trim();
+      const nombreCompleto2 = `${primerNombre} ${apellidoP} ${apellidoM}`.trim();
+      const nombreCompleto3 = `${apellidoP} ${primerNombre}`.trim();
+      const nombreCompleto4 = `${primerNombre} ${segundoNombre} ${apellidoP}`.trim();
+
+      return (
+        primerNombre.includes(filtro) ||
+        segundoNombre.includes(filtro) ||
+        apellidoP.includes(filtro) ||
+        apellidoM.includes(filtro) ||
+        numeroDoc.includes(filtro) ||
+        telefono.includes(filtro) ||
+        nombreCompleto1.includes(filtro) ||
+        nombreCompleto2.includes(filtro) ||
+        nombreCompleto3.includes(filtro) ||
+        nombreCompleto4.includes(filtro)
+      );
+    });
+
     this.pageIndex = 0;
     this.updatePostulantesPaginados();
     this.cargarEstadosPostulantes();
@@ -168,23 +188,23 @@ export class PostulantesComponent implements OnInit {
           `El DNI ${resultado.dni} no existe. Se debería registrar un nuevo postulante.`
         );
         const dialogCrear = this.dialog.open(ModalPostulanteFormComponent, {
-              width: 'auto',
-              data: { empresa: this.miEmpresa },
-            });
-        
-            dialogCrear.afterClosed().subscribe((resultado) => {
-              if (resultado) {
-                console.log('Postulante creado');
-                this.postulantesService
-                  .listbyEmpresaId(this.miEmpresa.id)
-                  .subscribe((todas) => {
-                    this.postulantes = todas;
-                    this.pageIndex = 0;
-                    //this.updateEmpresasPaginadas();
-                    this.filtrarPostulantes();
-                  });
-              }
-            });
+          width: 'auto',
+          data: { empresa: this.miEmpresa },
+        });
+
+        dialogCrear.afterClosed().subscribe((resultado) => {
+          if (resultado) {
+            console.log('Postulante creado');
+            this.postulantesService
+              .listbyEmpresaId(this.miEmpresa.id)
+              .subscribe((todas) => {
+                this.postulantes = todas;
+                this.pageIndex = 0;
+                //this.updateEmpresasPaginadas();
+                this.filtrarPostulantes();
+              });
+          }
+        });
       }
     });
   }
@@ -194,32 +214,32 @@ export class PostulantesComponent implements OnInit {
     if (!postulante) return;
 
     const dialogRef = this.dialog.open(ModalPostulanteFormComponent, {
-                width: 'auto',
-                data: { postulante, verDetalle: false, empresa: this.miEmpresa },
-              });
-          
-              dialogRef.afterClosed().subscribe((resultado) => {
-                if (resultado) {
-                  //console.log('Puesto editado');
-                  // recargar y filtrar
-                  this.postulantesService
-                    .listbyEmpresaId(this.miEmpresa.id)
-                    .subscribe((todas) => {
-                      this.postulantes = todas;
-                      this.postulantesFiltrados = [...this.postulantes];
-                      //this.updateEmpresasPaginadas();
-                      this.filtrarPostulantes();
-                    });
-          
-                  const dialogSucces = this.dialog.open(ModalExitoComponent, {
-                    data: {
-                      titulo: 'Información Actualizada',
-                      iconoUrl: '/assets/checkicon.svg', // ../../../assets/
-                      //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
-                    },
-                  });
-                }
-              });
+      width: 'auto',
+      data: { postulante, verDetalle: false, empresa: this.miEmpresa },
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        //console.log('Puesto editado');
+        // recargar y filtrar
+        this.postulantesService
+          .listbyEmpresaId(this.miEmpresa.id)
+          .subscribe((todas) => {
+            this.postulantes = todas;
+            this.postulantesFiltrados = [...this.postulantes];
+            //this.updateEmpresasPaginadas();
+            this.filtrarPostulantes();
+          });
+
+        const dialogSucces = this.dialog.open(ModalExitoComponent, {
+          data: {
+            titulo: 'Información Actualizada',
+            iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+            //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+          },
+        });
+      }
+    });
   }
 
   verDetallePostulante(postulante: Postulantes): void {
@@ -228,9 +248,9 @@ export class PostulantesComponent implements OnInit {
     if (!postulante) return;
 
     const dialogRef = this.dialog.open(ModalPostulanteFormComponent, {
-                  width: 'auto',
-                  data: { postulante, verDetalle: true, empresa: this.miEmpresa },
-                });
+      width: 'auto',
+      data: { postulante, verDetalle: true, empresa: this.miEmpresa },
+    });
   }
 
   private refrescarPostulante(): void {
@@ -255,7 +275,7 @@ export class PostulantesComponent implements OnInit {
     this.router.navigate([
       `/${currentSidenav}/postulantes/resultados/`, postulante.id, `empresa`, this.miEmpresa.id
     ]);
-  
+
   }
 
   ToogleEstadoPostulante(postulante: Postulantes): void { //agregar un ngif para verificar que solo un admin o subadmin pueda exponer
@@ -274,13 +294,13 @@ export class PostulantesComponent implements OnInit {
 
       const operacion = estadoActual
         ? this.estadoPostulanteXEmpresaService.deshabilitarPostulante(
-            this.miEmpresa.id!,
-            postulante.id
-          )
+          this.miEmpresa.id!,
+          postulante.id
+        )
         : this.estadoPostulanteXEmpresaService.habilitarPostulante(
-            this.miEmpresa.id!,
-            postulante.id
-          );
+          this.miEmpresa.id!,
+          postulante.id
+        );
 
       operacion.subscribe({
         next: () => {
@@ -291,9 +311,8 @@ export class PostulantesComponent implements OnInit {
 
           this.dialog.open(ModalExitoComponent, {
             data: {
-              titulo: `Postulante ${
-                accion === 'deshabilitar' ? 'deshabilitado' : 'habilitado'
-              }`,
+              titulo: `Postulante ${accion === 'deshabilitar' ? 'deshabilitado' : 'habilitado'
+                }`,
               iconoUrl: '/assets/checkicon.svg',
             },
           });
