@@ -210,7 +210,7 @@ export class UsuariosComponent implements OnInit {
     
             const dialogSucces = this.dialog.open(ModalExitoComponent, {
               data: {
-                titulo: 'Información Actualizada',
+                titulo: 'Usuario Actualizado Correctamente',
                 iconoUrl: '/assets/checkicon.svg', // ../../../assets/
                 //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
               },
