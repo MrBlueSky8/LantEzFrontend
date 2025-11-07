@@ -185,6 +185,14 @@ export class UsuariosFundadesComponent implements OnInit {
                 //this.updateEmpresasPaginadas();
                 this.filtrarUsuarios();
               });
+
+               const dialogSucces = this.dialog.open(ModalExitoComponent, {
+                  data: {
+                    titulo: 'Usuario Registrado Correctamente',
+                    iconoUrl: '/assets/checkicon.svg', // ../../../assets/
+                    //mensajeSecundario: 'Te enviamos un correo electrónico con un enlace para reestablecer la contraseña. '
+                  },
+                });
           }
         });
   }
