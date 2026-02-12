@@ -24,6 +24,7 @@ import autoTable from 'jspdf-autotable';
 interface CompetenciaDetalle {
   competencia: string;
   nivelPuesto: number;
+  nivelPostulante: number;
   coincidencia: number;
 }
 
@@ -108,9 +109,12 @@ export class IngresarEvaluacionComponent implements OnInit {
           const porcentaje = match
             ? (match.resultado_pregunta_obtenido / rq.resultado_minimo) * 100
             : 0;
+            const nivelPostulante = match ? Math.round(match.resultado_pregunta_obtenido) : 0;
+
           return {
             competencia: rq.pregunta_perfil.pregunta,
             nivelPuesto: rq.resultado_minimo,
+            nivelPostulante: nivelPostulante,
             coincidencia: Math.round(porcentaje)
           };
         });
