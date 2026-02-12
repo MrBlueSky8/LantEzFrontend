@@ -75,6 +75,7 @@
           <tr>
             <th class="th-competencia">Competencias</th>
             <th class="th-nivel">NIVEL DEL PUESTO</th>
+            <th class="th-nivel-postulante">NIVEL DEL POSTULANTE</th>
             <th class="th-coincidencia">COINCIDENCIA</th>
           </tr>
         </thead>
@@ -82,6 +83,7 @@
           <tr *ngFor="let c of competenciasDetalle">
             <td>{{ c.competencia }}</td>
             <td>{{ c.nivelPuesto }}</td>
+            <td>{{ c.nivelPostulante }}</td>
             <td>{{ c.coincidencia }}%</td>
           </tr>
         </tbody>
