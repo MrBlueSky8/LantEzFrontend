@@ -11,8 +11,8 @@
       <summary (click)="estadoPreguntasAbiertas[pregunta.id] = !estadoPreguntasAbiertas[pregunta.id]">
         <div class="pregunta-top-row">
           <div class="pregunta-cabecera">
-            <span class="pregunta-numero">{{ pregunta.pregunta.split('.')[0] }}</span>
-            <span class="pregunta-titulo">{{ pregunta.pregunta.split('. ')[1] }}</span>
+            <span class="pregunta-numero">{{ obtenerNumeroPregunta(pregunta.pregunta) }}</span>
+            <span class="pregunta-titulo">{{ obtenerTituloPregunta(pregunta.pregunta) }}</span>
           </div>
           <img
             [src]="estadoPreguntasAbiertas[pregunta.id] ? '/assets/arrowUp.svg' : '/assets/arrowDown.svg'"

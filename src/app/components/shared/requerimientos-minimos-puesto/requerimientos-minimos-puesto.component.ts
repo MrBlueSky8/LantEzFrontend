@@ -54,7 +54,7 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
     private usuarioService: UsuariosService,
     private loginService: LoginService,
     private empresaService: EmpresasService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const miRol = this.loginService.showRole();
@@ -71,13 +71,13 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
               next: (idEmpresa) => {
                 this.empresaService.listId(idEmpresa).subscribe({
                   next: (empresa) => {
-                    if(empresa.id === this.puesto.areas.empresas.id || miRol === 'ADMINISTRADOR FUNDADES' || miRol === 'SUBADMINISTRADOR FUNDADES'){
+                    if (empresa.id === this.puesto.areas.empresas.id || miRol === 'ADMINISTRADOR FUNDADES' || miRol === 'SUBADMINISTRADOR FUNDADES') {
                       this.cargando = false;
                       console.log('evento: puesto cargado: ' + this.puesto.nombre_puesto);
 
                       this.cargarPreguntas();
                       this.cargarRequerimientosExistentes(p.id);
-                    }else{
+                    } else {
                       console.log('evento: puesto no permitido para el usuario: ' + this.puesto.nombre_puesto);
                       this.redireccionarListaPuesto();
                     }
@@ -99,20 +99,36 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
   }
 
   cargarPreguntas(): void {
-    this.preguntaPerfilService.listtipopuesto().subscribe((preguntas) => {
-      this.preguntasPerfil = preguntas;
+    this.preguntaPerfilService.listtipopuesto().subscribe({
+      next: (preguntas) => {
+        this.preguntasPerfil = this.ordenarPreguntas(preguntas);
 
-      // Ahora cargamos perfiles para cada pregunta
-      preguntas.forEach((pregunta) => {
-        this.estadoPreguntasAbiertas[pregunta.id] = true;
-        this.perfilPuntoService
-          .listbypreguntaPerfilId(pregunta.id)
-          .subscribe((perfiles) => {
-            this.perfilesPorPregunta[pregunta.id] = perfiles;
-          });
-      });
+        this.preguntasPerfil.forEach((pregunta) => {
+          this.estadoPreguntasAbiertas[pregunta.id] = true;
 
-      this.cargando = false;
+          this.perfilPuntoService
+            .listbypreguntaPerfilId(pregunta.id)
+            .subscribe({
+              next: (perfiles) => {
+                this.perfilesPorPregunta[pregunta.id] =
+                  this.ordenarPerfiles(perfiles);
+              },
+              error: (err) => {
+                console.error(
+                  `Error al obtener perfiles de la pregunta ${pregunta.id}:`,
+                  err
+                );
+                this.perfilesPorPregunta[pregunta.id] = [];
+              },
+            });
+        });
+
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error al obtener preguntas de perfil:', err);
+        this.cargando = false;
+      },
     });
   }
 
@@ -138,9 +154,9 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
     const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
     const seccionEmpresa = segments[2]; //.includes('empresas') ? 'empresas' : 'mi-empresa';
 
-    if(this.loginService.showRole() === 'EVALUADOR'){
+    if (this.loginService.showRole() === 'EVALUADOR') {
       this.router.navigate([`/${currentSidenav}/${seccionEmpresa}`]);
-    }else{
+    } else {
       //console.log('evento: current sidenav: ' + currentSidenav);
       this.router.navigate([`/${currentSidenav}/${seccionEmpresa}/puestos-trabajo`]);
     }
@@ -206,5 +222,45 @@ export class RequerimientosMinimosPuestoComponent implements OnInit {
           },
         });
     });
+  }
+
+  private extraerNumeroPregunta(texto: string | null | undefined): number {
+    if (!texto) return Number.MAX_SAFE_INTEGER;
+
+    const match = texto.match(/^(\d+)\./);
+    return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+  }
+
+  private ordenarPreguntas(preguntas: Preguntas_perfil[]): Preguntas_perfil[] {
+    return [...preguntas].sort((a, b) => {
+      const numeroA = this.extraerNumeroPregunta(a.pregunta);
+      const numeroB = this.extraerNumeroPregunta(b.pregunta);
+
+      if (numeroA !== numeroB) {
+        return numeroA - numeroB;
+      }
+
+      return a.id - b.id;
+    });
+  }
+
+  private ordenarPerfiles(perfiles: Perfil_del_punto[]): Perfil_del_punto[] {
+    return [...perfiles].sort((a, b) => {
+      if (a.n_respuesta !== b.n_respuesta) {
+        return a.n_respuesta - b.n_respuesta;
+      }
+
+      return a.id - b.id;
+    });
+  }
+
+  obtenerNumeroPregunta(texto: string): string {
+    const match = texto?.match(/^(\d+)\./);
+    return match ? match[1] : '';
+  }
+
+  obtenerTituloPregunta(texto: string): string {
+    if (!texto) return '';
+    return texto.replace(/^\d+\.\s*/, '');
   }
 }
