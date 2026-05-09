@@ -1,6 +1,12 @@
 <!-- HEADER BIENVENIDA -->
 <div class="mi-empresa-header">
-  ¡Bienvenido de vuelta {{ usuario.primer_nombre | uppercase }} {{ usuario.apellido_p | uppercase }}!
+  <ng-container *ngIf="usuario as u; else cargandoUsuario">
+    ¡Bienvenido de vuelta {{ u.primer_nombre | uppercase }} {{ u.apellido_p | uppercase }}!
+  </ng-container>
+
+  <ng-template #cargandoUsuario>
+    Cargando información del usuario...
+  </ng-template>
 </div>
 
 <!-- SECCIÓN DE ACCESOS DIRECTOS -->

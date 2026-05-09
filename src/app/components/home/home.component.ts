@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  usuario!: UsuariosLight;
+  usuario?: UsuariosLight;
 
   // Indicadores
   totalEvaluacionesRealizadas: number = 0;
@@ -27,11 +27,16 @@ export class HomeComponent implements OnInit {
     private postulacionesService: PostulacionesService,
     private puestoTrabajoService: PuestoTrabajoService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loginService.getCurrentUsuarioLight().subscribe({
       next: (usuario) => {
+        if (!usuario?.id) {
+          console.warn('Usuario logueado no disponible');
+          return;
+        }
+
         this.usuario = usuario;
         this.cargarDatosDashboard(usuario.id);
       },
@@ -65,52 +70,52 @@ export class HomeComponent implements OnInit {
   irEmpresas(): void {
     console.log('Click: Ir a Empresas');
     const segments = this.router.url.split('/');
-      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
 
-      if(this.loginService.showRole() === 'ADMINISTRADOR'){
-        this.router.navigate([`/${currentSidenav}/mi-empresa`]);
-      }else{ 
-        this.router.navigate([`/${currentSidenav}/empresas`]);
-      }
+    if (this.loginService.showRole() === 'ADMINISTRADOR') {
+      this.router.navigate([`/${currentSidenav}/mi-empresa`]);
+    } else {
+      this.router.navigate([`/${currentSidenav}/empresas`]);
+    }
   }
 
   irEvaluaciones(): void {
     console.log('Click: Ir a Evaluaciones');
     const segments = this.router.url.split('/');
-      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
 
-      //console.log('evento: current sidenav: ' + currentSidenav);
-      this.router.navigate([`/${currentSidenav}/evaluaciones/pendientes`]);
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([`/${currentSidenav}/evaluaciones/pendientes`]);
   }
 
   irUsuarios(): void {
     console.log('Click: Ir a Usuarios');
     const segments = this.router.url.split('/');
-      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
 
-      //console.log('evento: current sidenav: ' + currentSidenav);
-      this.router.navigate([`/${currentSidenav}/usuarios`]);
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([`/${currentSidenav}/usuarios`]);
   }
 
   irPostulantes(): void {
     console.log('Click: Ir a Postulantes');
-    
-    const segments = this.router.url.split('/');
-      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
 
-      //console.log('evento: current sidenav: ' + currentSidenav);
-      this.router.navigate([`/${currentSidenav}/postulantes`]);
+    const segments = this.router.url.split('/');
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([`/${currentSidenav}/postulantes`]);
   }
 
   irEvaluadores(): void {
     console.log('Click: Ir a Evaluadores');
 
-    
-    const segments = this.router.url.split('/');
-      const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
 
-      //console.log('evento: current sidenav: ' + currentSidenav);
-      this.router.navigate([`/${currentSidenav}/evaluadores`]);
+    const segments = this.router.url.split('/');
+    const currentSidenav = segments[1]; // sidenav-fundades o sidenav-admin
+
+    //console.log('evento: current sidenav: ' + currentSidenav);
+    this.router.navigate([`/${currentSidenav}/evaluadores`]);
   }
 
   get esEvaluador(): boolean {
